@@ -4,7 +4,11 @@
 /* purgecss end ignore */
 
 body {
-  @apply antialiased text-gray-900;
+  @apply antialiased text-gray-900 p-10;
+}
+
+.markdown-body > h1 {
+  @apply text-2xl font-bold text-blue-700;
 }
 
 @tailwind utilities;

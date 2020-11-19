@@ -9,6 +9,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@octokit/request": "^5.4.10",
     "next": "latest",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
