@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@octokit/request": "^5.4.10",
+    "autoprefixer": "^10.0.2",
     "next": "latest",
+    "postcss": "^8.1.10",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "tailwindcss": "^2.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -28,8 +31,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "postcss-flexbugs-fixes": "4.2.1",
     "postcss-preset-env": "^6.7.0",
-    "prettier": "^2.1.2",
-    "tailwindcss": "^1.7.4"
+    "prettier": "^2.1.2"
   },
   "license": "MIT"
 }
