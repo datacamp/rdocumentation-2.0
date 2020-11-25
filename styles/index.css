@@ -4,7 +4,8 @@
 /* purgecss end ignore */
 
 body {
-  @apply antialiased text-gray-900 p-10;
+  font-family: "Studio-Feixen-Sans", "Arial";
+  @apply antialiased p-10;
 }
 
 .markdown-body > h1 {

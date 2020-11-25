@@ -5,24 +5,24 @@ export default function Home({
   allRDownloadsLast30,
   latestRVersion,
 }) {
-  console.log({
-    topDownloadsLast30,
-    topTrendingLast7,
-    allDownloadsLast30,
-    allRDownloadsLast30,
-    latestRVersion,
-  });
+  // console.log({
+  //   topDownloadsLast30,
+  //   topTrendingLast7,
+  //   allDownloadsLast30,
+  //   allRDownloadsLast30,
+  //   latestRVersion,
+  // });
   return (
     <>
       <div className="flex justify-around">
         <div>
-          <h2 className="text-xl font-bold">Most Downloaded (Last 30 Days)</h2>
+          <h2>Most Downloaded (Last 30 Days)</h2>
           <pre className="text-xs">
             {JSON.stringify(topDownloadsLast30, null, 2)}
           </pre>
         </div>
         <div>
-          <h2 className="text-xl font-bold">Trending (Last 7 Days)</h2>
+          <h2>Trending (Last 7 Days)</h2>
           <pre className="text-xs">
             {JSON.stringify(topTrendingLast7, null, 2)}
           </pre>
@@ -30,23 +30,19 @@ export default function Home({
       </div>
       <div className="flex justify-around mt-10">
         <div>
-          <h2 className="text-xl font-bold">
-            Total Package Downloads (Last 30 Days)
-          </h2>
+          <h2>Total Package Downloads (Last 30 Days)</h2>
           <pre className="text-xs">
             {JSON.stringify(allDownloadsLast30, null, 2)}
           </pre>
         </div>
         <div>
-          <h2 className="text-xl font-bold">
-            Total R Downloads (Last 30 Days)
-          </h2>
+          <h2>Total R Downloads (Last 30 Days)</h2>
           <pre className="text-xs">
             {JSON.stringify(allRDownloadsLast30, null, 2)}
           </pre>
         </div>
         <div>
-          <h2 className="text-xl font-bold">Latest R Version</h2>
+          <h2>Latest R Version</h2>
           <pre className="text-xs">
             {JSON.stringify(latestRVersion, null, 2)}
           </pre>

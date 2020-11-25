@@ -9,6 +9,8 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@datacamp/waffles-text": "^4.1.1",
+    "@emotion/core": "^10.1.1",
     "@octokit/request": "^5.4.10",
     "autoprefixer": "^10.0.2",
     "next": "latest",
