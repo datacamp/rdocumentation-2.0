@@ -9,9 +9,11 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@datacamp/waffles-icons": "^2.2.1",
     "@datacamp/waffles-text": "^4.1.1",
     "@emotion/core": "^10.1.1",
     "@octokit/request": "^5.4.10",
+    "@tailwindcss/forms": "^0.2.1",
     "autoprefixer": "^10.0.2",
     "next": "latest",
     "postcss": "^8.1.10",

@@ -1,3 +1,5 @@
+import HomeSearch from '../components/HomeSearch';
+
 export default function Home({
   topDownloadsLast30,
   topTrendingLast7,
@@ -14,38 +16,50 @@ export default function Home({
   // });
   return (
     <>
-      <div className="flex justify-around">
-        <div>
-          <h2>Most Downloaded (Last 30 Days)</h2>
-          <pre className="text-xs">
-            {JSON.stringify(topDownloadsLast30, null, 2)}
-          </pre>
-        </div>
-        <div>
-          <h2>Trending (Last 7 Days)</h2>
-          <pre className="text-xs">
-            {JSON.stringify(topTrendingLast7, null, 2)}
-          </pre>
-        </div>
+      <div className="w-2/3 mt-40 mx-auto">
+        <HomeSearch />
       </div>
-      <div className="flex justify-around mt-10">
-        <div>
-          <h2>Total Package Downloads (Last 30 Days)</h2>
-          <pre className="text-xs">
-            {JSON.stringify(allDownloadsLast30, null, 2)}
-          </pre>
+
+      <div className="mt-20">
+        <div className="flex justify-around">
+          <div>
+            <h2 className="text-xl font-bold">
+              Most Downloaded (Last 30 Days)
+            </h2>
+            <pre className="text-xs">
+              {JSON.stringify(topDownloadsLast30, null, 2)}
+            </pre>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold">Trending (Last 7 Days)</h2>
+            <pre className="text-xs">
+              {JSON.stringify(topTrendingLast7, null, 2)}
+            </pre>
+          </div>
         </div>
-        <div>
-          <h2>Total R Downloads (Last 30 Days)</h2>
-          <pre className="text-xs">
-            {JSON.stringify(allRDownloadsLast30, null, 2)}
-          </pre>
-        </div>
-        <div>
-          <h2>Latest R Version</h2>
-          <pre className="text-xs">
-            {JSON.stringify(latestRVersion, null, 2)}
-          </pre>
+        <div className="flex justify-around mt-10">
+          <div>
+            <h2 className="text-xl font-bold">
+              Total Package Downloads (Last 30 Days)
+            </h2>
+            <pre className="text-xs">
+              {JSON.stringify(allDownloadsLast30, null, 2)}
+            </pre>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold">
+              Total R Downloads (Last 30 Days)
+            </h2>
+            <pre className="text-xs">
+              {JSON.stringify(allRDownloadsLast30, null, 2)}
+            </pre>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold">Latest R Version</h2>
+            <pre className="text-xs">
+              {JSON.stringify(latestRVersion, null, 2)}
+            </pre>
+          </div>
         </div>
       </div>
     </>
@@ -69,8 +83,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      topDownloadsLast30: topDownloadsLast30.downloads,
-      topTrendingLast7: topTrendingLast7.slice(0, 10),
+      topDownloadsLast30: topDownloadsLast30.downloads.slice(0, 5),
+      topTrendingLast7: topTrendingLast7.slice(0, 5),
       allDownloadsLast30: allDownloadsLast30[0].downloads,
       allRDownloadsLast30: allRDownloadsLast30[0].downloads,
       latestRVersion: allRVersions.slice(-1)[0],
