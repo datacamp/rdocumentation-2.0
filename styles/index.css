@@ -8,8 +8,8 @@ body {
   @apply antialiased bg-dc-beige100 text-dc-navy;
 }
 
-.markdown-body > h1 {
+/* .markdown-body > h1 {
   @apply text-2xl font-bold text-blue-700;
-}
+} */
 
 @tailwind utilities;
