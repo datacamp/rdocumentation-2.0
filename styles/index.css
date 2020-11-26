@@ -5,7 +5,7 @@
 
 body {
   font-family: "Studio-Feixen-Sans", "Arial";
-  @apply antialiased bg-dc-beige100 text-dc-navy;
+  @apply antialiased;
 }
 
 /* .markdown-body > h1 {
