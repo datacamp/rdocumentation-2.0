@@ -8,8 +8,9 @@ body {
   @apply antialiased;
 }
 
-/* .markdown-body > h1 {
-  @apply text-2xl font-bold text-blue-700;
-} */
+/* get rid of badges */
+.prose p > a > img {
+  @apply hidden;
+}
 
 @tailwind utilities;

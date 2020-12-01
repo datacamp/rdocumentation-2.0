@@ -1,2 +1,3 @@
 - search in nav
-- TBD
+- list of all package names -> getStaticPages()
+
