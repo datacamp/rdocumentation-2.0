@@ -10,7 +10,7 @@ export default function Navbar() {
   }, [isDark]);
 
   return (
-    <header className="px-6 py-4 flex items-baseline justify-between">
+    <header className="flex justify-between items-center h-20">
       <nav className="text-lg">
         <Link href="/">
           <a>RDocumentation</a>
