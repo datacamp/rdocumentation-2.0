@@ -1,3 +1,4 @@
 - search in nav
 - list of all package names -> getStaticPages()
+- dark mode -> localStorage
 

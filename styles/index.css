@@ -13,4 +13,8 @@ body {
   @apply hidden;
 }
 
+.prose * {
+  @apply dark:text-white;
+}
+
 @tailwind utilities;
