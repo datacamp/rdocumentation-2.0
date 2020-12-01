@@ -29,7 +29,7 @@ export default function PackagePage({ metadata, githubUrl, readme }) {
                 </a>
               ),
             }}
-            skipHtml
+            allowDangerousHtml // TODO: is this safe?
           >
             {readme.data}
           </ReactMarkdown>
@@ -136,7 +136,7 @@ function getGithubOwnerRepo(url) {
 
 function getGithubUrl(stringOfUrls) {
   if (!stringOfUrls) return null;
-  const urlArray = stringOfUrls.split(', ');
+  const urlArray = stringOfUrls.split(',').map((url) => url.trim());
   const githubUrl = urlArray.find((url) => url.includes('github.com'));
   return githubUrl || null;
 }

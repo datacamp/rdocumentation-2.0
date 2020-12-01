@@ -2,3 +2,4 @@
 - list of all package names -> getStaticPages()
 - add custom 404 (with dark mode)? https://nextjs.org/docs/advanced-features/custom-error-page#404-page
 - don't use my personal github auth token
+- ask someone at DC about rendering HTML in README
