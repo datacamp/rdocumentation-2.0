@@ -1,8 +1,8 @@
-import { request } from '@octokit/request';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
+import { getGithubReadme } from '../../lib/github-api';
 
 function SidebarHeader({ children }) {
   return <h4 className="text-sm uppercase text-gray-500 mb-2">{children}</h4>;
@@ -129,12 +129,12 @@ export default function PackagePage({ metadata, githubUrl, readme }) {
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-function getGitHubOwnerRepo(url) {
+function getGithubOwnerRepo(url) {
   if (!url) return null;
   return url.replace('https://github.com/', '');
 }
 
-function getGitHubUrl(stringOfUrls) {
+function getGithubUrl(stringOfUrls) {
   if (!stringOfUrls) return null;
   const urlArray = stringOfUrls.split(', ');
   const githubUrl = urlArray.find((url) => url.includes('github.com'));
@@ -147,16 +147,11 @@ export async function getServerSideProps({ params: { name } }) {
 
   // get github url and readme
   const { URL: stringOfUrls } = metadata;
-  const githubUrl = getGitHubUrl(stringOfUrls);
-
+  const githubUrl = getGithubUrl(stringOfUrls);
   let readme = null;
   if (githubUrl) {
-    const githubOwnerRepo = getGitHubOwnerRepo(githubUrl);
-    readme = await request(`GET /repos/${githubOwnerRepo}/contents/README.md`, {
-      mediaType: {
-        format: 'raw',
-      },
-    });
+    const githubOwnerRepo = getGithubOwnerRepo(githubUrl);
+    readme = await getGithubReadme(githubOwnerRepo);
   }
 
   return {

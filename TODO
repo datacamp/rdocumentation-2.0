@@ -1,4 +1,4 @@
 - search in nav
 - list of all package names -> getStaticPages()
-- dark mode -> localStorage
-
+- add custom 404 (with dark mode)? https://nextjs.org/docs/advanced-features/custom-error-page#404-page
+- don't use my personal github auth token

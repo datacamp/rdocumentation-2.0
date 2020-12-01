@@ -1,14 +1,7 @@
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { SunIcon, MoonInvertedIcon } from '@datacamp/waffles-icons';
 
-export default function Navbar() {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    document.body.classList.toggle('dark', isDark);
-  }, [isDark]);
-
+export default function Navbar({ isDark, setIsDark }) {
   return (
     <header className="flex justify-between items-center h-20">
       <nav className="text-lg">
