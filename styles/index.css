@@ -10,7 +10,7 @@ body {
 
 /* TODO: get rid of badges? */
 .prose p > a > img {
-  @apply my-2;
+  @apply hidden;
 }
 
 .prose * {
