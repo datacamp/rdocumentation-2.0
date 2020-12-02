@@ -3,3 +3,8 @@
 - add custom 404 (with dark mode)? https://nextjs.org/docs/advanced-features/custom-error-page#404-page
 - don't use my personal github auth token
 - ask someone at DC about rendering HTML in README
+- package page
+  - extract package home page
+  - fetch github data (issues, stars, PRs, forks)
+  - create weekly downloads chart
+
