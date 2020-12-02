@@ -1,11 +1,12 @@
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
-import { FaHome, FaGithub } from 'react-icons/fa';
+// import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
 import { getGithubReadme } from '../../lib/github-api';
+import MonthlyDownloadsChart from '../../components/MonthlyDownloadsChart';
 
 function SidebarHeader({ children }) {
-  return <h4 className="text-sm uppercase text-gray-500 mb-2">{children}</h4>;
+  return <h4 className="mb-2 text-sm text-gray-500 uppercase">{children}</h4>;
 }
 
 function SidebarValue({ children }) {
@@ -17,7 +18,7 @@ export default function PackagePage({ metadata, githubUrl, readme }) {
 
   return (
     <div className="flex mt-12">
-      <article className="w-2/3 prose max-w-none pr-8">
+      <article className="w-2/3 pr-8 prose max-w-none">
         {readme ? (
           <ReactMarkdown
             plugins={[gfm]}
@@ -34,12 +35,12 @@ export default function PackagePage({ metadata, githubUrl, readme }) {
             {readme.data}
           </ReactMarkdown>
         ) : (
-          <div className="flex justify-center items-center h-full">
+          <div className="flex items-center justify-center h-full">
             Readme not available :(
           </div>
         )}
       </article>
-      <div className="w-1/3 space-y-5 border-l pl-8 ">
+      <div className="w-1/3 pl-8 space-y-5 border-l">
         <div>
           <SidebarHeader>Install</SidebarHeader>
           <div className="prose">
@@ -49,7 +50,13 @@ export default function PackagePage({ metadata, githubUrl, readme }) {
           </div>
         </div>
         <div>
-          <SidebarHeader>Weekly Downloads</SidebarHeader>
+          <SidebarHeader>Monthly Downloads</SidebarHeader>
+          <div className="flex items-baseline justify-between">
+            <div className="text-3xl font-light">122,222</div>
+            <div className="w-3/5">
+              <MonthlyDownloadsChart />
+            </div>
+          </div>
         </div>
         <div className="flex">
           <div className="w-1/2">
@@ -88,9 +95,9 @@ export default function PackagePage({ metadata, githubUrl, readme }) {
               <SidebarHeader>Repository</SidebarHeader>
               <SidebarValue>
                 <div className="flex items-center">
-                  <FaGithub />
+                  {/* <FaGithub /> */}
                   <a
-                    className="ml-2"
+                    // className="ml-2"
                     href={githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -106,9 +113,9 @@ export default function PackagePage({ metadata, githubUrl, readme }) {
           <SidebarHeader>Homepage</SidebarHeader>
           <SidebarValue>
             <div className="flex items-center">
-              <FaHome />
+              {/* <FaHome /> */}
               <a
-                className="ml-2"
+                // className="ml-2"
                 href="#"
                 target="_blank"
                 rel="noopener noreferrer"
