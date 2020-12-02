@@ -7,4 +7,4 @@
   - extract package home page
   - fetch github data (issues, stars, PRs, forks)
   - create weekly downloads chart
-
+- replace recharts with something better maintained (see console warnings)?
