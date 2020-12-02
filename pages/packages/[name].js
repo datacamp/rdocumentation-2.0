@@ -13,7 +13,7 @@ function SidebarValue({ children }) {
   return <div className="text-lg">{children}</div>;
 }
 
-export default function PackagePage({ metadata, githubUrl, readme }) {
+export default function PackagePage({ metadata, githubUrl, readme, isDark }) {
   const datePublished = new Date(metadata['Date/Publication']);
 
   return (
@@ -54,7 +54,7 @@ export default function PackagePage({ metadata, githubUrl, readme }) {
           <div className="flex items-baseline justify-between">
             <div className="text-3xl font-light">122,222</div>
             <div className="w-3/5">
-              <MonthlyDownloadsChart />
+              <MonthlyDownloadsChart isDark={isDark} />
             </div>
           </div>
         </div>

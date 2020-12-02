@@ -51,7 +51,13 @@ const data = [
   },
 ];
 
-export default function MonthlyDownloadsChart() {
+// copied from tailwind.config.js
+const colors = {
+  'dc-navy': '#05192D',
+  'dc-yellow': '#FCCE0D',
+};
+
+export default function MonthlyDownloadsChart({ isDark }) {
   return (
     <ResponsiveContainer width="100%" height={50}>
       <AreaChart
@@ -68,10 +74,12 @@ export default function MonthlyDownloadsChart() {
           type="monotone"
           name="Downloads"
           dataKey="downloads"
-          stroke="#05192D"
-          fill="#05192D"
+          stroke={isDark ? colors['dc-yellow'] : colors['dc-navy']}
+          fill={isDark ? colors['dc-yellow'] : colors['dc-navy']}
         />
-        <Tooltip />
+        <Tooltip
+          contentStyle={isDark ? { backgroundColor: colors['dc-navy'] } : {}}
+        />
       </AreaChart>
     </ResponsiveContainer>
   );

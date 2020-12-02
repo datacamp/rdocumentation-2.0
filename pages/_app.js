@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <GlobalFontFaces />
       <Layout isDark={isDark} setIsDark={setIsDark}>
-        <Component {...pageProps} />
+        <Component {...pageProps} isDark={isDark} />
       </Layout>
     </>
   );
