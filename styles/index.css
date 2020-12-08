@@ -8,7 +8,7 @@ body {
   @apply antialiased;
 }
 
-/* TODO: get rid of badges? */
+/* get rid of badges */
 .prose p > a > img {
   @apply hidden;
 }
