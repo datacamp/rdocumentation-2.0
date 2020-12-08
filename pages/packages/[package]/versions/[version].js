@@ -2,8 +2,8 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 // import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
-import { getGithubReadme } from '../../lib/github-api';
-import MonthlyDownloadsChart from '../../components/MonthlyDownloadsChart';
+import { getGithubReadme } from '../../../../lib/github-api';
+import MonthlyDownloadsChart from '../../../../components/MonthlyDownloadsChart';
 
 function SidebarHeader({ children }) {
   return <h4 className="mb-2 text-sm text-gray-500 uppercase">{children}</h4>;
@@ -13,7 +13,12 @@ function SidebarValue({ children }) {
   return <div className="text-lg">{children}</div>;
 }
 
-export default function PackagePage({ metadata, githubUrl, readme, isDark }) {
+export default function PackageVersionPage({
+  metadata,
+  githubUrl,
+  readme,
+  isDark,
+}) {
   const datePublished = new Date(metadata['Date/Publication']);
 
   return (
@@ -148,9 +153,12 @@ function getGithubUrl(stringOfUrls) {
   return githubUrl || null;
 }
 
-export async function getServerSideProps({ params: { name } }) {
+// have to change arg name to packageName since package is a JS reserved word
+export async function getServerSideProps({
+  params: { package: packageName, version },
+}) {
   // get package metadata
-  const metadata = await fetcher(`https://crandb.r-pkg.org/${name}`);
+  const metadata = await fetcher(`https://crandb.r-pkg.org/${packageName}`);
 
   // get github url and readme
   const { URL: stringOfUrls } = metadata;
