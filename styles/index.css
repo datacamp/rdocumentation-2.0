@@ -8,8 +8,8 @@ body {
   @apply antialiased;
 }
 
-/* get rid of badges */
-.prose p > a > img {
+/* TODO: confirm this ONLY gets rid of badges */
+.prose > p:first-of-type > a > img {
   @apply hidden;
 }
 

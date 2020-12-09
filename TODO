@@ -1,12 +1,12 @@
-- search in nav
-- list of all package names -> getStaticPages()?
+- add search in nav
+- list of all package names -> getStaticPages?
 - add custom 404 (with dark mode)? https://nextjs.org/docs/advanced-features/custom-error-page#404-page
 - don't use my personal github auth token
 - ask someone at DC about rendering HTML in README
 - package page
-  - extract package home page
   - fetch github data (issues, stars, PRs, forks)
   - create weekly downloads chart
 - replace recharts with something better maintained (see console warnings)?
 - add canonical link to copy on each page
-- add bug report link on package page
+- add bug report link on package page?
+- add contributor data on package page

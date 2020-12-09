@@ -1,4 +1,4 @@
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdownWithHtml from 'react-markdown/with-html';
 import gfm from 'remark-gfm';
 import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
@@ -43,7 +43,7 @@ export default function PackageVersionPage({ packageData, isDark }) {
     <div className="flex mt-12">
       <article className="w-2/3 pr-8 prose max-w-none">
         {readme ? (
-          <ReactMarkdown
+          <ReactMarkdownWithHtml
             plugins={[gfm]}
             renderers={{
               // eslint-disable-next-line react/display-name
@@ -56,7 +56,7 @@ export default function PackageVersionPage({ packageData, isDark }) {
             allowDangerousHtml // TODO: is this safe?
           >
             {readme}
-          </ReactMarkdown>
+          </ReactMarkdownWithHtml>
         ) : (
           <div className="flex items-center justify-center h-full">
             {/* TODO: Need a CTA here */}
