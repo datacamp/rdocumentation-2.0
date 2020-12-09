@@ -27,12 +27,12 @@ function SidebarValue({ children }) {
 export default function PackageVersionPage({ packageData, isDark }) {
   // get relevant data from package metadata
   const {
-    url: stringOfUrls,
-    readmemd: readme,
-    release_date,
     package_name,
     version,
     license,
+    url: stringOfUrls,
+    release_date,
+    readmemd: readme,
   } = packageData;
   // extract the github repo url
   const { homeUrl, githubUrl } = getPackageUrls(stringOfUrls);
