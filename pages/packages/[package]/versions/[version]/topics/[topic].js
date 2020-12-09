@@ -8,6 +8,7 @@ function Html({ className, children }) {
 export default function TopicPage({ topicData }) {
   const {
     name,
+    package_version: { package_name: packageName, version: packageVersion },
     title,
     description,
     usage,
@@ -22,42 +23,65 @@ export default function TopicPage({ topicData }) {
 
   return (
     <div className="max-w-screen-lg mx-auto mt-12 prose">
-      <h1>
-        {name}: {title}
-      </h1>
-      <h2>Description</h2>
-      <Html>{description}</Html>
-      <h2>Usage</h2>
-      <pre>
-        <Html>{usage}</Html>
-      </pre>
-      <h2>Arguments</h2>
-      {args.map((arg) => (
-        <div key={arg.name} className="flex justify-between mt-5">
-          <div className="font-mono font-bold">
-            <Html>{arg.name}</Html>
+      <section className="text-xl text-gray-400">
+        {packageName} (version {packageVersion})
+      </section>
+      <header className="mt-2">
+        <h1>
+          {name}: {title}
+        </h1>
+      </header>
+      <section>
+        <h2>Description</h2>
+        <Html>{description}</Html>
+      </section>
+      <section>
+        <h2>Usage</h2>
+        <pre>
+          <Html>{usage}</Html>
+        </pre>
+      </section>
+      <section>
+        <h2>Arguments</h2>
+        {args.map((arg) => (
+          <div key={arg.name} className="flex justify-between mt-5">
+            <div className="font-mono font-bold">
+              <Html>{arg.name}</Html>
+            </div>
+            <div className="w-4/5 ml-5 -mt-5">
+              <Html>{arg.description}</Html>
+            </div>
           </div>
-          <div className="w-4/5 ml-5 -mt-5">
-            <Html>{arg.description}</Html>
+        ))}
+      </section>
+      <section>
+        <h2>Value</h2>
+        <Html>{value}</Html>
+      </section>
+      <section>
+        {sections.map((section) => (
+          <div key={section.name}>
+            <h2>{section.name}</h2>
+            <Html>{section.description}</Html>
           </div>
-        </div>
-      ))}
-      <h2>Value</h2>
-      <Html>{value}</Html>
-      {sections.map((section) => (
-        <div key={section.name}>
-          <h2>{section.name}</h2>
-          <Html>{section.description}</Html>
-        </div>
-      ))}
-      <h2>Details</h2>
-      <Html>{details}</Html>
-      <h2>References</h2>
-      <Html>{references}</Html>
-      <h2>See Also</h2>
-      <Html>{seealso}</Html>
-      <h2>Examples</h2>
-      <pre>{examples}</pre>
+        ))}
+      </section>
+      <section>
+        <h2>Details</h2>
+        <Html>{details}</Html>
+      </section>
+      <section>
+        <h2>References</h2>
+        <Html>{references}</Html>
+      </section>
+      <section>
+        <h2>See Also</h2>
+        <Html>{seealso}</Html>
+      </section>
+      <section>
+        <h2>Examples</h2>
+        <pre>{examples}</pre>
+      </section>
     </div>
   );
 }
