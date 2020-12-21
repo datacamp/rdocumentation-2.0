@@ -1,9 +1,13 @@
-- add custom 404 (with dark mode)? https://nextjs.org/docs/advanced-features/custom-error-page#404-page
-- don't use my personal github auth token
-- replace recharts with something better maintained (see console warnings)?
-- get redirects setup (e.g. to latest package version)
-- get search setup (wait for dieter)
-- make the whole site responsive
-- pull package data from github
 - send API changes to dieter
 - figure out how relative links will work
+- add search in nav
+- make the whole site responsive
+- add custom 404 (with dark mode)? https://nextjs.org/docs/advanced-features/custom-error-page#404-page
+- don't use my personal github auth token
+- get redirects setup (e.g. to latest package version)
+- get search setup (wait for dieter)
+- fetch github data (issues, stars, PRs, forks)
+- replace recharts with something better maintained (see console warnings)
+- add canonical link to copy on each page
+- add bug report link on package page?
+- add contributor data on package page

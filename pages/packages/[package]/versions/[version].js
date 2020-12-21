@@ -1,9 +1,20 @@
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdownWithHtml from 'react-markdown/with-html';
 import gfm from 'remark-gfm';
-// import { FaHome, FaGithub } from 'react-icons/fa';
+import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
-import { getGithubReadme } from '../../lib/github-api';
-import MonthlyDownloadsChart from '../../components/MonthlyDownloadsChart';
+import MonthlyDownloadsChart from '../../../../components/MonthlyDownloadsChart';
+
+function getPackageUrls(stringOfUrls) {
+  const urls = { homeUrl: null, githubUrl: null };
+  if (!stringOfUrls) return urls;
+
+  const urlArray = stringOfUrls.split(',').map((url) => url.trim());
+  const githubIndex = urlArray.findIndex((url) => url.includes('github.com'));
+  if (githubIndex >= 0) urls.githubUrl = urlArray[githubIndex];
+  if (githubIndex >= 1) urls.homeUrl = urlArray[0];
+
+  return urls;
+}
 
 function SidebarHeader({ children }) {
   return <h4 className="mb-2 text-sm text-gray-500 uppercase">{children}</h4>;
@@ -13,14 +24,26 @@ function SidebarValue({ children }) {
   return <div className="text-lg">{children}</div>;
 }
 
-export default function PackagePage({ metadata, githubUrl, readme, isDark }) {
-  const datePublished = new Date(metadata['Date/Publication']);
+export default function PackageVersionPage({ packageData, isDark }) {
+  // get relevant data from package metadata
+  const {
+    package_name,
+    version,
+    license,
+    url: stringOfUrls,
+    release_date,
+    readmemd: readme,
+  } = packageData;
+  // extract the github repo url
+  const { homeUrl, githubUrl } = getPackageUrls(stringOfUrls);
+  // get the last published date
+  const lastPublished = release_date ? new Date(release_date) : null;
 
   return (
     <div className="flex mt-12">
       <article className="w-2/3 pr-8 prose max-w-none">
         {readme ? (
-          <ReactMarkdown
+          <ReactMarkdownWithHtml
             plugins={[gfm]}
             renderers={{
               // eslint-disable-next-line react/display-name
@@ -32,10 +55,11 @@ export default function PackagePage({ metadata, githubUrl, readme, isDark }) {
             }}
             allowDangerousHtml // TODO: is this safe?
           >
-            {readme.data}
-          </ReactMarkdown>
+            {readme}
+          </ReactMarkdownWithHtml>
         ) : (
           <div className="flex items-center justify-center h-full">
+            {/* TODO: Need a CTA here */}
             Readme not available :(
           </div>
         )}
@@ -45,7 +69,7 @@ export default function PackagePage({ metadata, githubUrl, readme, isDark }) {
           <SidebarHeader>Install</SidebarHeader>
           <div className="prose">
             <pre>
-              <code>{`install.packages('${metadata.Package}')`}</code>
+              <code>{`install.packages('${package_name}')`}</code>
             </pre>
           </div>
         </div>
@@ -61,12 +85,12 @@ export default function PackagePage({ metadata, githubUrl, readme, isDark }) {
         <div className="flex">
           <div className="w-1/2">
             <SidebarHeader>Version</SidebarHeader>
-            <SidebarValue>{metadata.Version}</SidebarValue>
+            <SidebarValue>{version}</SidebarValue>
           </div>
           <div className="w-1/2">
             <SidebarHeader>License</SidebarHeader>
             {/* TODO: strip down the license text? */}
-            <SidebarValue>{metadata.License}</SidebarValue>
+            <SidebarValue>{license}</SidebarValue>
           </div>
         </div>
         {githubUrl && (
@@ -95,9 +119,11 @@ export default function PackagePage({ metadata, githubUrl, readme, isDark }) {
               <SidebarHeader>Repository</SidebarHeader>
               <SidebarValue>
                 <div className="flex items-center">
-                  {/* <FaGithub /> */}
+                  <div>
+                    <FaGithub />
+                  </div>
                   <a
-                    // className="ml-2"
+                    className="ml-2"
                     href={githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -109,26 +135,32 @@ export default function PackagePage({ metadata, githubUrl, readme, isDark }) {
             </div>
           </>
         )}
-        <div>
-          <SidebarHeader>Homepage</SidebarHeader>
-          <SidebarValue>
-            <div className="flex items-center">
-              {/* <FaHome /> */}
-              <a
-                // className="ml-2"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                https://somepackage.com
-              </a>
-            </div>
-          </SidebarValue>
-        </div>
-        <div>
-          <SidebarHeader>Last Published</SidebarHeader>
-          <SidebarValue>{format(datePublished, 'PPP')}</SidebarValue>
-        </div>
+        {homeUrl && (
+          <div>
+            <SidebarHeader>Homepage</SidebarHeader>
+            <SidebarValue>
+              <div className="flex items-center">
+                <div>
+                  <FaHome />
+                </div>
+                <a
+                  className="ml-2"
+                  href={homeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {homeUrl}
+                </a>
+              </div>
+            </SidebarValue>
+          </div>
+        )}
+        {lastPublished && (
+          <div>
+            <SidebarHeader>Last Published</SidebarHeader>
+            <SidebarValue>{format(lastPublished, 'PPP')}</SidebarValue>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -136,36 +168,16 @@ export default function PackagePage({ metadata, githubUrl, readme, isDark }) {
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-function getGithubOwnerRepo(url) {
-  if (!url) return null;
-  return url.replace('https://github.com/', '');
-}
-
-function getGithubUrl(stringOfUrls) {
-  if (!stringOfUrls) return null;
-  const urlArray = stringOfUrls.split(',').map((url) => url.trim());
-  const githubUrl = urlArray.find((url) => url.includes('github.com'));
-  return githubUrl || null;
-}
-
-export async function getServerSideProps({ params: { name } }) {
-  // get package metadata
-  const metadata = await fetcher(`https://crandb.r-pkg.org/${name}`);
-
-  // get github url and readme
-  const { URL: stringOfUrls } = metadata;
-  const githubUrl = getGithubUrl(stringOfUrls);
-  let readme = null;
-  if (githubUrl) {
-    const githubOwnerRepo = getGithubOwnerRepo(githubUrl);
-    readme = await getGithubReadme(githubOwnerRepo);
-  }
+export async function getServerSideProps({
+  params: { package: packageName, version },
+}) {
+  const packageData = await fetcher(
+    `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`
+  );
 
   return {
     props: {
-      metadata,
-      githubUrl,
-      readme,
+      packageData,
     },
   };
 }
