@@ -1,20 +1,21 @@
-/* purgecss start ignore */
 @tailwind base;
 @tailwind components;
-/* purgecss end ignore */
-
-body {
-  font-family: "Studio-Feixen-Sans", "Arial";
-  @apply antialiased;
-}
-
-/* TODO: confirm this ONLY gets rid of badges */
-.prose > p:first-of-type > a > img {
-  @apply hidden;
-}
-
-.prose * {
-  @apply dark:text-white;
-}
-
 @tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "Studio-Feixen-Sans", "Arial";
+    @apply antialiased;
+  }
+}
+
+@layer utilities {
+  /* TODO: confirm this ONLY gets rid of badges */
+  .prose > p:first-of-type > a > img {
+    @apply hidden;
+  }
+
+  .prose * {
+    @apply dark:text-white;
+  }
+}

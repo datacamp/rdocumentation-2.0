@@ -17,10 +17,10 @@
     "@tailwindcss/typography": "^0.3.1",
     "autoprefixer": "^10.0.2",
     "date-fns": "^2.16.1",
-    "next": "latest",
+    "next": "^10.0.3",
     "postcss": "^8.1.10",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-icons": "^4.1.0",
     "react-markdown": "^5.0.3",
     "recharts": "^1.8.5",
@@ -39,8 +39,6 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "postcss-flexbugs-fixes": "4.2.1",
-    "postcss-preset-env": "^6.7.0",
     "prettier": "^2.1.2"
   },
   "license": "MIT"

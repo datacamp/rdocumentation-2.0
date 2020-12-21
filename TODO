@@ -11,3 +11,11 @@
 - add canonical link to copy on each page
 - add bug report link on package page?
 - add contributor data on package page
+
+## Helpful links
+
+- https://www.rdocumentation.org/packages/dplyr/versions/0.7.8
+- https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate
+
+- https://www.rdocumentation.org/packages/data.table/versions/1.13.4
+- https://www.rdocumentation.org/packages/data.table/versions/1.13.4/topics/fread
