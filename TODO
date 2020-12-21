@@ -1,12 +1,10 @@
 ## Today
 
-- get redirects setup (e.g. to latest package version)
 - fetch github data (issues, stars, PRs, forks)
 - add canonical link to copy on each page
 - add bug report link on package page?
 - add contributor data on package page
 - send API requirements to dieter
-    - relative topic links
 
 ## Later
 
@@ -18,6 +16,7 @@
 - don't use my personal github auth token
 - get search setup (wait for dieter)
 - replace recharts with something better maintained (see console warnings)
+- make the trends page official
 
 ## Helpful links
 
@@ -26,3 +25,9 @@
 
 - https://www.rdocumentation.org/packages/data.table/versions/1.13.4
 - https://www.rdocumentation.org/packages/data.table/versions/1.13.4/topics/fread
+
+## For Dieter
+
+- not getting most recent data for some packages (e.g. dplyr)
+- how does relative links api work
+- packages endpoint returns `latest_version_id` -> how to use this?

@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import ReactMarkdownWithHtml from 'react-markdown/with-html';
 import gfm from 'remark-gfm';
 import { FaHome, FaGithub } from 'react-icons/fa';
@@ -40,140 +41,143 @@ export default function PackageVersionPage({ packageData, isDark }) {
   const lastPublished = release_date ? new Date(release_date) : null;
 
   return (
-    <div className="flex mt-12">
-      <article className="w-2/3 pr-8 prose max-w-none">
-        {readme ? (
-          <ReactMarkdownWithHtml
-            plugins={[gfm]}
-            renderers={{
-              // eslint-disable-next-line react/display-name
-              link: ({ href, children }) => (
-                <a href={href} target="_blank" rel="noopener noreferrer">
-                  {children}
-                </a>
-              ),
-            }}
-            allowDangerousHtml // TODO: is this safe?
-          >
-            {readme}
-          </ReactMarkdownWithHtml>
-        ) : (
-          <div className="flex items-center justify-center h-full">
-            {/* TODO: Need a CTA here */}
-            Readme not available :(
-          </div>
-        )}
-      </article>
-      <div className="w-1/3 pl-8 space-y-5 border-l">
-        <div>
-          <SidebarHeader>Install</SidebarHeader>
-          <div className="prose">
-            <pre>
-              <code>{`install.packages('${package_name}')`}</code>
-            </pre>
-          </div>
-        </div>
-        <div>
-          <SidebarHeader>Monthly Downloads</SidebarHeader>
-          <div className="flex items-baseline justify-between">
-            <div className="text-3xl font-light">122,222</div>
-            <div className="w-3/5">
-              <MonthlyDownloadsChart isDark={isDark} />
+    <>
+      <Head>
+        <title>{package_name} package | RDocumentation</title>
+      </Head>
+      <div className="flex mt-12">
+        <article className="w-2/3 pr-8 prose max-w-none">
+          {readme ? (
+            <ReactMarkdownWithHtml
+              plugins={[gfm]}
+              renderers={{
+                // eslint-disable-next-line react/display-name
+                link: ({ href, children }) => (
+                  <a href={href} target="_blank" rel="noopener noreferrer">
+                    {children}
+                  </a>
+                ),
+              }}
+              allowDangerousHtml // TODO: is this safe?
+            >
+              {readme}
+            </ReactMarkdownWithHtml>
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              {/* TODO: Need a CTA here */}
+              Readme not available :(
+            </div>
+          )}
+        </article>
+        <div className="w-1/3 pl-8 space-y-5 border-l">
+          <div>
+            <SidebarHeader>Install</SidebarHeader>
+            <div className="prose">
+              <pre>
+                <code>{`install.packages('${package_name}')`}</code>
+              </pre>
             </div>
           </div>
-        </div>
-        <div className="flex">
-          <div className="w-1/2">
-            <SidebarHeader>Version</SidebarHeader>
-            <SidebarValue>{version}</SidebarValue>
-          </div>
-          <div className="w-1/2">
-            <SidebarHeader>License</SidebarHeader>
-            {/* TODO: strip down the license text? */}
-            <SidebarValue>{license}</SidebarValue>
-          </div>
-        </div>
-        {githubUrl && (
-          <>
-            <div className="flex">
-              <div className="w-1/2">
-                <SidebarHeader>Issues</SidebarHeader>
-                <SidebarValue>123</SidebarValue>
-              </div>
-              <div className="w-1/2">
-                <SidebarHeader>Pull Requests</SidebarHeader>
-                <SidebarValue>123</SidebarValue>
+          <div>
+            <SidebarHeader>Monthly Downloads</SidebarHeader>
+            <div className="flex items-baseline justify-between">
+              <div className="text-3xl font-light">122,222</div>
+              <div className="w-3/5">
+                <MonthlyDownloadsChart isDark={isDark} />
               </div>
             </div>
-            <div className="flex">
-              <div className="w-1/2">
-                <SidebarHeader>Stars</SidebarHeader>
-                <SidebarValue>123</SidebarValue>
-              </div>
-              <div className="w-1/2">
-                <SidebarHeader>Forks</SidebarHeader>
-                <SidebarValue>123</SidebarValue>
-              </div>
+          </div>
+          <div className="flex">
+            <div className="w-1/2">
+              <SidebarHeader>Version</SidebarHeader>
+              <SidebarValue>{version}</SidebarValue>
             </div>
+            <div className="w-1/2">
+              <SidebarHeader>License</SidebarHeader>
+              {/* TODO: strip down the license text? */}
+              <SidebarValue>{license}</SidebarValue>
+            </div>
+          </div>
+          {githubUrl && (
+            <>
+              <div className="flex">
+                <div className="w-1/2">
+                  <SidebarHeader>Issues</SidebarHeader>
+                  <SidebarValue>123</SidebarValue>
+                </div>
+                <div className="w-1/2">
+                  <SidebarHeader>Pull Requests</SidebarHeader>
+                  <SidebarValue>123</SidebarValue>
+                </div>
+              </div>
+              <div className="flex">
+                <div className="w-1/2">
+                  <SidebarHeader>Stars</SidebarHeader>
+                  <SidebarValue>123</SidebarValue>
+                </div>
+                <div className="w-1/2">
+                  <SidebarHeader>Forks</SidebarHeader>
+                  <SidebarValue>123</SidebarValue>
+                </div>
+              </div>
+              <div>
+                <SidebarHeader>Repository</SidebarHeader>
+                <SidebarValue>
+                  <div className="flex items-center">
+                    <div>
+                      <FaGithub />
+                    </div>
+                    <a
+                      className="ml-2"
+                      href={githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {githubUrl}
+                    </a>
+                  </div>
+                </SidebarValue>
+              </div>
+            </>
+          )}
+          {homeUrl && (
             <div>
-              <SidebarHeader>Repository</SidebarHeader>
+              <SidebarHeader>Homepage</SidebarHeader>
               <SidebarValue>
                 <div className="flex items-center">
                   <div>
-                    <FaGithub />
+                    <FaHome />
                   </div>
                   <a
                     className="ml-2"
-                    href={githubUrl}
+                    href={homeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {githubUrl}
+                    {homeUrl}
                   </a>
                 </div>
               </SidebarValue>
             </div>
-          </>
-        )}
-        {homeUrl && (
-          <div>
-            <SidebarHeader>Homepage</SidebarHeader>
-            <SidebarValue>
-              <div className="flex items-center">
-                <div>
-                  <FaHome />
-                </div>
-                <a
-                  className="ml-2"
-                  href={homeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {homeUrl}
-                </a>
-              </div>
-            </SidebarValue>
-          </div>
-        )}
-        {lastPublished && (
-          <div>
-            <SidebarHeader>Last Published</SidebarHeader>
-            <SidebarValue>{format(lastPublished, 'PPP')}</SidebarValue>
-          </div>
-        )}
+          )}
+          {lastPublished && (
+            <div>
+              <SidebarHeader>Last Published</SidebarHeader>
+              <SidebarValue>{format(lastPublished, 'PPP')}</SidebarValue>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export async function getServerSideProps({
   params: { package: packageName, version },
 }) {
-  const packageData = await fetcher(
+  const packageData = await fetch(
     `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`
-  );
+  ).then((res) => res.json());
 
   return {
     props: {
