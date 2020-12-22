@@ -5,6 +5,7 @@
     - add canonical link + copy to clipboard functionality
     - add bug report link?
     - add contributor data (names, gravitars, etc.)
+- add syntax highlighting for R code
 - send API requirements to dieter
 
 ## Later
