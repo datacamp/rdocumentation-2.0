@@ -11,8 +11,13 @@ function SidebarHeader({ children }) {
   return <h4 className="mb-2 text-sm text-gray-500 uppercase">{children}</h4>;
 }
 
-function SidebarValue({ children }) {
-  return <div className="text-lg">{children}</div>;
+function SidebarValue({ Icon, children }) {
+  return (
+    <div>
+      {Icon && <Icon className="inline mb-1" />}
+      <span className={Icon ? 'ml-2' : ''}>{children}</span>
+    </div>
+  );
 }
 
 export default function PackageVersionPage({
@@ -63,7 +68,7 @@ export default function PackageVersionPage({
             </div>
           )}
         </article>
-        <div className="w-1/3 pl-8 space-y-5 border-l">
+        <div className="w-1/3 pl-8 space-y-6 border-l">
           <div>
             <SidebarHeader>Install</SidebarHeader>
             <div className="prose">
@@ -75,7 +80,9 @@ export default function PackageVersionPage({
           <div>
             <SidebarHeader>Monthly Downloads</SidebarHeader>
             <div className="flex items-baseline justify-between">
-              <div className="text-3xl font-light">122,222</div>
+              <div className="text-3xl font-light">
+                {(122222).toLocaleString()}
+              </div>
               <div className="w-3/5">
                 <MonthlyDownloadsChart isDark={isDark} />
               </div>
@@ -97,39 +104,37 @@ export default function PackageVersionPage({
               <div className="flex">
                 <div className="w-1/2">
                   <SidebarHeader>Issues</SidebarHeader>
-                  <SidebarValue>{repository.issues}</SidebarValue>
+                  <SidebarValue>
+                    {repository.issues.toLocaleString()}
+                  </SidebarValue>
                 </div>
                 <div className="w-1/2">
                   <SidebarHeader>Pull Requests</SidebarHeader>
-                  <SidebarValue>{repository.pullRequests}</SidebarValue>
+                  <SidebarValue>
+                    {repository.pullRequests.toLocaleString()}
+                  </SidebarValue>
                 </div>
               </div>
               <div className="flex">
                 <div className="w-1/2">
                   <SidebarHeader>Stars</SidebarHeader>
-                  <SidebarValue>{repository.stars}</SidebarValue>
+                  <SidebarValue>
+                    {repository.stars.toLocaleString()}
+                  </SidebarValue>
                 </div>
                 <div className="w-1/2">
                   <SidebarHeader>Forks</SidebarHeader>
-                  <SidebarValue>{repository.forks}</SidebarValue>
+                  <SidebarValue>
+                    {repository.forks.toLocaleString()}
+                  </SidebarValue>
                 </div>
               </div>
               <div>
                 <SidebarHeader>Repository</SidebarHeader>
-                <SidebarValue>
-                  <div className="flex items-center">
-                    <div>
-                      <FaGithub />
-                    </div>
-                    <a
-                      className="ml-2"
-                      href={githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {githubUrl}
-                    </a>
-                  </div>
+                <SidebarValue Icon={FaGithub}>
+                  <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+                    {githubUrl}
+                  </a>
                 </SidebarValue>
               </div>
             </>
@@ -137,20 +142,10 @@ export default function PackageVersionPage({
           {homeUrl && (
             <div>
               <SidebarHeader>Homepage</SidebarHeader>
-              <SidebarValue>
-                <div className="flex items-center">
-                  <div>
-                    <FaHome />
-                  </div>
-                  <a
-                    className="ml-2"
-                    href={homeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {homeUrl}
-                  </a>
-                </div>
+              <SidebarValue Icon={FaHome}>
+                <a href={homeUrl} target="_blank" rel="noopener noreferrer">
+                  {homeUrl}
+                </a>
               </SidebarValue>
             </div>
           )}
