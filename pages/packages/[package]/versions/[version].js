@@ -1,21 +1,11 @@
 import Head from 'next/head';
+import { graphql } from '@octokit/graphql';
 import ReactMarkdownWithHtml from 'react-markdown/with-html';
 import gfm from 'remark-gfm';
 import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
 import MonthlyDownloadsChart from '../../../../components/MonthlyDownloadsChart';
-
-function getPackageUrls(stringOfUrls) {
-  const urls = { homeUrl: null, githubUrl: null };
-  if (!stringOfUrls) return urls;
-
-  const urlArray = stringOfUrls.split(',').map((url) => url.trim());
-  const githubIndex = urlArray.findIndex((url) => url.includes('github.com'));
-  if (githubIndex >= 0) urls.githubUrl = urlArray[githubIndex];
-  if (githubIndex >= 1) urls.homeUrl = urlArray[0];
-
-  return urls;
-}
+import { getPackageUrls, getGithubOwnerRepo } from '../../../../lib/utils';
 
 function SidebarHeader({ children }) {
   return <h4 className="mb-2 text-sm text-gray-500 uppercase">{children}</h4>;
@@ -25,25 +15,29 @@ function SidebarValue({ children }) {
   return <div className="text-lg">{children}</div>;
 }
 
-export default function PackageVersionPage({ packageData, isDark }) {
+export default function PackageVersionPage({
+  metadata,
+  urls,
+  repository,
+  isDark,
+}) {
   // get relevant data from package metadata
   const {
-    package_name,
+    package_name: packageName,
     version,
     license,
-    url: stringOfUrls,
-    release_date,
+    release_date: releaseDate,
     readmemd: readme,
-  } = packageData;
-  // extract the github repo url
-  const { homeUrl, githubUrl } = getPackageUrls(stringOfUrls);
+  } = metadata;
+  const { homeUrl, githubUrl } = urls;
+
   // get the last published date
-  const lastPublished = release_date ? new Date(release_date) : null;
+  const lastPublished = releaseDate ? new Date(releaseDate) : null;
 
   return (
     <>
       <Head>
-        <title>{package_name} package | RDocumentation</title>
+        <title>{packageName} package | RDocumentation</title>
       </Head>
       <div className="flex mt-12">
         <article className="w-2/3 pr-8 prose max-w-none">
@@ -74,7 +68,7 @@ export default function PackageVersionPage({ packageData, isDark }) {
             <SidebarHeader>Install</SidebarHeader>
             <div className="prose">
               <pre>
-                <code>{`install.packages('${package_name}')`}</code>
+                <code>{`install.packages('${packageName}')`}</code>
               </pre>
             </div>
           </div>
@@ -98,26 +92,26 @@ export default function PackageVersionPage({ packageData, isDark }) {
               <SidebarValue>{license}</SidebarValue>
             </div>
           </div>
-          {githubUrl && (
+          {repository && (
             <>
               <div className="flex">
                 <div className="w-1/2">
                   <SidebarHeader>Issues</SidebarHeader>
-                  <SidebarValue>123</SidebarValue>
+                  <SidebarValue>{repository.issues}</SidebarValue>
                 </div>
                 <div className="w-1/2">
                   <SidebarHeader>Pull Requests</SidebarHeader>
-                  <SidebarValue>123</SidebarValue>
+                  <SidebarValue>{repository.pullRequests}</SidebarValue>
                 </div>
               </div>
               <div className="flex">
                 <div className="w-1/2">
                   <SidebarHeader>Stars</SidebarHeader>
-                  <SidebarValue>123</SidebarValue>
+                  <SidebarValue>{repository.stars}</SidebarValue>
                 </div>
                 <div className="w-1/2">
                   <SidebarHeader>Forks</SidebarHeader>
-                  <SidebarValue>123</SidebarValue>
+                  <SidebarValue>{repository.forks}</SidebarValue>
                 </div>
               </div>
               <div>
@@ -175,13 +169,59 @@ export default function PackageVersionPage({ packageData, isDark }) {
 export async function getServerSideProps({
   params: { package: packageName, version },
 }) {
-  const packageData = await fetch(
+  const metadata = await fetch(
     `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`
   ).then((res) => res.json());
 
+  // extract the github repo url
+  const { homeUrl, githubUrl } = getPackageUrls(metadata.url);
+  // get the github owner and repo name (if relevant)
+  const { githubOwner, githubRepo } = getGithubOwnerRepo(githubUrl);
+
+  // initialize repository
+  let repository = null;
+  // if there is a repo, get the data
+  if (githubOwner && githubRepo) {
+    const response = await graphql(
+      `
+        query repository($owner: String!, $repo: String!) {
+          repository(owner: $owner, name: $repo) {
+            issues(states: OPEN) {
+              totalCount
+            }
+            pullRequests(states: OPEN) {
+              totalCount
+            }
+            stargazerCount
+            forkCount
+          }
+        }
+      `,
+      {
+        owner: githubOwner,
+        repo: githubRepo,
+        headers: {
+          authorization: `token ${process.env.GITHUB_TOKEN}`,
+        },
+      }
+    );
+    // set the repository values
+    repository = {
+      issues: response.repository.issues.totalCount,
+      pullRequests: response.repository.pullRequests.totalCount,
+      stars: response.repository.stargazerCount,
+      forks: response.repository.forkCount,
+    };
+  }
+
   return {
     props: {
-      packageData,
+      metadata,
+      urls: {
+        homeUrl,
+        githubUrl,
+      },
+      repository,
     },
   };
 }

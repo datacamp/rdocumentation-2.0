@@ -1,14 +1,17 @@
 ## Today
 
-- fetch github data (issues, stars, PRs, forks)
-- add canonical link to copy on each page
-- add bug report link on package page?
-- add contributor data on package page
+- package page updates
+    - allow version toggling
+    - add canonical link + copy to clipboard functionality
+    - add bug report link?
+    - add contributor data (names, gravitars, etc.)
 - send API requirements to dieter
 
 ## Later
 
 - make everything responsive (mobile first?)
+- link to vignettes (included in package endpoint)
+- update readme with helpful info
 - add custom 404 (with dark mode)
     - https://nextjs.org/docs/advanced-features/custom-error-page#404-page
 - make some topic links relative
@@ -31,3 +34,5 @@
 - not getting most recent data for some packages (e.g. dplyr)
 - how does relative links api work
 - packages endpoint returns `latest_version_id` -> how to use this?
+- favicon?
+

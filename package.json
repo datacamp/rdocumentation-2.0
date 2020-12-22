@@ -12,7 +12,7 @@
     "@datacamp/waffles-icons": "^2.2.1",
     "@datacamp/waffles-text": "^4.1.1",
     "@emotion/core": "^10.1.1",
-    "@octokit/request": "^5.4.10",
+    "@octokit/graphql": "^4.5.8",
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/typography": "^0.3.1",
     "autoprefixer": "^10.0.2",
