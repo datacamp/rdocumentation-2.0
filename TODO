@@ -5,11 +5,14 @@
     - add canonical link + copy to clipboard functionality
     - add bug report link?
     - add contributor data (names, gravitars, etc.)
+    - add list of available functions / vignettes (searchable)
 - add syntax highlighting for R code
 - send API requirements to dieter
 
 ## Later
 
+- add actual package count to home page
+- new lines etc. function examples (e.g. data.table) 
 - make everything responsive (mobile first?)
 - link to vignettes (included in package endpoint)
 - update readme with helpful info
