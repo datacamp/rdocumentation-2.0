@@ -22,6 +22,7 @@
 - make the trends page official
 - strip badges directly from the markdown?
 - deal with monthly downloads chart for new packages
+- show different install instructions for bioc packages
 
 ## Helpful links
 
@@ -38,3 +39,4 @@
 - packages endpoint returns `latest_version_id` -> how to use this?
 - favicon?
 - monthly downloads for past 12 months -> API
+- images with relative paths don't work

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { graphql } from '@octokit/graphql';
-import ReactMarkdownWithHtml from 'react-markdown/with-html';
+import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
@@ -38,6 +38,11 @@ export default function PackageVersionPage({
   } = metadata;
   const { homeUrl, githubUrl } = urls;
 
+  // get the number of downloads last month
+  const downloadsLastMonth = monthlyDownloads
+    ? monthlyDownloads[monthlyDownloads.length - 1].downloads
+    : null;
+
   // get the last published date
   const lastPublished = releaseDate ? new Date(releaseDate) : null;
 
@@ -49,7 +54,7 @@ export default function PackageVersionPage({
       <div className="flex mt-12">
         <article className="w-2/3 pr-8 prose max-w-none">
           {readme ? (
-            <ReactMarkdownWithHtml
+            <ReactMarkdown
               plugins={[gfm]}
               renderers={{
                 // eslint-disable-next-line react/display-name
@@ -59,10 +64,10 @@ export default function PackageVersionPage({
                   </a>
                 ),
               }}
-              allowDangerousHtml // TODO: is this safe?
+              skipHtml
             >
               {readme}
-            </ReactMarkdownWithHtml>
+            </ReactMarkdown>
           ) : (
             <div className="flex items-center justify-center h-full">
               {/* TODO: Need a CTA here */}
@@ -79,20 +84,22 @@ export default function PackageVersionPage({
               </pre>
             </div>
           </div>
-          <div>
-            <SidebarHeader>Monthly Downloads</SidebarHeader>
-            <div className="flex items-baseline justify-between">
-              <div className="text-3xl font-light">
-                {(122222).toLocaleString()}
-              </div>
-              <div className="w-3/5">
-                <MonthlyDownloadsChart
-                  monthlyDownloads={monthlyDownloads}
-                  isDark={isDark}
-                />
+          {monthlyDownloads && (
+            <div>
+              <SidebarHeader>Monthly Downloads</SidebarHeader>
+              <div className="flex items-baseline justify-between">
+                <div className="text-3xl font-light">
+                  {downloadsLastMonth.toLocaleString()}
+                </div>
+                <div className="w-3/5">
+                  <MonthlyDownloadsChart
+                    monthlyDownloads={monthlyDownloads}
+                    isDark={isDark}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
           <div className="flex">
             <div className="w-1/2">
               <SidebarHeader>Version</SidebarHeader>
