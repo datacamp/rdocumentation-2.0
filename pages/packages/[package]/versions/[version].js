@@ -6,6 +6,7 @@ import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
 import MonthlyDownloadsChart from '../../../../components/MonthlyDownloadsChart';
 import { getPackageUrls, getGithubOwnerRepo } from '../../../../lib/utils';
+import { getMonthlyDownloads } from '../../../../lib/downloads';
 
 function SidebarHeader({ children }) {
   return <h4 className="mb-2 text-sm text-gray-500 uppercase">{children}</h4>;
@@ -24,6 +25,7 @@ export default function PackageVersionPage({
   metadata,
   urls,
   repository,
+  monthlyDownloads,
   isDark,
 }) {
   // get relevant data from package metadata
@@ -84,7 +86,10 @@ export default function PackageVersionPage({
                 {(122222).toLocaleString()}
               </div>
               <div className="w-3/5">
-                <MonthlyDownloadsChart isDark={isDark} />
+                <MonthlyDownloadsChart
+                  monthlyDownloads={monthlyDownloads}
+                  isDark={isDark}
+                />
               </div>
             </div>
           </div>
@@ -164,18 +169,19 @@ export default function PackageVersionPage({
 export async function getServerSideProps({
   params: { package: packageName, version },
 }) {
+  // get package metadata from rdocs API
   const metadata = await fetch(
     `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`
   ).then((res) => res.json());
 
-  // extract the github repo url
+  // extract the home and github repo urls (if provided)
   const { homeUrl, githubUrl } = getPackageUrls(metadata.url);
   // get the github owner and repo name (if relevant)
   const { githubOwner, githubRepo } = getGithubOwnerRepo(githubUrl);
 
   // initialize repository
   let repository = null;
-  // if there is a repo, get the data
+  // if there is a repo, get the data from github API
   if (githubOwner && githubRepo) {
     const response = await graphql(
       `
@@ -209,6 +215,9 @@ export async function getServerSideProps({
     };
   }
 
+  // get monthly download data from the r-hub API
+  const monthlyDownloads = await getMonthlyDownloads({ packageName });
+
   return {
     props: {
       metadata,
@@ -217,6 +226,7 @@ export async function getServerSideProps({
         githubUrl,
       },
       repository,
+      monthlyDownloads,
     },
   };
 }

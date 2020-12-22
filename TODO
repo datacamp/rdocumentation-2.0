@@ -20,6 +20,8 @@
 - get search setup (wait for dieter)
 - replace recharts with something better maintained (see console warnings)
 - make the trends page official
+- strip badges directly from the markdown?
+- deal with monthly downloads chart for new packages
 
 ## Helpful links
 
@@ -35,4 +37,4 @@
 - how does relative links api work
 - packages endpoint returns `latest_version_id` -> how to use this?
 - favicon?
-
+- monthly downloads for past 12 months -> API
