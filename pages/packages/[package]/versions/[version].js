@@ -48,6 +48,7 @@ export default function PackageVersionPage({
     readmemd: readme,
     uri,
     canonicalLink,
+    maintainer,
   } = metadata;
   const { homeUrl, githubUrl } = urls;
 
@@ -190,13 +191,25 @@ export default function PackageVersionPage({
                 <div className="w-1/2">
                   <SidebarHeader>Issues</SidebarHeader>
                   <SidebarValue>
-                    {repository.issues.toLocaleString()}
+                    <a
+                      href={`${githubUrl}/issues`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {repository.issues.toLocaleString()}
+                    </a>
                   </SidebarValue>
                 </div>
                 <div className="w-1/2">
                   <SidebarHeader>Pull Requests</SidebarHeader>
                   <SidebarValue>
-                    {repository.pullRequests.toLocaleString()}
+                    <a
+                      href={`${githubUrl}/pulls`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {repository.pullRequests.toLocaleString()}
+                    </a>
                   </SidebarValue>
                 </div>
               </div>
@@ -204,13 +217,25 @@ export default function PackageVersionPage({
                 <div className="w-1/2">
                   <SidebarHeader>Stars</SidebarHeader>
                   <SidebarValue>
-                    {repository.stars.toLocaleString()}
+                    <a
+                      href={`${githubUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {repository.stars.toLocaleString()}
+                    </a>
                   </SidebarValue>
                 </div>
                 <div className="w-1/2">
                   <SidebarHeader>Forks</SidebarHeader>
                   <SidebarValue>
-                    {repository.forks.toLocaleString()}
+                    <a
+                      href={`${githubUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {repository.forks.toLocaleString()}
+                    </a>
                   </SidebarValue>
                 </div>
               </div>
@@ -234,12 +259,16 @@ export default function PackageVersionPage({
               </SidebarValue>
             </div>
           )}
-          {lastPublished && (
-            <div>
+          <div className="flex">
+            <div className="w-1/2">
+              <SidebarHeader>Maintainer</SidebarHeader>
+              <SidebarValue>{maintainer.name}</SidebarValue>
+            </div>
+            <div className="w-1/2">
               <SidebarHeader>Last Published</SidebarHeader>
               <SidebarValue>{format(lastPublished, 'PPP')}</SidebarValue>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </>
