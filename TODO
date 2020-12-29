@@ -39,6 +39,6 @@
 - not getting most recent data for some packages (e.g. dplyr)
 - how does relative links api work
 - packages endpoint returns `latest_version_id` -> how to use this?
-- favicon?
+- need updated favicon
 - monthly downloads for past 12 months -> API
 - images with relative paths don't work
