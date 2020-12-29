@@ -49,7 +49,7 @@ export default function PackageVersionPage({
   const { homeUrl, githubUrl } = urls;
 
   // construct a canonical link to the current package
-  const canonicalLink = `http://rdocumentation.org${metadata.canonicalLink}`;
+  const linkToCurrentVersion = `http://rdocumentation.org${metadata.uri}`;
 
   // get the number of downloads last month
   const downloadsLastMonth = monthlyDownloads
@@ -67,7 +67,7 @@ export default function PackageVersionPage({
   }
 
   function handleCopyLink() {
-    copyTextToClipboard(canonicalLink);
+    copyTextToClipboard(linkToCurrentVersion);
   }
 
   return (
@@ -113,7 +113,7 @@ export default function PackageVersionPage({
               <input
                 className="block w-full pl-10 text-gray-500 border-2 rounded-md border-dc-grey300"
                 type="text"
-                value={canonicalLink}
+                value={linkToCurrentVersion}
                 disabled
               />
             </div>
