@@ -1,10 +1,9 @@
 ## Today
 
-- package page updates
-    - add bug report link?
-    - add list of available functions / vignettes (searchable)
+- add searchable list of package functions / vignettes
 - add actual package count to home page
 - create the trends page
+- create dummy search landing page
 - write down API requirements for dieter
 
 ## Later
