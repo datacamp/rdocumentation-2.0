@@ -13,8 +13,6 @@
 - newlines etc. function examples (e.g. data.table)
 - link to vignettes (included in package endpoint)
 - update readme with helpful info
-- add custom 404 (with dark mode)
-    - https://nextjs.org/docs/advanced-features/custom-error-page#404-page
 - make topic links relative
 - add search in nav on package / topic pages
 - don't use my personal github auth token

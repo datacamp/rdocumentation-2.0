@@ -9,6 +9,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@datacamp/waffles-button": "^6.2.6",
     "@datacamp/waffles-form-elements": "^3.2.3",
     "@datacamp/waffles-icons": "^2.2.1",
     "@datacamp/waffles-text": "^4.1.1",
