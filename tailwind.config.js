@@ -24,6 +24,10 @@ module.exports = {
       },
     },
   },
-  variants: {},
+  variants: {
+    extend: {
+      borderColor: ['dark'],
+    },
+  },
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };

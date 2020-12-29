@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { graphql } from '@octokit/graphql';
 import ReactMarkdown from 'react-markdown';
@@ -45,11 +46,16 @@ export default function PackageVersionPage({
     license,
     release_date: releaseDate,
     readmemd: readme,
+    uri,
+    canonicalLink,
   } = metadata;
   const { homeUrl, githubUrl } = urls;
 
-  // construct a canonical link to the current package
-  const linkToCurrentVersion = `http://rdocumentation.org${metadata.uri}`;
+  // construct link to the current package version
+  const linkToCurrentVersion = `http://rdocumentation.org${uri}`;
+
+  // get the latest version of the package
+  const latestVersion = versionsArray[0];
 
   // get the number of downloads last month
   const downloadsLastMonth = monthlyDownloads
@@ -76,29 +82,40 @@ export default function PackageVersionPage({
         <title>{packageName} package | RDocumentation</title>
       </Head>
       <div className="flex mt-12">
-        <article className="w-2/3 pr-8 prose max-w-none">
-          {readme ? (
-            <ReactMarkdown
-              plugins={[gfm]}
-              renderers={{
-                // eslint-disable-next-line react/display-name
-                link: ({ href, children }) => (
-                  <a href={href} target="_blank" rel="noopener noreferrer">
-                    {children}
-                  </a>
-                ),
-              }}
-              skipHtml
-            >
-              {readme}
-            </ReactMarkdown>
-          ) : (
-            <div className="pt-20 text-center">
-              {/* TODO: Need a CTA here */}
-              Readme not available 😞
+        <div className="w-2/3 pr-8">
+          {version !== latestVersion && (
+            <div className="px-4 py-2 mb-5 text-white border-2 rounded-md border-dc-navy dark:border-dc-yellow bg-dc-navy">
+              <span>⚠️</span>
+              <span className="ml-3">{`There's a newer version (${latestVersion}) of this package.`}</span>{' '}
+              <Link href={canonicalLink}>
+                <a className="text-white underline">Take me there.</a>
+              </Link>
             </div>
           )}
-        </article>
+          <article className="prose max-w-none">
+            {readme ? (
+              <ReactMarkdown
+                plugins={[gfm]}
+                renderers={{
+                  // eslint-disable-next-line react/display-name
+                  link: ({ href, children }) => (
+                    <a href={href} target="_blank" rel="noopener noreferrer">
+                      {children}
+                    </a>
+                  ),
+                }}
+                skipHtml
+              >
+                {readme}
+              </ReactMarkdown>
+            ) : (
+              <div className="pt-20 text-center">
+                {/* TODO: Need a CTA here */}
+                Readme not available 😞
+              </div>
+            )}
+          </article>
+        </div>
         <div className="w-1/3 pl-8 space-y-6 border-l">
           <div>
             <SidebarHeader>Copy Link</SidebarHeader>
@@ -108,7 +125,7 @@ export default function PackageVersionPage({
                 type="button"
                 onClick={handleCopyLink}
               >
-                <CopyIcon size={16} />
+                <CopyIcon size={18} />
               </button>
               <input
                 className="block w-full pl-10 text-gray-500 border-2 rounded-md border-dc-grey300"
