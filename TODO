@@ -1,5 +1,6 @@
 ## Today
 
+- return 404 if package or function page doesn't exist
 - add actual package count to home page
 - create the trends page
 - create dummy search landing page
@@ -21,6 +22,7 @@
 - deal with monthly downloads chart for new packages
 - show different install instructions for bioc packages
 - add syntax highlighting for R code (see branch)
+- confirm redirect should be permanent when no package version
 
 ## Helpful links
 
