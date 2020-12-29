@@ -1,7 +1,7 @@
 ## Today
 
 - package page updates
-    - add canonical link + copy to clipboard functionality
+    - show warning + CTA when not on latest version
     - add list of available functions / vignettes (searchable)
     - add bug report link?
     - add contributor data (names, gravitars, etc.)

@@ -3,11 +3,16 @@ import { useRouter } from 'next/router';
 import { graphql } from '@octokit/graphql';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
+import { CopyIcon } from '@datacamp/waffles-icons';
 import { Select, SelectOption } from '@datacamp/waffles-form-elements';
 import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
 import MonthlyDownloadsChart from '../../../../components/MonthlyDownloadsChart';
-import { getPackageUrls, getGithubOwnerRepo } from '../../../../lib/utils';
+import {
+  getPackageUrls,
+  getGithubOwnerRepo,
+  copyTextToClipboard,
+} from '../../../../lib/utils';
 import { getMonthlyDownloads } from '../../../../lib/downloads';
 
 function SidebarHeader({ children }) {
@@ -43,6 +48,9 @@ export default function PackageVersionPage({
   } = metadata;
   const { homeUrl, githubUrl } = urls;
 
+  // construct a canonical link to the current package
+  const canonicalLink = `http://rdocumentation.org${metadata.canonicalLink}`;
+
   // get the number of downloads last month
   const downloadsLastMonth = monthlyDownloads
     ? monthlyDownloads[monthlyDownloads.length - 1].downloads
@@ -56,6 +64,10 @@ export default function PackageVersionPage({
       pathname: '/packages/[package]/versions/[version]',
       query: { package: packageName, version: selectedVersion },
     });
+  }
+
+  function handleCopyLink() {
+    copyTextToClipboard(canonicalLink);
   }
 
   return (
@@ -88,6 +100,24 @@ export default function PackageVersionPage({
           )}
         </article>
         <div className="w-1/3 pl-8 space-y-6 border-l">
+          <div>
+            <SidebarHeader>Copy Link</SidebarHeader>
+            <div className="relative mt-4 dark:text-dc-navy">
+              <button
+                className="absolute inset-y-0 left-0 flex items-center p-4"
+                type="button"
+                onClick={handleCopyLink}
+              >
+                <CopyIcon size={16} />
+              </button>
+              <input
+                className="block w-full pl-10 text-gray-500 border-2 rounded-md border-dc-grey300"
+                type="text"
+                value={canonicalLink}
+                disabled
+              />
+            </div>
+          </div>
           <div>
             <SidebarHeader>Version</SidebarHeader>
             <Select
