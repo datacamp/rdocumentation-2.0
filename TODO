@@ -1,30 +1,30 @@
 ## Today
 
+- add syntax highlighting for R code
 - package page updates
     - allow version toggling
     - add canonical link + copy to clipboard functionality
+    - add list of available functions / vignettes (searchable)
     - add bug report link?
     - add contributor data (names, gravitars, etc.)
-    - add list of available functions / vignettes (searchable)
-- add syntax highlighting for R code
-- send API requirements to dieter
+- add actual package count to home page
+- create the trends page
+- write down API requirements for dieter
 
 ## Later
 
-- add typescript everywhere
-- add actual package count to home page
-- new lines etc. function examples (e.g. data.table)
 - make everything responsive (mobile first?)
+- add typescript everywhere
+- newlines etc. function examples (e.g. data.table)
 - link to vignettes (included in package endpoint)
 - update readme with helpful info
 - add custom 404 (with dark mode)
     - https://nextjs.org/docs/advanced-features/custom-error-page#404-page
-- make some topic links relative
+- make topic links relative
 - add search in nav on package / topic pages
 - don't use my personal github auth token
 - get search setup (wait for dieter)
 - replace recharts with something better maintained (see console warnings)
-- make the trends page official
 - strip badges directly from the markdown?
 - deal with monthly downloads chart for new packages
 - show different install instructions for bioc packages
