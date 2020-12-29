@@ -1,7 +1,9 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { graphql } from '@octokit/graphql';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
+import { Select, SelectOption } from '@datacamp/waffles-form-elements';
 import { FaHome, FaGithub } from 'react-icons/fa';
 import { format } from 'date-fns';
 import MonthlyDownloadsChart from '../../../../components/MonthlyDownloadsChart';
@@ -23,11 +25,14 @@ function SidebarValue({ Icon, children }) {
 
 export default function PackageVersionPage({
   metadata,
+  versionsArray,
   urls,
   repository,
   monthlyDownloads,
   isDark,
 }) {
+  const router = useRouter();
+
   // get relevant data from package metadata
   const {
     package_name: packageName,
@@ -45,6 +50,13 @@ export default function PackageVersionPage({
 
   // get the last published date
   const lastPublished = releaseDate ? new Date(releaseDate) : null;
+
+  function handleChangeVersion(selectedVersion) {
+    router.push({
+      pathname: '/packages/[package]/versions/[version]',
+      query: { package: packageName, version: selectedVersion },
+    });
+  }
 
   return (
     <>
@@ -69,13 +81,27 @@ export default function PackageVersionPage({
               {readme}
             </ReactMarkdown>
           ) : (
-            <div className="flex items-center justify-center h-full">
+            <div className="pt-20 text-center">
               {/* TODO: Need a CTA here */}
-              Readme not available :(
+              Readme not available 😞
             </div>
           )}
         </article>
         <div className="w-1/3 pl-8 space-y-6 border-l">
+          <div>
+            <SidebarHeader>Version</SidebarHeader>
+            <Select
+              name="version"
+              value={version}
+              onChange={handleChangeVersion}
+            >
+              {versionsArray.map((v) => (
+                <SelectOption key={v} value={v}>
+                  {v}
+                </SelectOption>
+              ))}
+            </Select>
+          </div>
           <div>
             <SidebarHeader>Install</SidebarHeader>
             <div className="prose">
@@ -181,6 +207,9 @@ export async function getServerSideProps({
     `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`
   ).then((res) => res.json());
 
+  // create an array of all package versions
+  const versionsArray = metadata.package.versions.map((v) => v.version);
+
   // extract the home and github repo urls (if provided)
   const { homeUrl, githubUrl } = getPackageUrls(metadata.url);
   // get the github owner and repo name (if relevant)
@@ -228,6 +257,7 @@ export async function getServerSideProps({
   return {
     props: {
       metadata,
+      versionsArray,
       urls: {
         homeUrl,
         githubUrl,

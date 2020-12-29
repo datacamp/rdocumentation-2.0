@@ -182,7 +182,22 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@datacamp/waffles-icons@^2.2.1":
+"@datacamp/waffles-form-elements@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/@datacamp/waffles-form-elements/-/waffles-form-elements-3.2.3.tgz#1b88123c350393ae5e3045cdfe9245f7db1cf3b8"
+  integrity sha512-QpoTCNXHbccMGocxSunEFrVfuYTgOOsXfsHbJM04old25ohwpL6DUMNUj3Jl9FoAHV5mSo9zLiSGw3CmvFLzjg==
+  dependencies:
+    "@babel/runtime" "^7.12.1"
+    "@datacamp/waffles-icons" "^2.2.3"
+    "@datacamp/waffles-text" "^4.1.4"
+    "@datacamp/waffles-tokens" "^1.0.5"
+    "@datacamp/waffles-utils" "^2.1.3"
+    airbnb-prop-types "^2.16.0"
+    lodash "^4.17.20"
+    prop-types "^15.7.2"
+    tinycolor2 "^1.4.2"
+
+"@datacamp/waffles-icons@^2.2.1", "@datacamp/waffles-icons@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@datacamp/waffles-icons/-/waffles-icons-2.2.3.tgz#b568b7683c08f3432098a457acb3197c49b1b3c2"
   integrity sha512-HlfHhpLY7VhYAMQvpc44o09VKPAByEZrhSuCxmaeujRlAZG08+pzFPpnEbu5feN0ayCBnocQeZADtGhJNufGTg==
@@ -192,7 +207,7 @@
     prop-types "^15.7.2"
     react-native-svg "^9.13.6"
 
-"@datacamp/waffles-text@^4.1.1":
+"@datacamp/waffles-text@^4.1.1", "@datacamp/waffles-text@^4.1.4":
   version "4.1.4"
   resolved "https://registry.yarnpkg.com/@datacamp/waffles-text/-/waffles-text-4.1.4.tgz#e979dc37383b07d7fb657b72b30fa3b4a331c0d5"
   integrity sha512-xeBZ7FPc5c2SNIsjFcqxOt3fkGO0HGxVqAh9q0CcIZC+o9BRQpv4yNThoaSK6tdvn1usmdAUF/qdGSyLict5kQ==

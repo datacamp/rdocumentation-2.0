@@ -1,8 +1,6 @@
 ## Today
 
-- add syntax highlighting for R code
 - package page updates
-    - allow version toggling
     - add canonical link + copy to clipboard functionality
     - add list of available functions / vignettes (searchable)
     - add bug report link?
@@ -13,6 +11,7 @@
 
 ## Later
 
+- streamline data I'm sending to the client
 - make everything responsive (mobile first?)
 - add typescript everywhere
 - newlines etc. function examples (e.g. data.table)
@@ -28,6 +27,7 @@
 - strip badges directly from the markdown?
 - deal with monthly downloads chart for new packages
 - show different install instructions for bioc packages
+- add syntax highlighting for R code (see branch)
 
 ## Helpful links
 
