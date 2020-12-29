@@ -1,6 +1,5 @@
 ## Today
 
-- add searchable list of package functions / vignettes
 - add actual package count to home page
 - create the trends page
 - create dummy search landing page
@@ -40,4 +39,4 @@
 - packages endpoint returns `latest_version_id` -> how to use this?
 - need updated favicon
 - monthly downloads for past 12 months -> API
-- images with relative paths don't work
+- images with relative paths don't work (e.g. dplyr)

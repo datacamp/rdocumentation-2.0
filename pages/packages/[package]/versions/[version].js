@@ -5,6 +5,7 @@ import { getPackageUrls, getGithubOwnerRepo } from '../../../../lib/utils';
 import { getMonthlyDownloads } from '../../../../lib/downloads';
 import PackageReadme from '../../../../components/PackageReadme';
 import PackageSidebar from '../../../../components/PackageSidebar';
+import PackageFunctionList from '../../../../components/PackageFunctionList';
 
 export default function PackageVersionPage({
   metadata,
@@ -35,35 +36,44 @@ export default function PackageVersionPage({
       <Head>
         <title>{metadata.package_name} package | RDocumentation</title>
       </Head>
-      <div className="flex mt-12">
-        <div className="w-2/3 pr-8">
-          {/* show a warning if looking at an older package version */}
-          {metadata.version !== latestVersion && (
-            <div className="px-4 py-2 mb-5 text-white border-2 rounded-md border-dc-navy dark:border-dc-yellow bg-dc-navy">
-              <span>⚠️</span>
-              <span className="ml-3">{`There's a newer version (${latestVersion}) of this package.`}</span>{' '}
-              <Link href={metadata.canonicalLink}>
-                <a className="text-white underline">Take me there.</a>
-              </Link>
-            </div>
-          )}
-          <PackageReadme readme={metadata.readmemd} />
+      <div className="mt-12">
+        <div className="flex">
+          <div className="w-2/3 pr-8">
+            {/* show a warning if looking at an older package version */}
+            {metadata.version !== latestVersion && (
+              <div className="px-4 py-2 mb-5 text-white border-2 rounded-md border-dc-navy dark:border-dc-yellow bg-dc-navy">
+                <span>⚠️</span>
+                <span className="ml-3">{`There's a newer version (${latestVersion}) of this package.`}</span>{' '}
+                <Link href={metadata.canonicalLink}>
+                  <a className="text-white underline">Take me there.</a>
+                </Link>
+              </div>
+            )}
+            <PackageReadme readme={metadata.readmemd} />
+          </div>
+          <div className="w-1/3 pl-8 border-l">
+            <PackageSidebar
+              packageName={metadata.package_name}
+              linkToCurrentVersion={linkToCurrentVersion}
+              version={metadata.version}
+              versionsArray={versionsArray}
+              downloadsLastMonth={downloadsLastMonth}
+              monthlyDownloads={monthlyDownloads}
+              license={metadata.license}
+              repository={repository}
+              githubUrl={urls.githubUrl}
+              homeUrl={urls.homeUrl}
+              lastPublished={lastPublished}
+              maintainer={metadata.maintainer}
+              isDark={isDark}
+            />
+          </div>
         </div>
-        <div className="w-1/3 pl-8 border-l">
-          <PackageSidebar
+        <div className="w-full mt-12 max-w-none">
+          <PackageFunctionList
             packageName={metadata.package_name}
-            linkToCurrentVersion={linkToCurrentVersion}
-            version={metadata.version}
-            versionsArray={versionsArray}
-            downloadsLastMonth={downloadsLastMonth}
-            monthlyDownloads={monthlyDownloads}
-            license={metadata.license}
-            repository={repository}
-            githubUrl={urls.githubUrl}
-            homeUrl={urls.homeUrl}
-            lastPublished={lastPublished}
-            maintainer={metadata.maintainer}
-            isDark={isDark}
+            packageVersion={metadata.version}
+            functions={metadata.topics}
           />
         </div>
       </div>
