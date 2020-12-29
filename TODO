@@ -20,7 +20,6 @@
 - add search in nav on package / topic pages
 - don't use my personal github auth token
 - get search setup (wait for dieter)
-- replace recharts with something better maintained (see console warnings)
 - strip badges directly from the markdown?
 - deal with monthly downloads chart for new packages
 - show different install instructions for bioc packages
