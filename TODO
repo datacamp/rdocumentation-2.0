@@ -11,8 +11,9 @@
 
 ## Later
 
+- add typescript everywhere
 - add actual package count to home page
-- new lines etc. function examples (e.g. data.table) 
+- new lines etc. function examples (e.g. data.table)
 - make everything responsive (mobile first?)
 - link to vignettes (included in package endpoint)
 - update readme with helpful info
