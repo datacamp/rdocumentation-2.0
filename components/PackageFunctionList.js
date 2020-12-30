@@ -38,6 +38,7 @@ export default function PackageFunctionList({
       <div className="grid grid-cols-3 gap-5 mt-5">
         {filteredFunctions.map((f) => (
           <ClickableCard
+            key={f.id}
             id={f.id}
             name={f.name}
             description={f.title}

@@ -75,6 +75,7 @@ export default function SearchResults() {
         <div className="grid grid-cols-3 gap-5 mt-5">
           {fakeSearchResults.map((result) => (
             <ClickableCard
+              key={result.id}
               id={result.id}
               name={result.name}
               description={result.description}
