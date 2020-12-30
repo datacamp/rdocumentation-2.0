@@ -6,7 +6,7 @@ export default function PackagePage() {
 export async function getServerSideProps({ params: { package: packageName } }) {
   try {
     const res = await fetch(
-      `https://www.rdocumentation.org/api/packages/${packageName}`
+      `https://www.rdocumentation.org/api/packages/${packageName}`,
     );
     const data = await res.json();
 

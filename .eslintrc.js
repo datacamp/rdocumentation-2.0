@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ["@datacamp/eslint-config/typescript"],
+  extends: ['@datacamp/eslint-config/typescript'],
 };

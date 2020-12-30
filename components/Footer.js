@@ -6,8 +6,8 @@ export default function Footer() {
         <a
           className="underline"
           href="https://www.datacamp.com/"
-          target="_blank"
           rel="noreferrer"
+          target="_blank"
         >
           DataCamp
         </a>

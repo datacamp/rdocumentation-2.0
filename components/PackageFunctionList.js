@@ -1,11 +1,12 @@
-import { useState } from 'react';
 import { Input } from '@datacamp/waffles-form-elements';
+import { useState } from 'react';
+
 import ClickableCard from './ClickableCard';
 
 export default function PackageFunctionList({
+  functions,
   packageName,
   packageVersion,
-  functions,
 }) {
   const [searchInput, setSearchInput] = useState('');
 
@@ -16,7 +17,7 @@ export default function PackageFunctionList({
     filteredFunctions = filteredFunctions.filter(
       (f) =>
         f.name.toLowerCase().indexOf(cleanSearchValue) > -1 ||
-        f.title.toLowerCase().indexOf(cleanSearchValue) > -1
+        f.title.toLowerCase().indexOf(cleanSearchValue) > -1,
     );
   }
 
@@ -27,22 +28,22 @@ export default function PackageFunctionList({
           <h2 className="text-2xl font-bold">{`Functions in ${packageName} (${packageVersion})`}</h2>
         </div>
         <Input
-          name="functionSearch"
-          size="small"
           className="w-72"
-          value={searchInput}
+          name="functionSearch"
           onChange={setSearchInput}
           placeholder="Search all functions"
+          size="small"
+          value={searchInput}
         />
       </div>
       <div className="grid grid-cols-3 gap-5 mt-5">
         {filteredFunctions.map((f) => (
           <ClickableCard
-            key={f.id}
-            id={f.id}
-            name={f.name}
             description={f.title}
             href={`/packages/${packageName}/versions/${packageVersion}/topics/${f.name}`}
+            id={f.id}
+            key={f.id}
+            name={f.name}
           />
         ))}
       </div>

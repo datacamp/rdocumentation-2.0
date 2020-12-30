@@ -1,4 +1,4 @@
-import { ResponsiveContainer, AreaChart, Tooltip, Area, XAxis } from 'recharts';
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 
 // copied from tailwind.config.js
 const colors = {
@@ -6,25 +6,25 @@ const colors = {
   'dc-yellow': '#FCCE0D',
 };
 
-export default function MonthlyDownloadsChart({ monthlyDownloads, isDark }) {
+export default function MonthlyDownloadsChart({ isDark, monthlyDownloads }) {
   return (
-    <ResponsiveContainer width="100%" height={50}>
+    <ResponsiveContainer height={50} width="100%">
       <AreaChart
         data={monthlyDownloads}
         margin={{
-          top: 5,
-          right: 5,
-          left: 5,
           bottom: 0,
+          left: 5,
+          right: 5,
+          top: 5,
         }}
       >
         <XAxis dataKey="month" hide />
         <Area
-          type="monotone"
-          name="Downloads"
           dataKey="downloads"
-          stroke={isDark ? colors['dc-yellow'] : colors['dc-navy']}
           fill={isDark ? colors['dc-yellow'] : colors['dc-navy']}
+          name="Downloads"
+          stroke={isDark ? colors['dc-yellow'] : colors['dc-navy']}
+          type="monotone"
         />
         <Tooltip
           contentStyle={isDark ? { backgroundColor: colors['dc-navy'] } : {}}

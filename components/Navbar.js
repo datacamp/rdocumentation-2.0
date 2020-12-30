@@ -1,5 +1,5 @@
+import { MoonInvertedIcon, SunIcon } from '@datacamp/waffles-icons';
 import Link from 'next/link';
-import { SunIcon, MoonInvertedIcon } from '@datacamp/waffles-icons';
 
 export default function Navbar({ isDark, setIsDark }) {
   return (
@@ -11,8 +11,8 @@ export default function Navbar({ isDark, setIsDark }) {
       </nav>
       <button
         className="focus:outline-none"
-        type="button"
         onClick={() => setIsDark(!isDark)}
+        type="button"
       >
         {isDark ? <SunIcon /> : <MoonInvertedIcon />}
       </button>

@@ -1,19 +1,20 @@
+import { graphql } from '@octokit/graphql';
 import Head from 'next/head';
 import Link from 'next/link';
-import { graphql } from '@octokit/graphql';
-import { getPackageUrls, getGithubOwnerRepo } from '../../../../lib/utils';
-import { getMonthlyDownloads } from '../../../../lib/downloads';
+
+import PackageFunctionList from '../../../../components/PackageFunctionList';
 import PackageReadme from '../../../../components/PackageReadme';
 import PackageSidebar from '../../../../components/PackageSidebar';
-import PackageFunctionList from '../../../../components/PackageFunctionList';
+import { getMonthlyDownloads } from '../../../../lib/downloads';
+import { getGithubOwnerRepo, getPackageUrls } from '../../../../lib/utils';
 
 export default function PackageVersionPage({
-  metadata,
-  versionsArray,
-  urls,
-  repository,
-  monthlyDownloads,
   isDark,
+  metadata,
+  monthlyDownloads,
+  repository,
+  urls,
+  versionsArray,
 }) {
   // construct link to the current package version
   const linkToCurrentVersion = `http://rdocumentation.org${metadata.uri}`;
@@ -53,27 +54,27 @@ export default function PackageVersionPage({
           </div>
           <div className="w-1/3 pl-8 border-l">
             <PackageSidebar
-              packageName={metadata.package_name}
-              linkToCurrentVersion={linkToCurrentVersion}
-              version={metadata.version}
-              versionsArray={versionsArray}
               downloadsLastMonth={downloadsLastMonth}
-              monthlyDownloads={monthlyDownloads}
-              license={metadata.license}
-              repository={repository}
               githubUrl={urls.githubUrl}
               homeUrl={urls.homeUrl}
-              lastPublished={lastPublished}
-              maintainer={metadata.maintainer}
               isDark={isDark}
+              lastPublished={lastPublished}
+              license={metadata.license}
+              linkToCurrentVersion={linkToCurrentVersion}
+              maintainer={metadata.maintainer}
+              monthlyDownloads={monthlyDownloads}
+              packageName={metadata.package_name}
+              repository={repository}
+              version={metadata.version}
+              versionsArray={versionsArray}
             />
           </div>
         </div>
         <div className="w-full mt-12 max-w-none">
           <PackageFunctionList
+            functions={metadata.topics}
             packageName={metadata.package_name}
             packageVersion={metadata.version}
-            functions={metadata.topics}
           />
         </div>
       </div>
@@ -87,7 +88,7 @@ export async function getServerSideProps({
   try {
     // get package metadata from rdocs API
     const res = await fetch(
-      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`
+      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`,
     );
     const metadata = await res.json();
 
@@ -95,7 +96,7 @@ export async function getServerSideProps({
     const versionsArray = metadata.package.versions.map((v) => v.version);
 
     // extract the home and github repo urls (if provided)
-    const { homeUrl, githubUrl } = getPackageUrls(metadata.url);
+    const { githubUrl, homeUrl } = getPackageUrls(metadata.url);
     // get the github owner and repo name (if relevant)
     const { githubOwner, githubRepo } = getGithubOwnerRepo(githubUrl);
 
@@ -119,19 +120,19 @@ export async function getServerSideProps({
           }
         `,
         {
-          owner: githubOwner,
-          repo: githubRepo,
           headers: {
             authorization: `token ${process.env.GITHUB_TOKEN}`,
           },
-        }
+          owner: githubOwner,
+          repo: githubRepo,
+        },
       );
       // set the repository values
       repository = {
+        forks: response.repository.forkCount,
         issues: response.repository.issues.totalCount,
         pullRequests: response.repository.pullRequests.totalCount,
         stars: response.repository.stargazerCount,
-        forks: response.repository.forkCount,
       };
     }
 
@@ -141,13 +142,13 @@ export async function getServerSideProps({
     return {
       props: {
         metadata,
-        versionsArray,
-        urls: {
-          homeUrl,
-          githubUrl,
-        },
-        repository,
         monthlyDownloads,
+        repository,
+        urls: {
+          githubUrl,
+          homeUrl,
+        },
+        versionsArray,
       },
     };
   } catch (error) {

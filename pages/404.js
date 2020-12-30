@@ -13,11 +13,11 @@ export default function Custom404({ isDark }) {
           </a>
         </Link> */}
         <Button
-          type="link"
           appearance={isDark ? 'primary' : 'default'}
+          href="/"
           intent={isDark ? 'b2b' : 'neutral'}
           size="large"
-          href="/"
+          type="link"
         >
           Go Home
         </Button>

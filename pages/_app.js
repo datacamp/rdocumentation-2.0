@@ -1,7 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useEffect } from 'react';
-import { GlobalFontFaces } from '@datacamp/waffles-text';
 import '../styles/index.css';
+
+import { GlobalFontFaces } from '@datacamp/waffles-text';
+import { useEffect, useState } from 'react';
+
 import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {

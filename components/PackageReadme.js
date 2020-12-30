@@ -9,8 +9,8 @@ export default function PackageReadme({ readme }) {
           plugins={[gfm]}
           renderers={{
             // eslint-disable-next-line react/display-name
-            link: ({ href, children }) => (
-              <a href={href} target="_blank" rel="noopener noreferrer">
+            link: ({ children, href }) => (
+              <a href={href} rel="noopener noreferrer" target="_blank">
                 {children}
               </a>
             ),

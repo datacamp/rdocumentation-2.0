@@ -1,25 +1,27 @@
-import { useRouter } from 'next/router';
-import { CopyIcon } from '@datacamp/waffles-icons';
 import { Select, SelectOption } from '@datacamp/waffles-form-elements';
-import { FaHome, FaGithub } from 'react-icons/fa';
+import { CopyIcon } from '@datacamp/waffles-icons';
 import { format } from 'date-fns';
-import MonthlyDownloadsChart from './MonthlyDownloadsChart';
+import { useRouter } from 'next/router';
+import { FaGithub, FaHome } from 'react-icons/fa';
+
 import { copyTextToClipboard } from '../lib/utils';
 
+import MonthlyDownloadsChart from './MonthlyDownloadsChart';
+
 export default function PackageSidebar({
-  packageName,
-  linkToCurrentVersion,
-  version,
-  versionsArray,
   downloadsLastMonth,
-  monthlyDownloads,
-  license,
-  repository,
   githubUrl,
   homeUrl,
-  lastPublished,
-  maintainer,
   isDark,
+  lastPublished,
+  license,
+  linkToCurrentVersion,
+  maintainer,
+  monthlyDownloads,
+  packageName,
+  repository,
+  version,
+  versionsArray,
 }) {
   const router = useRouter();
 
@@ -54,22 +56,22 @@ export default function PackageSidebar({
         <div className="relative mt-4 dark:text-dc-navy">
           <button
             className="absolute inset-y-0 left-0 flex items-center p-4"
-            type="button"
             onClick={handleCopyLink}
+            type="button"
           >
             <CopyIcon size={18} />
           </button>
           <input
             className="block w-full pl-10 text-gray-500 border-2 rounded-md border-dc-grey300"
+            disabled
             type="text"
             value={linkToCurrentVersion}
-            disabled
           />
         </div>
       </div>
       <div>
         <SidebarHeader>Version</SidebarHeader>
-        <Select name="version" value={version} onChange={handleChangeVersion}>
+        <Select name="version" onChange={handleChangeVersion} value={version}>
           {versionsArray.map((v) => (
             <SelectOption key={v} value={v}>
               {v}
@@ -94,8 +96,8 @@ export default function PackageSidebar({
             </div>
             <div className="w-3/5">
               <MonthlyDownloadsChart
-                monthlyDownloads={monthlyDownloads}
                 isDark={isDark}
+                monthlyDownloads={monthlyDownloads}
               />
             </div>
           </div>
@@ -120,8 +122,8 @@ export default function PackageSidebar({
               <SidebarValue>
                 <a
                   href={`${githubUrl}/issues`}
-                  target="_blank"
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
                   {repository.issues.toLocaleString()}
                 </a>
@@ -132,8 +134,8 @@ export default function PackageSidebar({
               <SidebarValue>
                 <a
                   href={`${githubUrl}/pulls`}
-                  target="_blank"
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
                   {repository.pullRequests.toLocaleString()}
                 </a>
@@ -146,8 +148,8 @@ export default function PackageSidebar({
               <SidebarValue>
                 <a
                   href={`${githubUrl}`}
-                  target="_blank"
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
                   {repository.stars.toLocaleString()}
                 </a>
@@ -158,8 +160,8 @@ export default function PackageSidebar({
               <SidebarValue>
                 <a
                   href={`${githubUrl}`}
-                  target="_blank"
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
                   {repository.forks.toLocaleString()}
                 </a>
@@ -169,7 +171,7 @@ export default function PackageSidebar({
           <div>
             <SidebarHeader>Repository</SidebarHeader>
             <SidebarValue Icon={FaGithub}>
-              <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+              <a href={githubUrl} rel="noopener noreferrer" target="_blank">
                 {githubUrl}
               </a>
             </SidebarValue>
@@ -180,7 +182,7 @@ export default function PackageSidebar({
         <div>
           <SidebarHeader>Homepage</SidebarHeader>
           <SidebarValue Icon={FaHome}>
-            <a href={homeUrl} target="_blank" rel="noopener noreferrer">
+            <a href={homeUrl} rel="noopener noreferrer" target="_blank">
               {homeUrl}
             </a>
           </SidebarValue>

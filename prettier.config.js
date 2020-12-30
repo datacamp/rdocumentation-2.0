@@ -1,3 +1,3 @@
 module.exports = {
-  ...require("@datacamp/prettier-config"),
+  ...require('@datacamp/prettier-config'),
 };
