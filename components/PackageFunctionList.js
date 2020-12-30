@@ -38,7 +38,10 @@ export default function PackageFunctionList({
       </div>
       <div className="grid grid-cols-3 gap-5 mt-5">
         {filteredFunctions.map((f) => (
-          <div className="border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow">
+          <div
+            key={f.id}
+            className="border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow"
+          >
             <Link
               href={`/packages/${packageName}/versions/${packageVersion}/topics/${f.name}`}
             >
