@@ -1,13 +1,13 @@
 ## Today
 
 - finish dummy search landing page
+- add typescript everywhere
 
 ## Later
 
 - add actual package count to home page
 - streamline data I'm sending to the client
 - make everything responsive (mobile first?)
-- add typescript everywhere
 - newlines etc. function examples (e.g. data.table)
 - link to vignettes (included in package endpoint)
 - update readme with helpful info
@@ -37,4 +37,5 @@
 - monthly downloads for past 12 months -> API
 - images with relative paths don't work (e.g. dplyr)
 - how to get total package count for home page?
+- only show search results for latest package versions?
 - version agnostic topic lookup? (e.g. mutate in dplyr version X)
