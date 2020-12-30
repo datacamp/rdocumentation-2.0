@@ -8,7 +8,6 @@ export default function PackageReadme({ readme }) {
         <ReactMarkdown
           plugins={[gfm]}
           renderers={{
-            // eslint-disable-next-line react/display-name
             link: ({ children, href }) => (
               <a href={href} rel="noopener noreferrer" target="_blank">
                 {children}

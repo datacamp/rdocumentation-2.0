@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 export default function PackagePage() {
   return null;
 }

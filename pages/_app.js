@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-undef */
 import '../styles/index.css';
 
 import { GlobalFontFaces } from '@datacamp/waffles-text';

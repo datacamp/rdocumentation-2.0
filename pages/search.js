@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
