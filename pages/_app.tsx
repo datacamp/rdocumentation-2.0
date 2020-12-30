@@ -1,12 +1,12 @@
-/* eslint-disable no-undef */
 import '../styles/index.css';
 
 import { GlobalFontFaces } from '@datacamp/waffles-text';
-import { useEffect, useState } from 'react';
+import type { AppProps /* , AppContext */ } from 'next/app';
+import { FC, useEffect, useState } from 'react';
 
 import Layout from '../components/Layout';
 
-function MyApp({ Component, pageProps }) {
+const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   const [isDark, setIsDark] = useState(false);
 
   // if we're client-side, check local storage on mount
@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
   // run every time dark mode is toggled
   useEffect(() => {
     document.querySelector('html').classList.toggle('dark', isDark);
-    if (window) localStorage.setItem('darkMode', isDark);
+    if (window) localStorage.setItem('darkMode', String(isDark));
   }, [isDark]);
 
   return (
@@ -32,6 +32,6 @@ function MyApp({ Component, pageProps }) {
       </Layout>
     </>
   );
-}
+};
 
 export default MyApp;
