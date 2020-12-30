@@ -18,7 +18,7 @@ export async function getServerSideProps({ params: { package: packageName } }) {
     // return a redirect to the latest version
     return {
       redirect: {
-        destination: `${packageName}/versions/${latestVersion}`,
+        destination: `packages/${packageName}/versions/${latestVersion}`,
         permanent: true,
       },
     };
