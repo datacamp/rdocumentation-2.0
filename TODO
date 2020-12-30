@@ -5,6 +5,8 @@
 
 ## Later
 
+- create sitemap: https://leerob.io/blog/nextjs-sitemap-robots
+  - talk to Ludo?
 - add actual package count to home page
 - streamline data I'm sending to the client
 - make everything responsive (mobile first?)
@@ -39,3 +41,4 @@
 - how to get total package count for home page?
 - only show search results for latest package versions?
 - version agnostic topic lookup? (e.g. mutate in dplyr version X)
+- need a sitemap?
