@@ -2,19 +2,27 @@ import Link from 'next/link';
 
 import { Html } from '../lib/utils';
 
-export default function ClickableCard({
+type Props = {
+  description: string;
+  extraInfo?: string;
+  href: string;
+  id: string;
+  name: string;
+};
+
+export const ClickableCard: React.FC<Props> = ({
   description,
   extraInfo,
   href,
   id,
   name,
-}) {
+}) => {
   return (
     <div
       className="border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow"
       key={id}
     >
-      <Link className="w-full h-full" href={href}>
+      <Link href={href}>
         <a>
           <div className="px-4 py-3">
             <div className="flex items-baseline justify-between">
@@ -31,4 +39,4 @@ export default function ClickableCard({
       </Link>
     </div>
   );
-}
+};

@@ -1,7 +1,7 @@
 import { Input } from '@datacamp/waffles-form-elements';
 import { useState } from 'react';
 
-import ClickableCard from './ClickableCard';
+import { ClickableCard } from './ClickableCard';
 
 export default function PackageFunctionList({
   functions,
