@@ -1,6 +1,6 @@
 ## Today
 
-- create dummy search landing page
+- finish dummy search landing page
 
 ## Later
 
@@ -19,6 +19,7 @@
 - show different install instructions for bioc packages
 - add syntax highlighting for R code (see branch)
 - confirm redirect should be permanent when no package version
+- confirm I'm not using template strings unnecessarily
 
 ## Helpful links
 
@@ -36,3 +37,4 @@
 - monthly downloads for past 12 months -> API
 - images with relative paths don't work (e.g. dplyr)
 - how to get total package count for home page?
+- version agnostic topic lookup? (e.g. mutate in dplyr version X)
