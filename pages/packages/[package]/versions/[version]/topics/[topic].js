@@ -115,13 +115,24 @@ export default function TopicPage({ topicData }) {
 export async function getServerSideProps({
   params: { package: packageName, version, topic },
 }) {
-  const topicData = await fetch(
-    `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}/topics/${topic}`
-  ).then((res) => res.json());
+  try {
+    const res = await fetch(
+      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}/topics/${topic}`
+    );
+    const topicData = await res.json();
 
-  return {
-    props: {
-      topicData,
-    },
-  };
+    // if the response isn't a single topic, throw an error (i.e. return a 404)
+    // context: the API returns all package versions when the provided version doesn't match any
+    if (topicData.type !== 'topic') throw new Error();
+
+    return {
+      props: {
+        topicData,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 }

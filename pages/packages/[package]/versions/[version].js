@@ -84,68 +84,75 @@ export default function PackageVersionPage({
 export async function getServerSideProps({
   params: { package: packageName, version },
 }) {
-  // get package metadata from rdocs API
-  const metadata = await fetch(
-    `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`
-  ).then((res) => res.json());
-
-  // create an array of all package versions
-  const versionsArray = metadata.package.versions.map((v) => v.version);
-
-  // extract the home and github repo urls (if provided)
-  const { homeUrl, githubUrl } = getPackageUrls(metadata.url);
-  // get the github owner and repo name (if relevant)
-  const { githubOwner, githubRepo } = getGithubOwnerRepo(githubUrl);
-
-  // initialize repository
-  let repository = null;
-  // if there is a repo, get the data from github API
-  if (githubOwner && githubRepo) {
-    const response = await graphql(
-      `
-        query repository($owner: String!, $repo: String!) {
-          repository(owner: $owner, name: $repo) {
-            issues(states: OPEN) {
-              totalCount
-            }
-            pullRequests(states: OPEN) {
-              totalCount
-            }
-            stargazerCount
-            forkCount
-          }
-        }
-      `,
-      {
-        owner: githubOwner,
-        repo: githubRepo,
-        headers: {
-          authorization: `token ${process.env.GITHUB_TOKEN}`,
-        },
-      }
+  try {
+    // get package metadata from rdocs API
+    const res = await fetch(
+      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`
     );
-    // set the repository values
-    repository = {
-      issues: response.repository.issues.totalCount,
-      pullRequests: response.repository.pullRequests.totalCount,
-      stars: response.repository.stargazerCount,
-      forks: response.repository.forkCount,
+    const metadata = await res.json();
+
+    // create an array of all package versions
+    const versionsArray = metadata.package.versions.map((v) => v.version);
+
+    // extract the home and github repo urls (if provided)
+    const { homeUrl, githubUrl } = getPackageUrls(metadata.url);
+    // get the github owner and repo name (if relevant)
+    const { githubOwner, githubRepo } = getGithubOwnerRepo(githubUrl);
+
+    // initialize repository
+    let repository = null;
+    // if there is a repo, get the data from github API
+    if (githubOwner && githubRepo) {
+      const response = await graphql(
+        `
+          query repository($owner: String!, $repo: String!) {
+            repository(owner: $owner, name: $repo) {
+              issues(states: OPEN) {
+                totalCount
+              }
+              pullRequests(states: OPEN) {
+                totalCount
+              }
+              stargazerCount
+              forkCount
+            }
+          }
+        `,
+        {
+          owner: githubOwner,
+          repo: githubRepo,
+          headers: {
+            authorization: `token ${process.env.GITHUB_TOKEN}`,
+          },
+        }
+      );
+      // set the repository values
+      repository = {
+        issues: response.repository.issues.totalCount,
+        pullRequests: response.repository.pullRequests.totalCount,
+        stars: response.repository.stargazerCount,
+        forks: response.repository.forkCount,
+      };
+    }
+
+    // get monthly download data from the r-hub API
+    const monthlyDownloads = await getMonthlyDownloads({ packageName });
+
+    return {
+      props: {
+        metadata,
+        versionsArray,
+        urls: {
+          homeUrl,
+          githubUrl,
+        },
+        repository,
+        monthlyDownloads,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
     };
   }
-
-  // get monthly download data from the r-hub API
-  const monthlyDownloads = await getMonthlyDownloads({ packageName });
-
-  return {
-    props: {
-      metadata,
-      versionsArray,
-      urls: {
-        homeUrl,
-        githubUrl,
-      },
-      repository,
-      monthlyDownloads,
-    },
-  };
 }
