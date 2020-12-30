@@ -11,7 +11,6 @@
 - newlines etc. function examples (e.g. data.table)
 - link to vignettes (included in package endpoint)
 - update readme with helpful info
-- make topic links relative
 - add search in nav on package / topic pages
 - don't use my personal github auth token
 - get search setup (wait for dieter)
@@ -32,7 +31,6 @@
 ## For Dieter
 
 - not getting most recent data for some packages (e.g. dplyr)
-- how does relative links api work
 - packages endpoint returns `latest_version_id` -> how to use this?
 - need updated favicon
 - monthly downloads for past 12 months -> API
