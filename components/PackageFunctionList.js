@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Input } from '@datacamp/waffles-form-elements';
-import CardList from './CardList';
+import ClickableCard from './ClickableCard';
 
 export default function PackageFunctionList({
   packageName,
@@ -20,14 +20,6 @@ export default function PackageFunctionList({
     );
   }
 
-  // reshape to play nicely with CardList
-  const filteredFunctionsClean = filteredFunctions.map((f) => ({
-    id: f.id,
-    name: f.name,
-    description: f.title,
-    href: `/packages/${packageName}/versions/${packageVersion}/topics/${f.name}`,
-  }));
-
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -43,7 +35,16 @@ export default function PackageFunctionList({
           placeholder="Search all functions"
         />
       </div>
-      <CardList items={filteredFunctionsClean} />
+      <div className="grid grid-cols-3 gap-5 mt-5">
+        {filteredFunctions.map((f) => (
+          <ClickableCard
+            id={f.id}
+            name={f.name}
+            description={f.title}
+            href={`/packages/${packageName}/versions/${packageVersion}/topics/${f.name}`}
+          />
+        ))}
+      </div>
     </div>
   );
 }

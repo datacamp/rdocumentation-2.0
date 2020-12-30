@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import CardList from '../components/CardList';
+import ClickableCard from '../components/ClickableCard';
 
 const fakeSearchResults = [
   {
@@ -72,7 +72,17 @@ export default function SearchResults() {
       </Head>
       <div className="w-full max-w-screen-lg mx-auto mt-12">
         <h1 className="text-xl">Search results for '{q}':</h1>
-        <CardList items={fakeSearchResults} />
+        <div className="grid grid-cols-3 gap-5 mt-5">
+          {fakeSearchResults.map((result) => (
+            <ClickableCard
+              id={result.id}
+              name={result.name}
+              description={result.description}
+              extraInfo={result.extraInfo}
+              href={result.href}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
