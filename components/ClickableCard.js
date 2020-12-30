@@ -1,17 +1,18 @@
 import Link from 'next/link';
+
 import { Html } from '../lib/utils';
 
 export default function ClickableCard({
-  id,
-  name,
   description,
   extraInfo,
   href,
+  id,
+  name,
 }) {
   return (
     <div
-      key={id}
       className="border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow"
+      key={id}
     >
       <Link className="w-full h-full" href={href}>
         <a>
