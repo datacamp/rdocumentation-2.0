@@ -1,12 +1,12 @@
 import '../styles/index.css';
 
 import { GlobalFontFaces } from '@datacamp/waffles-text';
-import type { AppProps /* , AppContext */ } from 'next/app';
-import { FC, useEffect, useState } from 'react';
+import type { AppProps } from 'next/app';
+import { useEffect, useState } from 'react';
 
 import Layout from '../components/Layout';
 
-const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const [isDark, setIsDark] = useState(false);
 
   // if we're client-side, check local storage on mount
@@ -32,6 +32,4 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
       </Layout>
     </>
   );
-};
-
-export default MyApp;
+}

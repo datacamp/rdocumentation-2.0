@@ -10,13 +10,13 @@ type Props = {
   name: string;
 };
 
-export const ClickableCard: React.FC<Props> = ({
+export default function ClickableCard({
   description,
   extraInfo,
   href,
   id,
   name,
-}) => {
+}: Props) {
   return (
     <div
       className="border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow"
@@ -39,4 +39,4 @@ export const ClickableCard: React.FC<Props> = ({
       </Link>
     </div>
   );
-};
+}
