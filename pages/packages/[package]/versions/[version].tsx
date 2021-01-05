@@ -12,7 +12,51 @@ import { getGithubOwnerRepo, getPackageUrls } from '../../../../lib/utils';
 
 type Props = {
   isDark: boolean;
-  metadata: any; // TODO: change this
+  metadata: {
+    api_uri: string;
+    canonicalLink: string;
+    collaborators: [];
+    copyright: string;
+    created_at: string;
+    dependencies: [];
+    description: string;
+    fromCache: boolean;
+    hasSource: boolean;
+    id: number;
+    license: string;
+    maintainer: {
+      api_uri: string;
+      created_at: string;
+      email: string;
+      gravatar_url: string;
+      id: number;
+      name: string;
+      updated_at: string;
+      uri: string;
+    };
+    maintainer_id: number;
+    package: Record<string, unknown>;
+    package_name: string;
+    pageTitle: string;
+    readmemd: string;
+    release_date: string;
+    sourceJSON: Record<string, unknown>;
+    title: string;
+    topics: Array<{
+      api_uri: string;
+      id: number;
+      name: string;
+      package_version_id: number;
+      title: string;
+      uri: string;
+    }>;
+    type: string;
+    updated_at: string;
+    uri: string;
+    url: string;
+    version: string;
+    vignettes: [];
+  };
   monthlyDownloads: Array<{ downloads: number; month: string }>;
   repository: {
     forks: number;
@@ -120,7 +164,14 @@ export const getServerSideProps: GetServerSideProps = async ({
     let repository = null;
     // if there is a repo, get the data from github API
     if (githubOwner && githubRepo) {
-      const response = await graphql(
+      const response: {
+        repository: {
+          forkCount: number;
+          issues: { totalCount: number };
+          pullRequests: { totalCount: number };
+          stargazerCount: number;
+        };
+      } = await graphql(
         `
           query repository($owner: String!, $repo: String!) {
             repository(owner: $owner, name: $repo) {
@@ -144,7 +195,6 @@ export const getServerSideProps: GetServerSideProps = async ({
         },
       );
       // set the repository values
-      // TODO: resolve the TS complaints below
       repository = {
         forks: response.repository.forkCount,
         issues: response.repository.issues.totalCount,

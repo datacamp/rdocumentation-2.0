@@ -19,14 +19,6 @@
 - add syntax highlighting for R code (see branch)
 - confirm redirect should be permanent when no package version
 
-## Helpful links
-
-- https://www.rdocumentation.org/packages/dplyr/versions/0.7.8
-- https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate
-
-- https://www.rdocumentation.org/packages/data.table/versions/1.13.4
-- https://www.rdocumentation.org/packages/data.table/versions/1.13.4/topics/fread
-
 ## For Dieter
 
 - don't use my personal github auth token

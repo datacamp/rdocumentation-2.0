@@ -24,7 +24,11 @@ export function getGithubOwnerRepo(githubUrl: string) {
 }
 
 // calculate a sum on a per-group basis
-export function sumByGroup(objectArray: any, groupBy: string, sumBy: string) {
+export function sumByGroup(
+  objectArray: Record<string, unknown>,
+  groupBy: string,
+  sumBy: string,
+) {
   return objectArray.reduce((acc, obj) => {
     const key = obj[groupBy];
     if (!acc[key]) {
