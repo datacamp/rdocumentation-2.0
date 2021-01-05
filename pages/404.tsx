@@ -1,6 +1,10 @@
 import Button from '@datacamp/waffles-button';
 
-export default function Custom404({ isDark }) {
+type Props = {
+  isDark: boolean;
+};
+
+export default function Custom404({ isDark }: Props) {
   return (
     <div className="flex flex-col items-center mt-36">
       <h1 className="text-2xl">Oops, that page doesn't exist.</h1>

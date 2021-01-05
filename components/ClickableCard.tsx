@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Html } from '../lib/utils';
+import Html from './Html';
 
 type Props = {
   description: string;

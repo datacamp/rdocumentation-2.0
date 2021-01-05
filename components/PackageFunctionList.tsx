@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { Input } from '@datacamp/waffles-form-elements';
 import { useState } from 'react';
 

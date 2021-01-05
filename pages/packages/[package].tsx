@@ -1,11 +1,14 @@
 import fetch from 'isomorphic-fetch';
+import { GetServerSideProps } from 'next';
 
 export default function PackagePage() {
   return null;
 }
 
 // if no version is specified, then just redirect to the latest version
-export async function getServerSideProps({ params: { package: packageName } }) {
+export const getServerSideProps: GetServerSideProps = async ({
+  params: { package: packageName },
+}) => {
   try {
     const res = await fetch(
       `https://www.rdocumentation.org/api/packages/${packageName}`,
@@ -21,7 +24,7 @@ export async function getServerSideProps({ params: { package: packageName } }) {
     return {
       redirect: {
         destination: `packages/${packageName}/versions/${latestVersion}`,
-        permanent: true,
+        permanent: false, // TODO: make true
       },
     };
   } catch (error) {
@@ -30,4 +33,4 @@ export async function getServerSideProps({ params: { package: packageName } }) {
       notFound: true,
     };
   }
-}
+};

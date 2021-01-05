@@ -1,5 +1,6 @@
 import { graphql } from '@octokit/graphql';
 import fetch from 'isomorphic-fetch';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -9,6 +10,20 @@ import PackageSidebar from '../../../../components/PackageSidebar';
 import { getMonthlyDownloads } from '../../../../lib/downloads';
 import { getGithubOwnerRepo, getPackageUrls } from '../../../../lib/utils';
 
+type Props = {
+  isDark: boolean;
+  metadata: any; // TODO: change this
+  monthlyDownloads: Array<{ downloads: number; month: string }>;
+  repository: {
+    forks: number;
+    issues: number;
+    pullRequests: number;
+    stars: number;
+  };
+  urls: { githubUrl: string; homeUrl: string };
+  versionsArray: string[];
+};
+
 export default function PackageVersionPage({
   isDark,
   metadata,
@@ -16,7 +31,7 @@ export default function PackageVersionPage({
   repository,
   urls,
   versionsArray,
-}) {
+}: Props) {
   // construct link to the current package version
   const linkToCurrentVersion = `http://rdocumentation.org${metadata.uri}`;
 
@@ -83,9 +98,9 @@ export default function PackageVersionPage({
   );
 }
 
-export async function getServerSideProps({
+export const getServerSideProps: GetServerSideProps = async ({
   params: { package: packageName, version },
-}) {
+}) => {
   try {
     // get package metadata from rdocs API
     const res = await fetch(
@@ -129,6 +144,7 @@ export async function getServerSideProps({
         },
       );
       // set the repository values
+      // TODO: resolve the TS complaints below
       repository = {
         forks: response.repository.forkCount,
         issues: response.repository.issues.totalCount,
@@ -138,7 +154,7 @@ export async function getServerSideProps({
     }
 
     // get monthly download data from the r-hub API
-    const monthlyDownloads = await getMonthlyDownloads({ packageName });
+    const monthlyDownloads = await getMonthlyDownloads(packageName);
 
     return {
       props: {
@@ -157,4 +173,4 @@ export async function getServerSideProps({
       notFound: true,
     };
   }
-}
+};

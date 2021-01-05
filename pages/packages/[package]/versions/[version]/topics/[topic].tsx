@@ -2,9 +2,30 @@ import fetch from 'isomorphic-fetch';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Html } from '../../../../../../lib/utils';
+import Html from '../../../../../../components/Html';
 
-export default function TopicPage({ topicData }) {
+type Props = {
+  topicData: {
+    arguments: Array<{
+      description: string;
+      name: string;
+      topic_id: number;
+    }>;
+    description: string;
+    details: string;
+    examples: string;
+    name: string;
+    package_version: { package_name: string; version: string };
+    references: string;
+    sections: Array<{ description: string; name: string; topic_id: number }>;
+    seealso: string;
+    title: string;
+    usage: string;
+    value: string;
+  };
+};
+
+export default function TopicPage({ topicData }: Props) {
   const {
     arguments: args,
     description,
@@ -19,7 +40,6 @@ export default function TopicPage({ topicData }) {
     usage,
     value,
   } = topicData;
-
   return (
     <>
       <Head>

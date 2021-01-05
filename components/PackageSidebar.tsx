@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { Select, SelectOption } from '@datacamp/waffles-form-elements';
 import { CopyIcon } from '@datacamp/waffles-icons';
 import { format } from 'date-fns';
