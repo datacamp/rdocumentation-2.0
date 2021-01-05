@@ -1,7 +1,11 @@
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 
-export default function PackageReadme({ readme }) {
+type Props = {
+  readme: string;
+};
+
+export default function PackageReadme({ readme }: Props) {
   return (
     <article className="prose max-w-none">
       {readme ? (

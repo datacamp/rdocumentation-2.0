@@ -6,7 +6,7 @@ type Props = {
   description: string;
   extraInfo?: string;
   href: string;
-  id: string;
+  id: string | number;
   name: string;
 };
 

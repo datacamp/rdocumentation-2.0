@@ -1,13 +1,27 @@
+/* eslint-disable camelcase */
 import { Input } from '@datacamp/waffles-form-elements';
 import { useState } from 'react';
 
-import { ClickableCard } from './ClickableCard';
+import ClickableCard from './ClickableCard';
+
+type Props = {
+  functions: Array<{
+    api_uri: string;
+    id: number;
+    name: string;
+    package_version_id: number;
+    title: string;
+    uri: string;
+  }>;
+  packageName: string;
+  packageVersion: string;
+};
 
 export default function PackageFunctionList({
   functions,
   packageName,
   packageVersion,
-}) {
+}: Props) {
   const [searchInput, setSearchInput] = useState('');
 
   let filteredFunctions = functions;

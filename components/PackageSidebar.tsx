@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Select, SelectOption } from '@datacamp/waffles-form-elements';
 import { CopyIcon } from '@datacamp/waffles-icons';
 import { format } from 'date-fns';
@@ -7,6 +8,36 @@ import { FaGithub, FaHome } from 'react-icons/fa';
 import { copyTextToClipboard } from '../lib/utils';
 
 import MonthlyDownloadsChart from './MonthlyDownloadsChart';
+
+type PackageSidebarProps = {
+  downloadsLastMonth: number;
+  githubUrl: string;
+  homeUrl: string;
+  isDark: boolean;
+  lastPublished: Date;
+  license: string;
+  linkToCurrentVersion: string;
+  maintainer: {
+    api_uri: string;
+    created_at: string;
+    email: string;
+    gravatar_url: string;
+    id: number;
+    name: string;
+    updated_at: string;
+    uri: string;
+  };
+  monthlyDownloads: Array<{ downloads: number; month: string }>;
+  packageName: string;
+  repository: {
+    forks: number;
+    issues: number;
+    pullRequests: number;
+    stars: number;
+  };
+  version: string;
+  versionsArray: string[];
+};
 
 export default function PackageSidebar({
   downloadsLastMonth,
@@ -22,17 +53,26 @@ export default function PackageSidebar({
   repository,
   version,
   versionsArray,
-}) {
+}: PackageSidebarProps) {
   const router = useRouter();
 
-  function SidebarHeader({ children }) {
+  type SidebarHeaderProps = {
+    children: React.ReactNode;
+  };
+
+  function SidebarHeader({ children }: SidebarHeaderProps) {
     return <h4 className="mb-2 text-sm text-gray-500 uppercase">{children}</h4>;
   }
 
-  function SidebarValue({ Icon, children }) {
+  type SidebarValueProps = {
+    children: React.ReactNode;
+    Icon?: React.ComponentType;
+  };
+
+  function SidebarValue({ Icon, children }: SidebarValueProps) {
     return (
-      <div>
-        {Icon && <Icon className="inline mb-1" />}
+      <div className="flex items-center">
+        {Icon && <Icon />}
         <span className={Icon ? 'ml-2' : ''}>{children}</span>
       </div>
     );

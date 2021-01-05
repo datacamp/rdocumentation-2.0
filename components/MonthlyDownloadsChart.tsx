@@ -6,7 +6,15 @@ const colors = {
   'dc-yellow': '#FCCE0D',
 };
 
-export default function MonthlyDownloadsChart({ isDark, monthlyDownloads }) {
+type Props = {
+  isDark: boolean;
+  monthlyDownloads: Array<{ downloads: number; month: string }>;
+};
+
+export default function MonthlyDownloadsChart({
+  isDark,
+  monthlyDownloads,
+}: Props) {
   return (
     <ResponsiveContainer height={50} width="100%">
       <AreaChart

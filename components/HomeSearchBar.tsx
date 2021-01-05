@@ -1,6 +1,12 @@
 import { SearchIcon } from '@datacamp/waffles-icons';
+import { ChangeEvent } from 'react';
 
-export default function HomeSearchBar({ onChange, value }) {
+type Props = {
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+};
+
+export default function HomeSearchBar({ onChange, value }: Props) {
   return (
     <div className="relative mt-4 dark:text-dc-navy">
       <div className="absolute inset-y-0 left-0 flex items-center pl-6 pointer-events-none">

@@ -1,9 +1,14 @@
 import { MoonInvertedIcon, SunIcon } from '@datacamp/waffles-icons';
 import Link from 'next/link';
 
-export default function Navbar({ isDark, setIsDark }) {
+type Props = {
+  isDark: boolean;
+  setIsDark: (state: boolean) => void;
+};
+
+export default function Navbar({ isDark, setIsDark }: Props) {
   return (
-    <header className="flex justify-between items-center h-20">
+    <header className="flex items-center justify-between h-20">
       <nav className="text-lg">
         <Link href="/">
           <a>RDocumentation</a>

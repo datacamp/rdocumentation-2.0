@@ -2,7 +2,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { ClickableCard } from '../components/ClickableCard';
+import ClickableCard from '../components/ClickableCard';
 
 const fakeSearchResults = [
   {
