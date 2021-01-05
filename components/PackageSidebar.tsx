@@ -185,11 +185,7 @@ export default function PackageSidebar({
             <div className="w-1/2">
               <SidebarHeader>Stars</SidebarHeader>
               <SidebarValue>
-                <a
-                  href={`${githubUrl}`}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
+                <a href={githubUrl} rel="noopener noreferrer" target="_blank">
                   {repository.stars.toLocaleString()}
                 </a>
               </SidebarValue>
@@ -197,11 +193,7 @@ export default function PackageSidebar({
             <div className="w-1/2">
               <SidebarHeader>Forks</SidebarHeader>
               <SidebarValue>
-                <a
-                  href={`${githubUrl}`}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
+                <a href={githubUrl} rel="noopener noreferrer" target="_blank">
                   {repository.forks.toLocaleString()}
                 </a>
               </SidebarValue>

@@ -1,7 +1,7 @@
 ## Today
 
 - finish dummy search landing page
-- fix redirect from e.g. /packages/dplyr
+- add search in nav on package / topic pages
 
 ## Later
 
@@ -12,16 +12,12 @@
 - make everything responsive (mobile first?)
 - newlines etc. function examples (e.g. data.table)
 - link to vignettes (included in package endpoint)
-- update readme with helpful info
-- add search in nav on package / topic pages
-- don't use my personal github auth token
-- get search setup (wait for dieter)
+- update github readme with helpful info
 - strip badges directly from the markdown?
 - deal with monthly downloads chart for new packages
 - show different install instructions for bioc packages
 - add syntax highlighting for R code (see branch)
 - confirm redirect should be permanent when no package version
-- confirm I'm not using template strings unnecessarily
 
 ## Helpful links
 
@@ -33,6 +29,7 @@
 
 ## For Dieter
 
+- don't use my personal github auth token
 - not getting most recent data for some packages (e.g. dplyr)
 - packages endpoint returns `latest_version_id` -> how to use this?
 - need updated favicon
@@ -42,3 +39,4 @@
 - only show search results for latest package versions?
 - version agnostic topic lookup? (e.g. mutate in dplyr version X)
 - need a sitemap?
+- update on search?
