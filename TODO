@@ -1,4 +1,4 @@
-## Today
+## Next
 
 - make everything responsive (mobile first?)
 - add site metadata for SEO
@@ -6,32 +6,21 @@
 
 ## Later
 
-- bug: why does date say 1969?
-  - https://rdocumentation.vercel.app/packages/dplyr/versions/0.4.3?package=dplyr&version=0.4.3
+- fix bugs
+  - why does date say 1969?
+    - https://rdocumentation.vercel.app/packages/dplyr/versions/0.4.3?package=dplyr&version=0.4.3
+  - why are query params being added on deployed version when switching package versions?
 - improve search results page design / functionality
 - create sitemap? https://leerob.io/blog/nextjs-sitemap-robots
 - add actual package count to home page
 - streamline data I'm sending to the client
 - newlines etc. function examples (e.g. data.table)
 - link to vignettes (included in package endpoint)
-- update github readme with helpful info
 - strip badges directly from the markdown?
 - deal with monthly downloads chart for new packages
 - show different install instructions for bioc packages
 - add syntax highlighting for R code (see branch)
 - confirm redirect should be permanent when no package version
-
-## For Dieter
-
-- don't use my personal github auth token
-- not getting most recent data for some packages (e.g. dplyr)
-- packages endpoint returns `latest_version_id` -> how to use this?
-- need updated favicon
-- monthly downloads for past 12 months -> API
-- images with relative paths don't work (e.g. dplyr)
-- how to get total package count for home page?
-- only show search results for latest package versions?
-- version agnostic topic lookup? (e.g. mutate in dplyr version X)
-- need a sitemap?
-- update on search?
-- deadline end of january
+- use latest_version_id to pull info about latest package version?
+  - endpoint: https://www.rdocumentation.org/docs/#api-Package-Get_Packages
+- exclude "github packages"?
