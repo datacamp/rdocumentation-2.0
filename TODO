@@ -4,6 +4,8 @@
 
 ## Later
 
+- bug: why does date say 1969? 
+  - https://rdocumentation.vercel.app/packages/dplyr/versions/0.4.3?package=dplyr&version=0.4.3
 - improve search results page design / functionality
 - create sitemap? https://leerob.io/blog/nextjs-sitemap-robots
 - add actual package count to home page
