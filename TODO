@@ -1,12 +1,11 @@
 ## Today
 
-- finish dummy search landing page
-- add search in nav on package / topic pages
+- share another video update
 
 ## Later
 
-- create sitemap: https://leerob.io/blog/nextjs-sitemap-robots
-  - talk to Ludo?
+- improve search results page design / functionality
+- create sitemap? https://leerob.io/blog/nextjs-sitemap-robots
 - add actual package count to home page
 - streamline data I'm sending to the client
 - make everything responsive (mobile first?)
@@ -18,6 +17,8 @@
 - show different install instructions for bioc packages
 - add syntax highlighting for R code (see branch)
 - confirm redirect should be permanent when no package version
+- do a lighthouse audit of the entire site
+- add site metadata for SEO
 
 ## For Dieter
 
@@ -32,3 +33,4 @@
 - version agnostic topic lookup? (e.g. mutate in dplyr version X)
 - need a sitemap?
 - update on search?
+- deadline end of january

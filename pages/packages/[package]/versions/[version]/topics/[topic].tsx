@@ -56,7 +56,7 @@ export default function TopicPage({ topicData }: Props) {
         <div className="mt-2 prose max-w-none">
           <header>
             <h1>
-              {name}: {title}
+              {name}: <Html>{title}</Html>
             </h1>
           </header>
           {description && (

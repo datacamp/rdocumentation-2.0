@@ -3,5 +3,5 @@ type Props = {
 };
 
 export default function Html({ children }: Props) {
-  return <div dangerouslySetInnerHTML={{ __html: children }} />;
+  return <span dangerouslySetInnerHTML={{ __html: children }} />;
 }
