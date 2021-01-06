@@ -1,22 +1,83 @@
+import { graphql } from '@octokit/graphql';
+import fetch from 'isomorphic-fetch';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { graphql } from '@octokit/graphql';
-import { getPackageUrls, getGithubOwnerRepo } from '../../../../lib/utils';
-import { getMonthlyDownloads } from '../../../../lib/downloads';
+
+import PackageFunctionList from '../../../../components/PackageFunctionList';
 import PackageReadme from '../../../../components/PackageReadme';
 import PackageSidebar from '../../../../components/PackageSidebar';
-import PackageFunctionList from '../../../../components/PackageFunctionList';
+import { getMonthlyDownloads } from '../../../../lib/downloads';
+import { getGithubOwnerRepo, getPackageUrls } from '../../../../lib/utils';
+
+type Props = {
+  isDark: boolean;
+  metadata: {
+    api_uri: string;
+    canonicalLink: string;
+    collaborators: [];
+    copyright: string;
+    created_at: string;
+    dependencies: [];
+    description: string;
+    fromCache: boolean;
+    hasSource: boolean;
+    id: number;
+    license: string;
+    maintainer: {
+      api_uri: string;
+      created_at: string;
+      email: string;
+      gravatar_url: string;
+      id: number;
+      name: string;
+      updated_at: string;
+      uri: string;
+    };
+    maintainer_id: number;
+    package: Record<string, unknown>;
+    package_name: string;
+    pageTitle: string;
+    readmemd: string;
+    release_date: string;
+    sourceJSON: Record<string, unknown>;
+    title: string;
+    topics: Array<{
+      api_uri: string;
+      id: number;
+      name: string;
+      package_version_id: number;
+      title: string;
+      uri: string;
+    }>;
+    type: string;
+    updated_at: string;
+    uri: string;
+    url: string;
+    version: string;
+    vignettes: [];
+  };
+  monthlyDownloads: Array<{ downloads: number; month: string }>;
+  repository: {
+    forks: number;
+    issues: number;
+    pullRequests: number;
+    stars: number;
+  };
+  urls: { githubUrl: string; homeUrl: string };
+  versionsArray: string[];
+};
 
 export default function PackageVersionPage({
-  metadata,
-  versionsArray,
-  urls,
-  repository,
-  monthlyDownloads,
   isDark,
-}) {
+  metadata,
+  monthlyDownloads,
+  repository,
+  urls,
+  versionsArray,
+}: Props) {
   // construct link to the current package version
-  const linkToCurrentVersion = `http://rdocumentation.org${metadata.uri}`;
+  const linkToCurrentVersion = `https://rdocumentation.org${metadata.uri}`;
 
   // get the latest version of the package
   const latestVersion = versionsArray[0];
@@ -53,27 +114,27 @@ export default function PackageVersionPage({
           </div>
           <div className="w-1/3 pl-8 border-l">
             <PackageSidebar
-              packageName={metadata.package_name}
-              linkToCurrentVersion={linkToCurrentVersion}
-              version={metadata.version}
-              versionsArray={versionsArray}
               downloadsLastMonth={downloadsLastMonth}
-              monthlyDownloads={monthlyDownloads}
-              license={metadata.license}
-              repository={repository}
               githubUrl={urls.githubUrl}
               homeUrl={urls.homeUrl}
-              lastPublished={lastPublished}
-              maintainer={metadata.maintainer}
               isDark={isDark}
+              lastPublished={lastPublished}
+              license={metadata.license}
+              linkToCurrentVersion={linkToCurrentVersion}
+              maintainer={metadata.maintainer}
+              monthlyDownloads={monthlyDownloads}
+              packageName={metadata.package_name}
+              repository={repository}
+              version={metadata.version}
+              versionsArray={versionsArray}
             />
           </div>
         </div>
         <div className="w-full mt-12 max-w-none">
           <PackageFunctionList
+            functions={metadata.topics}
             packageName={metadata.package_name}
             packageVersion={metadata.version}
-            functions={metadata.topics}
           />
         </div>
       </div>
@@ -81,13 +142,13 @@ export default function PackageVersionPage({
   );
 }
 
-export async function getServerSideProps({
+export const getServerSideProps: GetServerSideProps = async ({
   params: { package: packageName, version },
-}) {
+}) => {
   try {
     // get package metadata from rdocs API
     const res = await fetch(
-      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`
+      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`,
     );
     const metadata = await res.json();
 
@@ -95,7 +156,7 @@ export async function getServerSideProps({
     const versionsArray = metadata.package.versions.map((v) => v.version);
 
     // extract the home and github repo urls (if provided)
-    const { homeUrl, githubUrl } = getPackageUrls(metadata.url);
+    const { githubUrl, homeUrl } = getPackageUrls(metadata.url);
     // get the github owner and repo name (if relevant)
     const { githubOwner, githubRepo } = getGithubOwnerRepo(githubUrl);
 
@@ -103,7 +164,14 @@ export async function getServerSideProps({
     let repository = null;
     // if there is a repo, get the data from github API
     if (githubOwner && githubRepo) {
-      const response = await graphql(
+      const response: {
+        repository: {
+          forkCount: number;
+          issues: { totalCount: number };
+          pullRequests: { totalCount: number };
+          stargazerCount: number;
+        };
+      } = await graphql(
         `
           query repository($owner: String!, $repo: String!) {
             repository(owner: $owner, name: $repo) {
@@ -119,35 +187,35 @@ export async function getServerSideProps({
           }
         `,
         {
-          owner: githubOwner,
-          repo: githubRepo,
           headers: {
             authorization: `token ${process.env.GITHUB_TOKEN}`,
           },
-        }
+          owner: githubOwner,
+          repo: githubRepo,
+        },
       );
       // set the repository values
       repository = {
+        forks: response.repository.forkCount,
         issues: response.repository.issues.totalCount,
         pullRequests: response.repository.pullRequests.totalCount,
         stars: response.repository.stargazerCount,
-        forks: response.repository.forkCount,
       };
     }
 
     // get monthly download data from the r-hub API
-    const monthlyDownloads = await getMonthlyDownloads({ packageName });
+    const monthlyDownloads = await getMonthlyDownloads(packageName);
 
     return {
       props: {
         metadata,
-        versionsArray,
-        urls: {
-          homeUrl,
-          githubUrl,
-        },
-        repository,
         monthlyDownloads,
+        repository,
+        urls: {
+          githubUrl,
+          homeUrl,
+        },
+        versionsArray,
       },
     };
   } catch (error) {
@@ -155,4 +223,4 @@ export async function getServerSideProps({
       notFound: true,
     };
   }
-}
+};

@@ -1,5 +1,5 @@
-export function getPackageUrls(stringOfUrls) {
-  const urls = { homeUrl: null, githubUrl: null };
+export function getPackageUrls(stringOfUrls: string) {
+  const urls = { githubUrl: null, homeUrl: null };
   if (!stringOfUrls) return urls;
 
   const urlArray = stringOfUrls.split(',').map((url) => url.trim());
@@ -13,7 +13,7 @@ export function getPackageUrls(stringOfUrls) {
   return urls;
 }
 
-export function getGithubOwnerRepo(githubUrl) {
+export function getGithubOwnerRepo(githubUrl: string) {
   const ownerRepo = { githubOwner: null, githubRepo: null };
   if (!githubUrl) return ownerRepo;
 
@@ -24,7 +24,8 @@ export function getGithubOwnerRepo(githubUrl) {
 }
 
 // calculate a sum on a per-group basis
-export function sumByGroup(objectArray, groupBy, sumBy) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function sumByGroup(objectArray: any, groupBy: string, sumBy: string) {
   return objectArray.reduce((acc, obj) => {
     const key = obj[groupBy];
     if (!acc[key]) {
@@ -37,13 +38,6 @@ export function sumByGroup(objectArray, groupBy, sumBy) {
 
 // https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
 // TODO: make this more robust to older browsers?
-export function copyTextToClipboard(text) {
+export function copyTextToClipboard(text: string) {
   navigator.clipboard.writeText(text);
-}
-
-export function Html({ className, children }) {
-  return (
-    // eslint-disable-next-line react/no-danger
-    <div className={className} dangerouslySetInnerHTML={{ __html: children }} />
-  );
 }

@@ -1,13 +1,16 @@
 import {
-  format,
-  startOfMonth,
   endOfMonth,
-  subMonths,
+  format,
   formatISO,
+  startOfMonth,
+  subMonths,
 } from 'date-fns';
+import fetch from 'isomorphic-fetch';
+
 import { sumByGroup } from './utils';
 
-export async function getMonthlyDownloads({ packageName }) {
+// TODO: only want `packageName` to be a `string`
+export async function getMonthlyDownloads(packageName: string | string[]) {
   const today = new Date();
 
   // start of month, 1 year ago
@@ -22,7 +25,7 @@ export async function getMonthlyDownloads({ packageName }) {
 
   // get the daily data
   const dailyDownloads = await fetch(
-    `https://cranlogs.r-pkg.org/downloads/daily/${startDate}:${endDate}/${packageName}`
+    `https://cranlogs.r-pkg.org/downloads/daily/${startDate}:${endDate}/${packageName}`,
   )
     .then((res) => res.json())
     .then((data) => data[0].downloads);
@@ -40,7 +43,7 @@ export async function getMonthlyDownloads({ packageName }) {
   const monthlyDownloadsRaw = sumByGroup(
     dailyDownloadsWithMonths,
     'month',
-    'downloads'
+    'downloads',
   );
 
   // return an array of objects in the correct format
@@ -49,8 +52,8 @@ export async function getMonthlyDownloads({ packageName }) {
 
   return months
     .map((month, i) => ({
-      month,
       downloads: downloads[i],
+      month,
     }))
     .slice(-12);
 }

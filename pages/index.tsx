@@ -1,6 +1,7 @@
-import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+
 import HomeSearchBar from '../components/HomeSearchBar';
 
 export default function HomePage() {
@@ -13,7 +14,8 @@ export default function HomePage() {
 
   function onSubmitSearch(e) {
     e.preventDefault();
-    router.push(`/search?q=${searchInput}`);
+    router.push(`/search?q=${encodeURIComponent(searchInput)}`);
+    setSearchInput('');
   }
 
   return (
@@ -27,8 +29,8 @@ export default function HomePage() {
         </h1>
         <form onSubmit={onSubmitSearch}>
           <HomeSearchBar
-            value={searchInput}
             onChange={handleChangeSearchInput}
+            value={searchInput}
           />
         </form>
       </div>

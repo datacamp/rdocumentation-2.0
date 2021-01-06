@@ -1,23 +1,45 @@
+import fetch from 'isomorphic-fetch';
 import Head from 'next/head';
 import Link from 'next/link';
-import { Html } from '../../../../../../lib/utils';
 
-export default function TopicPage({ topicData }) {
+import Html from '../../../../../../components/Html';
+
+type Props = {
+  topicData: {
+    arguments: Array<{
+      description: string;
+      name: string;
+      topic_id: number;
+    }>;
+    description: string;
+    details: string;
+    examples: string;
+    name: string;
+    package_version: { package_name: string; version: string };
+    references: string;
+    sections: Array<{ description: string; name: string; topic_id: number }>;
+    seealso: string;
+    title: string;
+    usage: string;
+    value: string;
+  };
+};
+
+export default function TopicPage({ topicData }: Props) {
   const {
+    arguments: args,
+    description,
+    details,
+    examples,
     name,
     package_version: { package_name: packageName, version: packageVersion },
-    title,
-    description,
-    usage,
-    arguments: args,
-    value,
-    sections,
-    details,
     references,
+    sections,
     seealso,
-    examples,
+    title,
+    usage,
+    value,
   } = topicData;
-
   return (
     <>
       <Head>
@@ -34,7 +56,7 @@ export default function TopicPage({ topicData }) {
         <div className="mt-2 prose max-w-none">
           <header>
             <h1>
-              {name}: {title}
+              {name}: <Html>{title}</Html>
             </h1>
           </header>
           {description && (
@@ -55,7 +77,7 @@ export default function TopicPage({ topicData }) {
             <section>
               <h2>Arguments</h2>
               {args.map((arg) => (
-                <div key={arg.name} className="flex justify-between mt-5">
+                <div className="flex justify-between mt-5" key={arg.name}>
                   <div className="font-mono font-bold">
                     <Html>{arg.name}</Html>
                   </div>
@@ -113,11 +135,11 @@ export default function TopicPage({ topicData }) {
 }
 
 export async function getServerSideProps({
-  params: { package: packageName, version, topic },
+  params: { package: packageName, topic, version },
 }) {
   try {
     const res = await fetch(
-      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}/topics/${topic}`
+      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}/topics/${topic}`,
     );
     const topicData = await res.json();
 

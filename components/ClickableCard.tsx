@@ -1,19 +1,28 @@
 import Link from 'next/link';
-import { Html } from '../lib/utils';
+
+import Html from './Html';
+
+type Props = {
+  description: string;
+  extraInfo?: string;
+  href: string;
+  id: string | number;
+  name: string;
+};
 
 export default function ClickableCard({
-  id,
-  name,
   description,
   extraInfo,
   href,
-}) {
+  id,
+  name,
+}: Props) {
   return (
     <div
-      key={id}
       className="border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow"
+      key={id}
     >
-      <Link className="w-full h-full" href={href}>
+      <Link href={href}>
         <a>
           <div className="px-4 py-3">
             <div className="flex items-baseline justify-between">

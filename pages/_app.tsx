@@ -1,10 +1,12 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { useState, useEffect } from 'react';
-import { GlobalFontFaces } from '@datacamp/waffles-text';
 import '../styles/index.css';
+
+import { GlobalFontFaces } from '@datacamp/waffles-text';
+import type { AppProps } from 'next/app';
+import { useEffect, useState } from 'react';
+
 import Layout from '../components/Layout';
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const [isDark, setIsDark] = useState(false);
 
   // if we're client-side, check local storage on mount
@@ -19,7 +21,7 @@ function MyApp({ Component, pageProps }) {
   // run every time dark mode is toggled
   useEffect(() => {
     document.querySelector('html').classList.toggle('dark', isDark);
-    if (window) localStorage.setItem('darkMode', isDark);
+    if (window) localStorage.setItem('darkMode', String(isDark));
   }, [isDark]);
 
   return (
@@ -31,5 +33,3 @@ function MyApp({ Component, pageProps }) {
     </>
   );
 }
-
-export default MyApp;

@@ -1,36 +1,28 @@
 ## Today
 
-- finish dummy search landing page
-- add typescript everywhere
+- share another video update
 
 ## Later
 
+- improve search results page design / functionality
+- create sitemap? https://leerob.io/blog/nextjs-sitemap-robots
 - add actual package count to home page
 - streamline data I'm sending to the client
 - make everything responsive (mobile first?)
 - newlines etc. function examples (e.g. data.table)
 - link to vignettes (included in package endpoint)
-- update readme with helpful info
-- add search in nav on package / topic pages
-- don't use my personal github auth token
-- get search setup (wait for dieter)
+- update github readme with helpful info
 - strip badges directly from the markdown?
 - deal with monthly downloads chart for new packages
 - show different install instructions for bioc packages
 - add syntax highlighting for R code (see branch)
 - confirm redirect should be permanent when no package version
-- confirm I'm not using template strings unnecessarily
-
-## Helpful links
-
-- https://www.rdocumentation.org/packages/dplyr/versions/0.7.8
-- https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate
-
-- https://www.rdocumentation.org/packages/data.table/versions/1.13.4
-- https://www.rdocumentation.org/packages/data.table/versions/1.13.4/topics/fread
+- do a lighthouse audit of the entire site
+- add site metadata for SEO
 
 ## For Dieter
 
+- don't use my personal github auth token
 - not getting most recent data for some packages (e.g. dplyr)
 - packages endpoint returns `latest_version_id` -> how to use this?
 - need updated favicon
@@ -39,3 +31,6 @@
 - how to get total package count for home page?
 - only show search results for latest package versions?
 - version agnostic topic lookup? (e.g. mutate in dplyr version X)
+- need a sitemap?
+- update on search?
+- deadline end of january
