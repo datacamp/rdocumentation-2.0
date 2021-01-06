@@ -77,7 +77,7 @@ export default function PackageVersionPage({
   versionsArray,
 }: Props) {
   // construct link to the current package version
-  const linkToCurrentVersion = `http://rdocumentation.org${metadata.uri}`;
+  const linkToCurrentVersion = `https://rdocumentation.org${metadata.uri}`;
 
   // get the latest version of the package
   const latestVersion = versionsArray[0];
