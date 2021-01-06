@@ -1,16 +1,17 @@
 ## Today
 
-- share another video update
+- make everything responsive (mobile first?)
+- add site metadata for SEO
+- do a lighthouse audit of the entire site
 
 ## Later
 
-- bug: why does date say 1969? 
+- bug: why does date say 1969?
   - https://rdocumentation.vercel.app/packages/dplyr/versions/0.4.3?package=dplyr&version=0.4.3
 - improve search results page design / functionality
 - create sitemap? https://leerob.io/blog/nextjs-sitemap-robots
 - add actual package count to home page
 - streamline data I'm sending to the client
-- make everything responsive (mobile first?)
 - newlines etc. function examples (e.g. data.table)
 - link to vignettes (included in package endpoint)
 - update github readme with helpful info
@@ -19,8 +20,6 @@
 - show different install instructions for bioc packages
 - add syntax highlighting for R code (see branch)
 - confirm redirect should be permanent when no package version
-- do a lighthouse audit of the entire site
-- add site metadata for SEO
 
 ## For Dieter
 
