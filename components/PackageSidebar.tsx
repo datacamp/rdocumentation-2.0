@@ -82,10 +82,7 @@ export default function PackageSidebar({
   }
 
   function handleChangeVersion(selectedVersion) {
-    router.push({
-      pathname: '/packages/[package]/versions/[version]',
-      query: { package: packageName, version: selectedVersion },
-    });
+    router.push(`/packages/${packageName}/versions/${selectedVersion}`);
   }
 
   return (
