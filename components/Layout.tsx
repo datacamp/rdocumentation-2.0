@@ -9,12 +9,10 @@ type Props = {
 
 export default function Layout({ children, isDark, setIsDark }: Props) {
   return (
-    <div className="bg-dc-beige100 text-dc-navy dark:bg-dc-navy dark:text-white">
-      <div className="flex flex-col max-w-screen-xl min-h-screen px-5 mx-auto md:px-10">
-        <Navbar isDark={isDark} setIsDark={setIsDark} />
-        <div className="flex flex-col flex-grow">{children}</div>
-        <Footer />
-      </div>
+    <div className="flex flex-col max-w-screen-xl min-h-screen px-5 mx-auto md:px-10">
+      <Navbar isDark={isDark} setIsDark={setIsDark} />
+      <div className="flex flex-col flex-grow">{children}</div>
+      <Footer />
     </div>
   );
 }

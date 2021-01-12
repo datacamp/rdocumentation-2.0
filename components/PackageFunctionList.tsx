@@ -39,7 +39,7 @@ export default function PackageFunctionList({
     <div>
       <div className="block md:flex md:items-center md:justify-between">
         <h2 className="text-2xl font-bold">{`Functions in ${packageName} (${packageVersion})`}</h2>
-        <div className="mt-3 dc-input md:mt-0">
+        <div className="mt-5 dc-input md:mt-0">
           <Input
             className="w-full md:w-72"
             name="functionSearch"

@@ -5,7 +5,7 @@
 @layer base {
   body {
     font-family: 'Studio-Feixen-Sans', 'Arial';
-    @apply antialiased;
+    @apply antialiased bg-dc-beige100 text-dc-navy dark:bg-dc-navy dark:text-white;
   }
 }
 
