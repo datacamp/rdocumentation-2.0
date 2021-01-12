@@ -125,6 +125,7 @@ export default function PackageVersionPage({
               monthlyDownloads={monthlyDownloads}
               packageName={metadata.package_name}
               repository={repository}
+              showInstallCode={metadata.package.type_id === 1}
               version={metadata.version}
               versionsArray={versionsArray}
             />
