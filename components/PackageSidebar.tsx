@@ -131,11 +131,10 @@ export default function PackageSidebar({
               {downloadsLastMonth.toLocaleString()}
             </div>
             <div className="w-3/5">
-              {/* TODO: put the chart back */}
-              {/* <MonthlyDownloadsChart
+              <MonthlyDownloadsChart
                 isDark={isDark}
                 monthlyDownloads={monthlyDownloads}
-              /> */}
+              />
             </div>
           </div>
         </div>
