@@ -132,7 +132,8 @@ export default function PackageSidebar({
             </div>
           </div>
         )}
-        {monthlyDownloads && (
+        {/* only show downloads data if we have 3+ months of it */}
+        {monthlyDownloads && monthlyDownloads.length >= 3 && (
           <div>
             <SidebarHeader>Monthly Downloads</SidebarHeader>
             <div className="flex items-baseline justify-between">
