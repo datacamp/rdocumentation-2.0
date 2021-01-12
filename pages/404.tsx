@@ -6,7 +6,7 @@ type Props = {
 
 export default function Custom404({ isDark }: Props) {
   return (
-    <div className="flex flex-col items-center mt-36">
+    <div className="flex flex-col items-center mt-32 md:mt-56">
       <h1 className="text-xl md:text-2xl">Oops, that page doesn't exist.</h1>
       <div className="mt-8">
         <Button
