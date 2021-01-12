@@ -13,6 +13,7 @@
     "@datacamp/waffles-form-elements": "^3.2.3",
     "@datacamp/waffles-icons": "^2.2.1",
     "@datacamp/waffles-text": "^4.1.1",
+    "@datacamp/waffles-toast": "^2.1.7",
     "@emotion/core": "^10.1.1",
     "@octokit/graphql": "^4.5.8",
     "@tailwindcss/forms": "^0.2.1",
