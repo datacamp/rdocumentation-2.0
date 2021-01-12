@@ -73,7 +73,7 @@ export default function SearchResults() {
       <Head>
         <title>Results for '{q}' | RDocumentation</title>
       </Head>
-      <div className="w-full max-w-screen-lg mt-8 md:mx-auto md:mt-12">
+      <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
         <h1 className="text-xl">Search results for '{q}':</h1>
         <GridListContainer>
           {fakeSearchResults.map((result) => (

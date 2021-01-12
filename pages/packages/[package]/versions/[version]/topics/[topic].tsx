@@ -45,7 +45,7 @@ export default function TopicPage({ topicData }: Props) {
       <Head>
         <title>{name} function | RDocumentation</title>
       </Head>
-      <div className="max-w-screen-lg mt-8 md:mt-12 md:mx-auto">
+      <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
         <section className="text-xl text-gray-400">
           <Link href={`/packages/${packageName}/versions/${packageVersion}`}>
             <a>
