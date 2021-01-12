@@ -34,6 +34,7 @@ type PackageSidebarProps = {
     pullRequests: number;
     stars: number;
   };
+  showInstallCode: boolean;
   version: string;
   versionsArray: string[];
 };
@@ -50,6 +51,7 @@ export default function PackageSidebar({
   monthlyDownloads,
   packageName,
   repository,
+  showInstallCode,
   version,
   versionsArray,
 }: PackageSidebarProps) {
@@ -115,14 +117,17 @@ export default function PackageSidebar({
           ))}
         </Select>
       </div>
-      <div>
-        <SidebarHeader>Install</SidebarHeader>
-        <div className="prose-sm prose sm:prose">
-          <pre>
-            <code>{`install.packages('${packageName}')`}</code>
-          </pre>
+      {/* show install code if it's a CRAN package */}
+      {showInstallCode && (
+        <div>
+          <SidebarHeader>Install</SidebarHeader>
+          <div className="prose-sm prose sm:prose">
+            <pre>
+              <code>{`install.packages('${packageName}')`}</code>
+            </pre>
+          </div>
         </div>
-      </div>
+      )}
       {monthlyDownloads && (
         <div>
           <SidebarHeader>Monthly Downloads</SidebarHeader>
