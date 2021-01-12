@@ -2,6 +2,7 @@ import { Input } from '@datacamp/waffles-form-elements';
 import { useState } from 'react';
 
 import ClickableCard from './ClickableCard';
+import GridListContainer from './GridListContainer';
 
 type Props = {
   functions: Array<{
@@ -36,20 +37,20 @@ export default function PackageFunctionList({
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">{`Functions in ${packageName} (${packageVersion})`}</h2>
+      <div className="block md:flex md:items-center md:justify-between">
+        <h2 className="text-2xl font-bold">{`Functions in ${packageName} (${packageVersion})`}</h2>
+        <div className="mt-5 dc-input md:mt-0">
+          <Input
+            className="w-full md:w-72"
+            name="functionSearch"
+            onChange={setSearchInput}
+            placeholder="Search all functions"
+            size="small"
+            value={searchInput}
+          />
         </div>
-        <Input
-          className="w-72"
-          name="functionSearch"
-          onChange={setSearchInput}
-          placeholder="Search all functions"
-          size="small"
-          value={searchInput}
-        />
       </div>
-      <div className="grid grid-cols-3 gap-5 mt-5">
+      <GridListContainer>
         {filteredFunctions.map((f) => (
           <ClickableCard
             description={f.title}
@@ -59,7 +60,7 @@ export default function PackageFunctionList({
             name={f.name}
           />
         ))}
-      </div>
+      </GridListContainer>
     </div>
   );
 }

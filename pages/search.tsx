@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import ClickableCard from '../components/ClickableCard';
+import GridListContainer from '../components/GridListContainer';
 
 const fakeSearchResults = [
   {
@@ -72,9 +73,9 @@ export default function SearchResults() {
       <Head>
         <title>Results for '{q}' | RDocumentation</title>
       </Head>
-      <div className="w-full max-w-screen-lg mx-auto mt-12">
+      <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
         <h1 className="text-xl">Search results for '{q}':</h1>
-        <div className="grid grid-cols-3 gap-5 mt-5">
+        <GridListContainer>
           {fakeSearchResults.map((result) => (
             <ClickableCard
               description={result.description}
@@ -85,7 +86,7 @@ export default function SearchResults() {
               name={result.name}
             />
           ))}
-        </div>
+        </GridListContainer>
       </div>
     </>
   );
