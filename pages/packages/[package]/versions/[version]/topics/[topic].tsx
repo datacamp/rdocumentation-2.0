@@ -53,7 +53,7 @@ export default function TopicPage({ topicData }: Props) {
             </a>
           </Link>
         </section>
-        <div className="mt-2 prose max-w-none">
+        <div className="mt-2 prose-sm prose sm:prose max-w-none sm:max-w-none">
           <header>
             <h1>
               {name}: <Html>{title}</Html>

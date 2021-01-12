@@ -7,7 +7,7 @@ type Props = {
 
 export default function PackageReadme({ readme }: Props) {
   return (
-    <article className="prose max-w-none">
+    <article className="prose-sm prose sm:prose max-w-none sm:max-w-none">
       {readme ? (
         <ReactMarkdown
           plugins={[gfm]}

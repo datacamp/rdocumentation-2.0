@@ -117,7 +117,7 @@ export default function PackageSidebar({
       </div>
       <div>
         <SidebarHeader>Install</SidebarHeader>
-        <div className="prose">
+        <div className="prose-sm prose sm:prose">
           <pre>
             <code>{`install.packages('${packageName}')`}</code>
           </pre>
