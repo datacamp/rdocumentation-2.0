@@ -77,11 +77,11 @@ export default function TopicPage({ topicData }: Props) {
             <section>
               <h2>Arguments</h2>
               {args.map((arg) => (
-                <div className="flex justify-between mt-5" key={arg.name}>
-                  <div className="font-mono font-bold">
+                <div className="mt-6 md:flex" key={arg.name}>
+                  <div className="font-mono font-bold truncate md:w-3/12 lg:w-2/12">
                     <Html>{arg.name}</Html>
                   </div>
-                  <div className="w-4/5 ml-5 -mt-5">
+                  <div className="-mt-4 md:-mt-5 md:w-9/12 md:pl-5 lg:w-10/12">
                     <Html>{arg.description}</Html>
                   </div>
                 </div>
