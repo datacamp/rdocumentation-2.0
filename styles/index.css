@@ -8,7 +8,7 @@
     @apply antialiased bg-dc-beige100 text-dc-navy dark:bg-dc-navy dark:text-white;
   }
   input {
-    @apply appearance-none;
+    @apply shadow-none;
   }
 }
 
