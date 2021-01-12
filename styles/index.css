@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    font-family: "Studio-Feixen-Sans", "Arial";
+    font-family: 'Studio-Feixen-Sans', 'Arial';
     @apply antialiased;
   }
 }
@@ -17,5 +17,9 @@
 
   .prose * {
     @apply dark:text-white;
+  }
+
+  .dc-input > div {
+    @apply w-full;
   }
 }
