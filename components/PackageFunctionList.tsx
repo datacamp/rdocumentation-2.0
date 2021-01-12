@@ -2,6 +2,7 @@ import { Input } from '@datacamp/waffles-form-elements';
 import { useState } from 'react';
 
 import ClickableCard from './ClickableCard';
+import GridListContainer from './GridListContainer';
 
 type Props = {
   functions: Array<{
@@ -49,7 +50,7 @@ export default function PackageFunctionList({
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-3 mt-5 md:gap-5 md:grid-cols-3">
+      <GridListContainer>
         {filteredFunctions.map((f) => (
           <ClickableCard
             description={f.title}
@@ -59,7 +60,7 @@ export default function PackageFunctionList({
             name={f.name}
           />
         ))}
-      </div>
+      </GridListContainer>
     </div>
   );
 }
