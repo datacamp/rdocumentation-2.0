@@ -4,7 +4,10 @@ import { GlobalFontFaces } from '@datacamp/waffles-text';
 import type { AppProps } from 'next/app';
 import { createContext, useEffect, useState } from 'react';
 
-export const ThemeContext = createContext('light');
+export const ThemeContext = createContext({
+  theme: 'light',
+  toggleTheme: () => null,
+});
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState('light');
