@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch';
-import Head from 'next/head';
 import Link from 'next/link';
 
 import Html from '../../../../../../components/Html';
+import Layout from '../../../../../../components/Layout';
 
 type Props = {
   topicData: {
@@ -16,6 +16,7 @@ type Props = {
     examples: string;
     name: string;
     package_version: { package_name: string; version: string };
+    pageTitle: string;
     references: string;
     sections: Array<{ description: string; name: string; topic_id: number }>;
     seealso: string;
@@ -33,6 +34,7 @@ export default function TopicPage({ topicData }: Props) {
     examples,
     name,
     package_version: { package_name: packageName, version: packageVersion },
+    pageTitle,
     references,
     sections,
     seealso,
@@ -40,12 +42,9 @@ export default function TopicPage({ topicData }: Props) {
     usage,
     value,
   } = topicData;
+
   return (
-    <>
-      <Head>
-        <title>{name} function | RDocumentation</title>
-        <meta content={description} name="description" />
-      </Head>
+    <Layout description={description} title={pageTitle}>
       <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
         <section className="text-xl text-gray-400">
           <Link href={`/packages/${packageName}/versions/${packageVersion}`}>
@@ -131,7 +130,7 @@ export default function TopicPage({ topicData }: Props) {
           )}
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 

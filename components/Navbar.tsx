@@ -4,12 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-type Props = {
-  isDark: boolean;
-  setIsDark: (state: boolean) => void;
-};
-
-export default function Navbar({ isDark, setIsDark }: Props) {
+export default function Navbar() {
   const [searchInput, setSearchInput] = useState('');
   const router = useRouter();
 

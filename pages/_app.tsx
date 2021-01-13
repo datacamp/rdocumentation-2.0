@@ -4,8 +4,6 @@ import { GlobalFontFaces } from '@datacamp/waffles-text';
 import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 
-import Layout from '../components/Layout';
-
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [isDark, setIsDark] = useState(false);
 
@@ -27,9 +25,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalFontFaces />
-      <Layout isDark={isDark} setIsDark={setIsDark}>
-        <Component {...pageProps} isDark={isDark} />
-      </Layout>
+      <Component {...pageProps} />
     </>
   );
 }

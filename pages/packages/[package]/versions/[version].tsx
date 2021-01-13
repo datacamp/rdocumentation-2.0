@@ -1,9 +1,9 @@
 import { graphql } from '@octokit/graphql';
 import fetch from 'isomorphic-fetch';
 import { GetServerSideProps } from 'next';
-import Head from 'next/head';
 import Link from 'next/link';
 
+import Layout from '../../../../components/Layout';
 import PackageFunctionList from '../../../../components/PackageFunctionList';
 import PackageReadme from '../../../../components/PackageReadme';
 import PackageSidebar from '../../../../components/PackageSidebar';
@@ -93,11 +93,7 @@ export default function PackageVersionPage({
     : null;
 
   return (
-    <>
-      <Head>
-        <title>{metadata.package_name} package | RDocumentation</title>
-        <meta content={metadata.description} name="description" />
-      </Head>
+    <Layout description={metadata.description} title={metadata.pageTitle}>
       <div className="mt-8 md:mt-12">
         <div className="block lg:flex">
           <div className="w-full pb-8 lg:pb-0 lg:w-2/3 lg:pr-8">
@@ -140,7 +136,7 @@ export default function PackageVersionPage({
           />
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 
