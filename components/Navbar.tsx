@@ -2,11 +2,14 @@ import { Input } from '@datacamp/waffles-form-elements';
 import { MoonInvertedIcon, SunIcon } from '@datacamp/waffles-icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+
+import { ThemeContext } from '../pages/_app';
 
 export default function Navbar() {
   const [searchInput, setSearchInput] = useState('');
   const router = useRouter();
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   function onSubmitSearch(e) {
     e.preventDefault();
@@ -32,10 +35,10 @@ export default function Navbar() {
         <div className="md:absolute md:right-0 md:top-6">
           <button
             className="focus:outline-none"
-            onClick={() => setIsDark(!isDark)}
+            onClick={toggleTheme}
             type="button"
           >
-            {isDark ? <SunIcon /> : <MoonInvertedIcon />}
+            {theme === 'light' ? <MoonInvertedIcon /> : <SunIcon />}
           </button>
         </div>
       </div>

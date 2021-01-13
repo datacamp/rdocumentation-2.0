@@ -11,7 +11,6 @@ import { getMonthlyDownloads } from '../../../../lib/downloads';
 import { getGithubOwnerRepo, getPackageUrls } from '../../../../lib/utils';
 
 type Props = {
-  isDark: boolean;
   metadata: {
     api_uri: string;
     canonicalLink: string;
@@ -69,7 +68,6 @@ type Props = {
 };
 
 export default function PackageVersionPage({
-  isDark,
   metadata,
   monthlyDownloads,
   repository,
@@ -114,7 +112,6 @@ export default function PackageVersionPage({
               downloadsLastMonth={downloadsLastMonth}
               githubUrl={urls.githubUrl}
               homeUrl={urls.homeUrl}
-              isDark={isDark}
               lastPublished={lastPublished}
               license={metadata.license}
               linkToCurrentVersion={linkToCurrentVersion}

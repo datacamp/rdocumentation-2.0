@@ -1,4 +1,7 @@
+import { useContext } from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
+
+import { ThemeContext } from '../pages/_app';
 
 // copied from tailwind.config.js
 const colors = {
@@ -7,14 +10,11 @@ const colors = {
 };
 
 type Props = {
-  isDark: boolean;
   monthlyDownloads: Array<{ downloads: number; month: string }>;
 };
 
-export default function MonthlyDownloadsChart({
-  isDark,
-  monthlyDownloads,
-}: Props) {
+export default function MonthlyDownloadsChart({ monthlyDownloads }: Props) {
+  const { theme } = useContext(ThemeContext);
   return (
     <ResponsiveContainer height={50} width="100%">
       <AreaChart
@@ -29,13 +29,15 @@ export default function MonthlyDownloadsChart({
         <XAxis dataKey="month" hide />
         <Area
           dataKey="downloads"
-          fill={isDark ? colors['dc-yellow'] : colors['dc-navy']}
+          fill={theme === 'light' ? colors['dc-navy'] : colors['dc-yellow']}
           name="Downloads"
-          stroke={isDark ? colors['dc-yellow'] : colors['dc-navy']}
+          stroke={theme === 'light' ? colors['dc-navy'] : colors['dc-yellow']}
           type="monotone"
         />
         <Tooltip
-          contentStyle={isDark ? { backgroundColor: colors['dc-navy'] } : {}}
+          contentStyle={
+            theme === 'light' ? {} : { backgroundColor: colors['dc-navy'] }
+          }
         />
       </AreaChart>
     </ResponsiveContainer>
