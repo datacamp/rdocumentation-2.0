@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import Document, {
   DocumentContext,
-  DocumentInitialProps,
   Head,
   Html,
   Main,
@@ -9,14 +8,12 @@ import Document, {
 } from 'next/document';
 
 class MyDocument extends Document {
-  static async getInitialProps(
-    ctx: DocumentContext,
-  ): Promise<DocumentInitialProps> {
+  static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
   }
 
-  render(): JSX.Element {
+  render() {
     return (
       <Html lang="en">
         <Head>
