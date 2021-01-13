@@ -22,6 +22,10 @@ export default function HomePage() {
     <>
       <Head>
         <title>Home | RDocumentation</title>
+        <meta
+          content="Easily search the documentation for every version of every R package on CRAN and Bioconductor."
+          name="description"
+        />
       </Head>
       <div className="w-full max-w-4xl mx-auto mt-32 md:mt-56">
         <h1 className="text-xl md:text-2xl lg:text-3xl">

@@ -44,6 +44,7 @@ export default function TopicPage({ topicData }: Props) {
     <>
       <Head>
         <title>{name} function | RDocumentation</title>
+        <meta content={description} name="description" />
       </Head>
       <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
         <section className="text-xl text-gray-400">

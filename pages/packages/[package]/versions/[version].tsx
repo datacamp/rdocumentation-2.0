@@ -96,6 +96,7 @@ export default function PackageVersionPage({
     <>
       <Head>
         <title>{metadata.package_name} package | RDocumentation</title>
+        <meta content={metadata.description} name="description" />
       </Head>
       <div className="mt-8 md:mt-12">
         <div className="block lg:flex">
