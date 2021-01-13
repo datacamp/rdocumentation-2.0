@@ -2,34 +2,44 @@ import '../styles/index.css';
 
 import { GlobalFontFaces } from '@datacamp/waffles-text';
 import type { AppProps } from 'next/app';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-import Layout from '../components/Layout';
+export const ThemeContext = createContext({
+  theme: 'light',
+  toggleTheme: () => null,
+});
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const [isDark, setIsDark] = useState(false);
+  const [theme, setTheme] = useState('light');
+
+  function toggleTheme() {
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  }
 
   // if we're client-side, check local storage on mount
   useEffect(() => {
     if (window) {
-      let darkMode = false;
-      darkMode = JSON.parse(localStorage.getItem('darkMode'));
-      setIsDark(darkMode);
+      const savedTheme = localStorage.getItem('theme');
+      setTheme(savedTheme || 'light');
     }
   }, []);
 
-  // run every time dark mode is toggled
+  // run every time theme is toggled
   useEffect(() => {
-    document.querySelector('html').classList.toggle('dark', isDark);
-    if (window) localStorage.setItem('darkMode', String(isDark));
-  }, [isDark]);
+    document.querySelector('html').classList.toggle('dark', theme === 'dark');
+    if (window) localStorage.setItem('theme', theme);
+  }, [theme]);
 
   return (
     <>
       <GlobalFontFaces />
-      <Layout isDark={isDark} setIsDark={setIsDark}>
-        <Component {...pageProps} isDark={isDark} />
-      </Layout>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <Component {...pageProps} />
+      </ThemeContext.Provider>
     </>
   );
 }

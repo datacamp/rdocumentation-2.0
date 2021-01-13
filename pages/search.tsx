@@ -1,9 +1,9 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import ClickableCard from '../components/ClickableCard';
 import GridListContainer from '../components/GridListContainer';
+import Layout from '../components/Layout';
 
 const fakeSearchResults = [
   {
@@ -69,10 +69,7 @@ export default function SearchResults() {
   const { q } = router.query;
 
   return (
-    <>
-      <Head>
-        <title>Results for '{q}' | RDocumentation</title>
-      </Head>
+    <Layout title={`Results for '${q}'`}>
       <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
         <h1 className="text-xl">Search results for '{q}':</h1>
         <GridListContainer>
@@ -88,6 +85,6 @@ export default function SearchResults() {
           ))}
         </GridListContainer>
       </div>
-    </>
+    </Layout>
   );
 }

@@ -13,7 +13,6 @@ type PackageSidebarProps = {
   downloadsLastMonth: number;
   githubUrl: string;
   homeUrl: string;
-  isDark: boolean;
   lastPublished: Date;
   license: string;
   linkToCurrentVersion: string;
@@ -44,7 +43,6 @@ export default function PackageSidebar({
   downloadsLastMonth,
   githubUrl,
   homeUrl,
-  isDark,
   lastPublished,
   license,
   linkToCurrentVersion,
@@ -141,10 +139,7 @@ export default function PackageSidebar({
                 {downloadsLastMonth.toLocaleString()}
               </div>
               <div className="w-3/5">
-                <MonthlyDownloadsChart
-                  isDark={isDark}
-                  monthlyDownloads={monthlyDownloads}
-                />
+                <MonthlyDownloadsChart monthlyDownloads={monthlyDownloads} />
               </div>
             </div>
           </div>

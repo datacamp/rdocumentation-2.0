@@ -1,9 +1,9 @@
 import { graphql } from '@octokit/graphql';
 import fetch from 'isomorphic-fetch';
 import { GetServerSideProps } from 'next';
-import Head from 'next/head';
 import Link from 'next/link';
 
+import Layout from '../../../../components/Layout';
 import PackageFunctionList from '../../../../components/PackageFunctionList';
 import PackageReadme from '../../../../components/PackageReadme';
 import PackageSidebar from '../../../../components/PackageSidebar';
@@ -11,7 +11,6 @@ import { getMonthlyDownloads } from '../../../../lib/downloads';
 import { getGithubOwnerRepo, getPackageUrls } from '../../../../lib/utils';
 
 type Props = {
-  isDark: boolean;
   metadata: {
     api_uri: string;
     canonicalLink: string;
@@ -69,7 +68,6 @@ type Props = {
 };
 
 export default function PackageVersionPage({
-  isDark,
   metadata,
   monthlyDownloads,
   repository,
@@ -93,10 +91,7 @@ export default function PackageVersionPage({
     : null;
 
   return (
-    <>
-      <Head>
-        <title>{metadata.package_name} package | RDocumentation</title>
-      </Head>
+    <Layout description={metadata.description} title={metadata.pageTitle}>
       <div className="mt-8 md:mt-12">
         <div className="block lg:flex">
           <div className="w-full pb-8 lg:pb-0 lg:w-2/3 lg:pr-8">
@@ -117,7 +112,6 @@ export default function PackageVersionPage({
               downloadsLastMonth={downloadsLastMonth}
               githubUrl={urls.githubUrl}
               homeUrl={urls.homeUrl}
-              isDark={isDark}
               lastPublished={lastPublished}
               license={metadata.license}
               linkToCurrentVersion={linkToCurrentVersion}
@@ -139,7 +133,7 @@ export default function PackageVersionPage({
           />
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 
