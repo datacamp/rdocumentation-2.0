@@ -20,11 +20,11 @@ export const getServerSideProps: GetServerSideProps = async ({
       .sort((a, b) => b.id - a.id)
       .slice(0, 1)[0].version;
 
-    // return a redirect to the latest version
+    // return a temporary redirect to the latest version
     return {
       redirect: {
         destination: `/packages/${packageName}/versions/${latestVersion}`,
-        permanent: false, // TODO: make true?
+        permanent: false,
       },
     };
   } catch (error) {
