@@ -199,7 +199,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     }
 
     // get monthly download data from the r-hub API
-    const monthlyDownloads = await getMonthlyDownloads(packageName);
+    const monthlyDownloads = await getMonthlyDownloads(packageName as string);
 
     return {
       props: {

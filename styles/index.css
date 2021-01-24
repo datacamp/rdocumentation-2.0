@@ -13,7 +13,7 @@
 }
 
 @layer utilities {
-  /* TODO: confirm this ONLY gets rid of badges */
+  /* get rid of badges at top of readmes */
   .prose > p:first-of-type > a > img {
     @apply hidden;
   }

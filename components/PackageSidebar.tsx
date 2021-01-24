@@ -151,7 +151,6 @@ export default function PackageSidebar({
           </div>
           <div className="w-1/2">
             <SidebarHeader>License</SidebarHeader>
-            {/* TODO: strip down the license text? */}
             <SidebarValue>{license}</SidebarValue>
           </div>
         </div>

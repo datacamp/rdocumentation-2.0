@@ -9,8 +9,7 @@ import fetch from 'isomorphic-fetch';
 
 import { sumByGroup } from './utils';
 
-// TODO: only want `packageName` to be a `string`
-export async function getMonthlyDownloads(packageName: string | string[]) {
+export async function getMonthlyDownloads(packageName: string) {
   const today = new Date();
 
   // start of month, 1 year ago

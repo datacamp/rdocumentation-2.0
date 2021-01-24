@@ -37,7 +37,6 @@ export function sumByGroup(objectArray: any, groupBy: string, sumBy: string) {
 }
 
 // https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-// TODO: make this more robust to older browsers?
 export function copyTextToClipboard(text: string) {
   navigator.clipboard.writeText(text);
 }
