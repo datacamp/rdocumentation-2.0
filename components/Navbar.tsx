@@ -26,7 +26,7 @@ export default function Navbar() {
         <div className="md:absolute md:left-0 md:top-6">
           <nav className="text-lg">
             <Link href="/">
-              <a>RDocumentation</a>
+              <a className="p-1 -ml-1">RDocumentation</a>
             </Link>
           </nav>
         </div>
@@ -34,7 +34,8 @@ export default function Navbar() {
         {/* dark mode toggle */}
         <div className="md:absolute md:right-0 md:top-6">
           <button
-            className="focus:outline-none"
+            aria-label="toggle dark mode"
+            className="p-1 -mr-1"
             onClick={toggleTheme}
             type="button"
           >

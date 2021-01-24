@@ -95,6 +95,7 @@ export default function PackageSidebar({
           <SidebarHeader>Copy Link</SidebarHeader>
           <div className="relative mt-4 dark:text-dc-navy">
             <button
+              aria-label="copy link to clipboard"
               className="absolute inset-y-0 left-0 flex items-center justify-center w-10 pl-2"
               onClick={handleCopyLink}
               type="button"
