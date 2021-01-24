@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 
 import Html from '../../../../../../components/Html';
@@ -134,9 +135,9 @@ export default function TopicPage({ topicData }: Props) {
   );
 }
 
-export async function getServerSideProps({
+export const getServerSideProps: GetServerSideProps = async ({
   params: { package: packageName, topic, version },
-}) {
+}) => {
   try {
     const res = await fetch(
       `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}/topics/${topic}`,
@@ -157,4 +158,4 @@ export async function getServerSideProps({
       notFound: true,
     };
   }
-}
+};
