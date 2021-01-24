@@ -16,9 +16,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     const data = await res.json();
 
     // if package is found, get the latest version
-    const latestVersion = data.versions
-      .sort((a, b) => b.id - a.id)
-      .slice(0, 1)[0].version;
+    const latestVersion = data.versions.find(
+      (version) => version.id === data.latest_version_id,
+    ).version;
 
     // return a temporary redirect to the latest version
     return {
