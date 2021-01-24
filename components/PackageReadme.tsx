@@ -7,26 +7,27 @@ type Props = {
 
 export default function PackageReadme({ readme }: Props) {
   return (
-    <article className="prose-sm prose sm:prose max-w-none sm:max-w-none">
+    <article>
       {readme ? (
-        <ReactMarkdown
-          plugins={[gfm]}
-          renderers={{
-            link: ({ children, href }) => (
-              <a href={href} rel="noopener noreferrer" target="_blank">
-                {children}
-              </a>
-            ),
-          }}
-          skipHtml
-        >
-          {readme}
-        </ReactMarkdown>
-      ) : (
-        <div className="pt-20 text-center">
-          {/* TODO: Need a CTA here */}
-          Readme not available 😞
+        <div className="prose-sm prose sm:prose max-w-none sm:max-w-none">
+          <ReactMarkdown
+            plugins={[gfm]}
+            renderers={{
+              link: ({ children, href }) => (
+                <a href={href} rel="noopener noreferrer" target="_blank">
+                  {children}
+                </a>
+              ),
+            }}
+            skipHtml
+          >
+            {readme}
+          </ReactMarkdown>
         </div>
+      ) : (
+        <p className="mt-8 text-center md:text-lg lg:text-xl lg:mt-24">
+          Readme not available 😞
+        </p>
       )}
     </article>
   );

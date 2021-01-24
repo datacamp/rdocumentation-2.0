@@ -26,7 +26,7 @@ export default function ClickableCard({
         <a>
           <div className="px-4 py-3">
             <div className="flex items-baseline justify-between">
-              <div className="font-bold">
+              <div className="font-bold truncate">
                 <Html>{name}</Html>
               </div>
               <div className="text-sm text-gray-400">{extraInfo}</div>
