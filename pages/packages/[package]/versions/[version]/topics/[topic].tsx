@@ -47,7 +47,7 @@ export default function TopicPage({ topicData }: Props) {
   return (
     <Layout description={description} title={pageTitle}>
       <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
-        <section className="text-xl text-gray-400">
+        <section className="text-xl text-gray-500">
           <Link href={`/packages/${packageName}/versions/${packageVersion}`}>
             <a>
               {packageName} (version {packageVersion})
