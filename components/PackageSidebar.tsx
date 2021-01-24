@@ -102,8 +102,12 @@ export default function PackageSidebar({
             >
               <CopyIcon size={18} />
             </button>
+            <label className="sr-only" htmlFor="linkToCurrentVersion">
+              Link to current version
+            </label>
             <input
               className="block w-full pl-10 text-gray-500 border-2 rounded-md border-dc-grey300"
+              id="linkToCurrentVersion"
               readOnly
               type="text"
               value={linkToCurrentVersion}
@@ -112,7 +116,15 @@ export default function PackageSidebar({
         </div>
         <div>
           <SidebarHeader>Version</SidebarHeader>
-          <Select name="version" onChange={handleChangeVersion} value={version}>
+          <label className="sr-only" htmlFor="version">
+            Version
+          </label>
+          <Select
+            id="version"
+            name="version"
+            onChange={handleChangeVersion}
+            value={version}
+          >
             {versionsArray.map((v) => (
               <SelectOption key={v} value={v}>
                 {v}

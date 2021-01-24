@@ -39,8 +39,12 @@ export default function PackageFunctionList({
       <div className="block md:flex md:items-center md:justify-between">
         <h2 className="text-2xl font-bold">{`Functions in ${packageName} (${packageVersion})`}</h2>
         <div className="mt-5 dc-input md:mt-0">
+          <label className="sr-only" htmlFor="functionSearch">
+            Search functions
+          </label>
           <Input
             className="w-full md:w-72"
+            id="functionSearch"
             name="functionSearch"
             onChange={setSearchInput}
             placeholder="Search all functions"

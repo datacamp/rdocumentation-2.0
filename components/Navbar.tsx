@@ -48,9 +48,13 @@ export default function Navbar() {
       {showSearch && (
         <form onSubmit={onSubmitSearch}>
           <div className="dc-input">
+            <label className="sr-only" htmlFor="searchBarNav">
+              Search all packages and functions
+            </label>
             <Input
               className="w-full md:w-80 lg:w-96"
-              name="navSearch"
+              id="searchBarNav"
+              name="searchBarNav"
               onChange={setSearchInput}
               placeholder="Search all packages and functions"
               size="small"

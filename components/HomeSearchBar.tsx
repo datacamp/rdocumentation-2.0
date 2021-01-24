@@ -22,8 +22,12 @@ export default function HomeSearchBar({ onChange, value }: Props) {
       <div className="absolute inset-y-0 left-0 items-center hidden pl-6 pointer-events-none sm:flex">
         <SearchIcon size={24} />
       </div>
+      <label className="sr-only" htmlFor="searchBarHome">
+        Search all packages and functions
+      </label>
       <input
         className="block w-full py-2 text-lg border-2 rounded-md sm:pl-16 md:text-2xl md:py-4 placeholder-dc-grey400 border-dc-grey300 focus:border-dc-blue focus:ring-dc-blue dark:focus:border-dc-green dark:focus:ring-dc-green"
+        id="searchBarHome"
         onChange={onChange}
         placeholder={`For example, try '${p.package}' or '${p.function}'`}
         type="text"

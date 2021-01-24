@@ -29,7 +29,7 @@ export default function ClickableCard({
               <div className="font-bold truncate">
                 <Html>{name}</Html>
               </div>
-              <div className="text-sm text-gray-400">{extraInfo}</div>
+              <div className="text-sm text-gray-500">{extraInfo}</div>
             </div>
             <div className="mt-2 text-sm">
               <Html>{description}</Html>
