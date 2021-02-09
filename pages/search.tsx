@@ -1,106 +1,71 @@
 /* eslint-disable sonarjs/no-duplicate-string */
+import fetch from 'isomorphic-fetch';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 import ClickableCard from '../components/ClickableCard';
 import Layout from '../components/Layout';
 
-const fakeSearchResults = {
-  functions: [
-    {
-      description: 'Add new variables',
-      extraInfo: 'function',
-      href: '/packages/dplyr',
-      id: 3,
-      name: 'mutate (dplyr)',
-    },
-    {
-      description: 'Merge two data.tables',
-      extraInfo: 'function',
-      href: '/packages/data.table',
-      id: 4,
-      name: 'merge (data.table)',
-    },
-
-    {
-      description: 'Fast and friendly file finagler',
-      extraInfo: 'function',
-      href: '/packages/data.table',
-      id: 6,
-      name: 'fread (data.table)',
-    },
-
-    {
-      description: 'Truncate a character string.',
-      extraInfo: 'function',
-      href: '/packages/stringr',
-      id: 8,
-      name: 'str_trunc (stringr)',
-    },
-  ],
-  packages: [
-    {
-      description: 'A Grammar of Data Manipulation',
-      extraInfo: 'package',
-      href: '/packages/dplyr',
-      id: 1,
-      name: 'dplyr',
-    },
-    {
-      description: 'Extension of Data.frame',
-      extraInfo: 'package',
-      href: '/packages/data.table',
-      id: 2,
-      name: 'data.table',
-    },
-    {
-      description: 'Simple, Consistent Wrappers for Common String Operations',
-      extraInfo: 'package',
-      href: '/packages/stringr',
-      id: 5,
-      name: 'stringr',
-    },
-    {
-      description: 'Learn R, in R',
-      extraInfo: 'package',
-      href: '/packages/swirl',
-      id: 7,
-      name: 'swirl',
-    },
-  ],
-};
-
 export default function SearchResults() {
   const router = useRouter();
-  const { q } = router.query;
+  const [packageResults, setPackageResults] = useState([]);
+  const [functionResults, setFunctionResults] = useState([]);
+  const { q: searchTerm } = router.query;
+
+  useEffect(() => {
+    async function getResults() {
+      const resPackages = await fetch(
+        `https://www.rdocumentation.org/search_packages?q=${searchTerm}&page=1&latest=1`,
+        {
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      );
+      const resFunctions = await fetch(
+        `https://www.rdocumentation.org/search_functions?q=${searchTerm}&page=1&latest=1`,
+        {
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      );
+      const { packages } = await resPackages.json();
+      const { functions } = await resFunctions.json();
+      setPackageResults(packages);
+      setFunctionResults(functions);
+    }
+    getResults();
+  }, [searchTerm]);
 
   return (
-    <Layout title={`Results for '${q}'`}>
+    <Layout title={`Results for '${searchTerm}'`}>
       <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
-        <h1 className="text-lg">Search results for '{q}':</h1>
+        <h1 className="text-lg">Search results for '{searchTerm}':</h1>
         <div className="grid grid-cols-1 mt-5 md:grid-cols-2">
           <div className="pb-5 space-y-4 md:border-r md:space-y-5 md:pr-10">
             <h2 className="text-2xl">Packages</h2>
-            {fakeSearchResults.packages.map((packageResult) => (
+            {packageResults.map((p) => (
               <ClickableCard
-                description={packageResult.description}
-                extraInfo={packageResult.extraInfo}
-                href={packageResult.href}
-                id={packageResult.id}
-                key={packageResult.id}
-                name={packageResult.name}
+                description={p.description}
+                extraInfo={`version ${p.fields.version}`}
+                href={`/packages/${p.fields.package_name}/versions/${p.fields.version}`}
+                id={`${p.fields.package_name}-${p.fields.version}`}
+                key={`${p.fields.package_name}-${p.fields.version}`}
+                name={p.fields.package_name}
               />
             ))}
           </div>
           <div className="pb-5 mt-5 space-y-4 md:mt-0 md:space-y-5 md:pl-10">
             <h2 className="text-2xl">Functions</h2>
-            {fakeSearchResults.functions.map((functionResult) => (
+            {functionResults.map((f) => (
               <ClickableCard
-                description={functionResult.description}
-                extraInfo={functionResult.extraInfo}
-                href={functionResult.href}
-                id={functionResult.id}
-                key={functionResult.id}
-                name={functionResult.name}
+                description={f.description}
+                extraInfo="function"
+                href={`/packages/${f.fields.package_name}/versions/${f.fields.version}/topics/${f.fields.name}`}
+                id={`${f.fields.name}-${f.fields.version}`}
+                key={`${f.fields.name}-${f.fields.version}`}
+                name={f.fields.name}
               />
             ))}
           </div>
