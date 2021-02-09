@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import Html from './Html';
 
@@ -17,27 +17,27 @@ export default function ClickableCard({
   id,
   name,
 }: Props) {
+  const router = useRouter();
+
+  function handleClick() {
+    router.push(href);
+  }
+
   return (
-    <div
-      className="border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow focus:border-dc-navy dark:focus:border-dc-yellow focus:outline-none"
+    <button
+      className="block w-full px-4 py-3 border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow focus:border-dc-navy dark:focus:border-dc-yellow focus:outline-none"
       key={id}
-      tabIndex={0}
+      onClick={handleClick}
     >
-      <Link href={href}>
-        <a>
-          <div className="px-4 py-3">
-            <div className="flex items-baseline justify-between">
-              <div className="font-bold truncate">
-                <Html>{name}</Html>
-              </div>
-              <div className="text-sm text-gray-500">{extraInfo}</div>
-            </div>
-            <div className="mt-2 text-sm line-clamp-3">
-              <Html>{description}</Html>
-            </div>
-          </div>
-        </a>
-      </Link>
-    </div>
+      <div className="flex items-baseline justify-between">
+        <div className="font-bold truncate">
+          <Html>{name}</Html>
+        </div>
+        <div className="text-sm text-gray-500">{extraInfo}</div>
+      </div>
+      <div className="mt-2 text-sm text-left line-clamp-3">
+        <Html>{description}</Html>
+      </div>
+    </button>
   );
 }
