@@ -19,8 +19,9 @@ export default function ClickableCard({
 }: Props) {
   return (
     <div
-      className="border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow"
+      className="border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow focus:border-dc-navy dark:focus:border-dc-yellow focus:outline-none"
       key={id}
+      tabIndex={0}
     >
       <Link href={href}>
         <a>
@@ -31,7 +32,7 @@ export default function ClickableCard({
               </div>
               <div className="text-sm text-gray-500">{extraInfo}</div>
             </div>
-            <div className="mt-2 text-sm">
+            <div className="mt-2 text-sm line-clamp-3">
               <Html>{description}</Html>
             </div>
           </div>
