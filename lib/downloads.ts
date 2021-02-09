@@ -23,11 +23,10 @@ export async function getMonthlyDownloads(packageName: string) {
   });
 
   // get the daily data
-  const dailyDownloads = await fetch(
+  const res = await fetch(
     `https://cranlogs.r-pkg.org/downloads/daily/${startDate}:${endDate}/${packageName}`,
-  )
-    .then((res) => res.json())
-    .then((data) => data[0].downloads);
+  );
+  const dailyDownloads = (await res.json())[0].downloads;
 
   // if none, then return empty array
   if (!dailyDownloads) return null;
