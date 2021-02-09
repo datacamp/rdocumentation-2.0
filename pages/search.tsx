@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import Button from '@datacamp/waffles-button';
 import fetch from 'isomorphic-fetch';
 import { useRouter } from 'next/router';
@@ -9,13 +8,39 @@ import Layout from '../components/Layout';
 
 import { ThemeContext } from './_app';
 
+type PackageResult = {
+  description: string;
+  fields: {
+    maintainer: string[];
+    package_name: string;
+    version: string;
+  };
+  score: number;
+};
+
+type FunctionResult = {
+  description: string;
+  fields: {
+    maintainer: string[];
+    name: string;
+    package_name: string;
+    version: string;
+  };
+  score: number;
+  title: string;
+};
+
 export default function SearchResults() {
   const router = useRouter();
   const { q: searchTerm } = router.query;
   const { theme } = useContext(ThemeContext);
 
-  const [packageResults, setPackageResults] = useState([]);
-  const [functionResults, setFunctionResults] = useState([]);
+  const [packageResults, setPackageResults] = useState<PackageResult[] | []>(
+    [],
+  );
+  const [functionResults, setFunctionResults] = useState<FunctionResult[] | []>(
+    [],
+  );
   const [pagesShown, setPagesShown] = useState(1);
 
   // reset search results and page count when package changes
@@ -60,7 +85,7 @@ export default function SearchResults() {
         <div className="grid grid-cols-1 mt-5 md:grid-cols-2">
           <div className="pb-5 space-y-4 md:border-r md:space-y-5 md:pr-10">
             <h2 className="text-2xl">Packages</h2>
-            {packageResults.map((p) => (
+            {packageResults.map((p: PackageResult) => (
               <ClickableCard
                 description={p.description}
                 extraInfo={`version ${p.fields.version}`}
@@ -73,9 +98,9 @@ export default function SearchResults() {
           </div>
           <div className="pb-5 mt-5 space-y-4 md:mt-0 md:space-y-5 md:pl-10">
             <h2 className="text-2xl">Functions</h2>
-            {functionResults.map((f) => (
+            {functionResults.map((f: FunctionResult) => (
               <ClickableCard
-                description={f.description}
+                description={f.title}
                 extraInfo={f.fields.package_name}
                 href={`/packages/${f.fields.package_name}/versions/${f.fields.version}/topics/${f.fields.name}`}
                 id={`${f.fields.name}-${f.fields.version}`}
