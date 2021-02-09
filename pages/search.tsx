@@ -1,110 +1,172 @@
-/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable no-console */
+import Button, { ButtonGroup } from '@datacamp/waffles-button';
+import { ArrowLeftIcon, ArrowRightIcon } from '@datacamp/waffles-icons';
+import fetch from 'isomorphic-fetch';
 import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
 
 import ClickableCard from '../components/ClickableCard';
 import Layout from '../components/Layout';
 
-const fakeSearchResults = {
-  functions: [
-    {
-      description: 'Add new variables',
-      extraInfo: 'function',
-      href: '/packages/dplyr',
-      id: 3,
-      name: 'mutate (dplyr)',
-    },
-    {
-      description: 'Merge two data.tables',
-      extraInfo: 'function',
-      href: '/packages/data.table',
-      id: 4,
-      name: 'merge (data.table)',
-    },
+import { ThemeContext } from './_app';
 
-    {
-      description: 'Fast and friendly file finagler',
-      extraInfo: 'function',
-      href: '/packages/data.table',
-      id: 6,
-      name: 'fread (data.table)',
-    },
+type PackageResult = {
+  description: string;
+  fields: {
+    maintainer: string[];
+    package_name: string;
+    version: string;
+  };
+  score: number;
+};
 
-    {
-      description: 'Truncate a character string.',
-      extraInfo: 'function',
-      href: '/packages/stringr',
-      id: 8,
-      name: 'str_trunc (stringr)',
-    },
-  ],
-  packages: [
-    {
-      description: 'A Grammar of Data Manipulation',
-      extraInfo: 'package',
-      href: '/packages/dplyr',
-      id: 1,
-      name: 'dplyr',
-    },
-    {
-      description: 'Extension of Data.frame',
-      extraInfo: 'package',
-      href: '/packages/data.table',
-      id: 2,
-      name: 'data.table',
-    },
-    {
-      description: 'Simple, Consistent Wrappers for Common String Operations',
-      extraInfo: 'package',
-      href: '/packages/stringr',
-      id: 5,
-      name: 'stringr',
-    },
-    {
-      description: 'Learn R, in R',
-      extraInfo: 'package',
-      href: '/packages/swirl',
-      id: 7,
-      name: 'swirl',
-    },
-  ],
+type FunctionResult = {
+  description: string;
+  fields: {
+    maintainer: string[];
+    name: string;
+    package_name: string;
+    version: string;
+  };
+  score: number;
+  title: string;
 };
 
 export default function SearchResults() {
   const router = useRouter();
-  const { q } = router.query;
+  const { p: page, q: searchTerm } = router.query;
+  const { theme } = useContext(ThemeContext);
+
+  const [packageResults, setPackageResults] = useState<PackageResult[]>([]);
+  const [functionResults, setFunctionResults] = useState<FunctionResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const pageNumber = page ? Number(page) : 1;
+  const onFirstPage = pageNumber === 1;
+  const onLastPage = packageResults.length < 15 && functionResults.length < 15;
+
+  // fetch first page of results and add pages as requested
+  useEffect(() => {
+    async function fetchResults() {
+      try {
+        setIsLoading(true);
+        // fetch the data
+        const resPackages = await fetch(
+          `https://www.rdocumentation.org/search_packages?q=${searchTerm}&page=${pageNumber}&latest=1`,
+          {
+            headers: {
+              Accept: 'application/json',
+            },
+          },
+        );
+        const resFunctions = await fetch(
+          `https://www.rdocumentation.org/search_functions?q=${searchTerm}&page=${pageNumber}&latest=1`,
+          {
+            headers: {
+              Accept: 'application/json',
+            },
+          },
+        );
+        const { packages } = await resPackages.json();
+        const { functions } = await resFunctions.json();
+        setPackageResults(packages);
+        setFunctionResults(functions);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    // get results once search term exists
+    if (searchTerm) fetchResults();
+  }, [searchTerm, pageNumber]);
+
+  function handlePreviousPage() {
+    if (onFirstPage) return;
+    router.push(`/search?q=${searchTerm}&p=${pageNumber - 1}`);
+  }
+
+  function handleNextPage() {
+    if (onLastPage) return;
+    router.push(`/search?q=${searchTerm}&p=${pageNumber + 1}`);
+  }
 
   return (
-    <Layout title={`Results for '${q}'`}>
+    <Layout title={searchTerm ? `Results for '${searchTerm}'` : ''}>
       <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
-        <h1 className="text-lg">Search results for '{q}':</h1>
+        <h1 className="text-lg">
+          Page {pageNumber} of results for '{searchTerm}':
+        </h1>
         <div className="grid grid-cols-1 mt-5 md:grid-cols-2">
+          {/* package results */}
           <div className="pb-5 space-y-4 md:border-r md:space-y-5 md:pr-10">
             <h2 className="text-2xl">Packages</h2>
-            {fakeSearchResults.packages.map((packageResult) => (
-              <ClickableCard
-                description={packageResult.description}
-                extraInfo={packageResult.extraInfo}
-                href={packageResult.href}
-                id={packageResult.id}
-                key={packageResult.id}
-                name={packageResult.name}
-              />
-            ))}
+            {!isLoading && packageResults.length > 0 ? (
+              <>
+                {packageResults.map((p: PackageResult) => (
+                  <ClickableCard
+                    description={p.description}
+                    extraInfo={`version: ${p.fields.version}`}
+                    href={`/packages/${p.fields.package_name}/versions/${p.fields.version}`}
+                    id={`${p.fields.package_name}-${p.fields.version}`}
+                    key={`${p.fields.package_name}-${p.fields.version}`}
+                    name={p.fields.package_name}
+                  />
+                ))}
+              </>
+            ) : (
+              <p className="italic text-gray-600">
+                {isLoading ? 'Loading results...' : 'No packages found'}
+              </p>
+            )}
           </div>
+
+          {/* function results */}
           <div className="pb-5 mt-5 space-y-4 md:mt-0 md:space-y-5 md:pl-10">
             <h2 className="text-2xl">Functions</h2>
-            {fakeSearchResults.functions.map((functionResult) => (
-              <ClickableCard
-                description={functionResult.description}
-                extraInfo={functionResult.extraInfo}
-                href={functionResult.href}
-                id={functionResult.id}
-                key={functionResult.id}
-                name={functionResult.name}
-              />
-            ))}
+            {!isLoading && functionResults.length > 0 ? (
+              <>
+                {functionResults.map((f: FunctionResult) => (
+                  <ClickableCard
+                    description={f.description}
+                    extraInfo={`package: ${f.fields.package_name}`}
+                    href={`/packages/${f.fields.package_name}/versions/${f.fields.version}/topics/${f.fields.name}`}
+                    id={`${f.fields.package_name}-${f.fields.name}-${f.fields.version}`}
+                    key={`${f.fields.package_name}-${f.fields.name}-${f.fields.version}`}
+                    name={f.fields.name}
+                  />
+                ))}
+              </>
+            ) : (
+              <p className="italic text-gray-600">
+                {isLoading ? 'Loading results...' : 'No functions found'}
+              </p>
+            )}
           </div>
         </div>
+
+        {/* page toggle buttons */}
+        {(packageResults.length > 0 || functionResults.length > 0) && (
+          <div className="flex justify-center mt-6">
+            <ButtonGroup>
+              <Button
+                appearance={theme === 'light' ? 'default' : 'inverted'}
+                disabled={onFirstPage}
+                onClick={handlePreviousPage}
+              >
+                <ArrowLeftIcon />
+                Previous Page
+              </Button>
+              <Button
+                appearance={theme === 'light' ? 'default' : 'inverted'}
+                disabled={onLastPage}
+                onClick={handleNextPage}
+              >
+                Next Page
+                <ArrowRightIcon />
+              </Button>
+            </ButtonGroup>
+          </div>
+        )}
       </div>
     </Layout>
   );

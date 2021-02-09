@@ -13,6 +13,7 @@ export default function Navbar() {
 
   function onSubmitSearch(e) {
     e.preventDefault();
+    if (!searchInput) return;
     router.push(`/search?q=${encodeURIComponent(searchInput)}`);
     setSearchInput('');
   }
@@ -58,6 +59,7 @@ export default function Navbar() {
               onChange={setSearchInput}
               placeholder="Search all packages and functions"
               size="small"
+              type="search"
               value={searchInput}
             />
           </div>
