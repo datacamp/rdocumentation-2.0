@@ -26,7 +26,7 @@ export default function HomePage() {
     >
       <div className="w-full max-w-4xl mx-auto mt-32 md:mt-56">
         <h1 className="text-xl md:text-2xl lg:text-3xl">
-          Search all 22,432 R packages on CRAN and Bioconductor
+          Search all R packages on CRAN and Bioconductor
         </h1>
         <form onSubmit={onSubmitSearch}>
           <HomeSearchBar
