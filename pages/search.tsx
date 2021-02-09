@@ -1,21 +1,35 @@
 /* eslint-disable sonarjs/no-duplicate-string */
+import Button from '@datacamp/waffles-button';
 import fetch from 'isomorphic-fetch';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import ClickableCard from '../components/ClickableCard';
 import Layout from '../components/Layout';
 
+import { ThemeContext } from './_app';
+
 export default function SearchResults() {
   const router = useRouter();
+  const { q: searchTerm } = router.query;
+  const { theme } = useContext(ThemeContext);
+
   const [packageResults, setPackageResults] = useState([]);
   const [functionResults, setFunctionResults] = useState([]);
-  const { q: searchTerm } = router.query;
+  const [pagesShown, setPagesShown] = useState(1);
 
+  // reset search results and page count when package changes
+  useEffect(() => {
+    setPackageResults([]);
+    setFunctionResults([]);
+    setPagesShown(1);
+  }, [searchTerm]);
+
+  // fetch first page of results and add pages as requested
   useEffect(() => {
     async function getResults() {
       const resPackages = await fetch(
-        `https://www.rdocumentation.org/search_packages?q=${searchTerm}&page=1&latest=1`,
+        `https://www.rdocumentation.org/search_packages?q=${searchTerm}&page=${pagesShown}&latest=1`,
         {
           headers: {
             Accept: 'application/json',
@@ -23,7 +37,7 @@ export default function SearchResults() {
         },
       );
       const resFunctions = await fetch(
-        `https://www.rdocumentation.org/search_functions?q=${searchTerm}&page=1&latest=1`,
+        `https://www.rdocumentation.org/search_functions?q=${searchTerm}&page=${pagesShown}&latest=1`,
         {
           headers: {
             Accept: 'application/json',
@@ -32,11 +46,12 @@ export default function SearchResults() {
       );
       const { packages } = await resPackages.json();
       const { functions } = await resFunctions.json();
-      setPackageResults(packages);
-      setFunctionResults(functions);
+      setPackageResults((prevState) => [...prevState, ...packages]);
+      setFunctionResults((prevState) => [...prevState, ...functions]);
     }
-    getResults();
-  }, [searchTerm]);
+    // get results once search term exists
+    if (searchTerm) getResults();
+  }, [searchTerm, pagesShown]);
 
   return (
     <Layout title={`Results for '${searchTerm}'`}>
@@ -61,7 +76,7 @@ export default function SearchResults() {
             {functionResults.map((f) => (
               <ClickableCard
                 description={f.description}
-                extraInfo={`version ${f.fields.version}`}
+                extraInfo={f.fields.package_name}
                 href={`/packages/${f.fields.package_name}/versions/${f.fields.version}/topics/${f.fields.name}`}
                 id={`${f.fields.name}-${f.fields.version}`}
                 key={`${f.fields.name}-${f.fields.version}`}
@@ -70,6 +85,17 @@ export default function SearchResults() {
             ))}
           </div>
         </div>
+        {(functionResults.length > 0 || packageResults.length > 0) && (
+          <div className="flex justify-center mt-6">
+            <Button
+              appearance={theme === 'light' ? 'default' : 'primary'}
+              intent={theme === 'light' ? 'neutral' : 'b2b'}
+              onClick={() => setPagesShown(pagesShown + 1)}
+            >
+              See More
+            </Button>
+          </div>
+        )}
       </div>
     </Layout>
   );
