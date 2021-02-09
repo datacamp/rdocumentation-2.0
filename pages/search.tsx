@@ -43,7 +43,7 @@ export default function SearchResults() {
   );
   const [pagesShown, setPagesShown] = useState(1);
 
-  // reset search results and page count when package changes
+  // reset search results and page count when search term changes
   useEffect(() => {
     setPackageResults([]);
     setFunctionResults([]);
