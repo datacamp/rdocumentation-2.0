@@ -79,7 +79,7 @@ export default function SearchResults() {
   }, [searchTerm, pagesShown]);
 
   return (
-    <Layout title={`Results for '${searchTerm}'`}>
+    <Layout title={searchTerm ? `Results for '${searchTerm}'` : ''}>
       <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
         <h1 className="text-lg">Search results for '{searchTerm}':</h1>
         <div className="grid grid-cols-1 mt-5 md:grid-cols-2">
