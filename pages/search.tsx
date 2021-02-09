@@ -61,7 +61,7 @@ export default function SearchResults() {
             {functionResults.map((f) => (
               <ClickableCard
                 description={f.description}
-                extraInfo="function"
+                extraInfo={`version ${f.fields.version}`}
                 href={`/packages/${f.fields.package_name}/versions/${f.fields.version}/topics/${f.fields.name}`}
                 id={`${f.fields.name}-${f.fields.version}`}
                 key={`${f.fields.name}-${f.fields.version}`}
