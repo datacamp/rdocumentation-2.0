@@ -1,4 +1,6 @@
-import Button from '@datacamp/waffles-button';
+/* eslint-disable no-console */
+import Button, { ButtonGroup } from '@datacamp/waffles-button';
+import { ArrowUpIcon } from '@datacamp/waffles-icons';
 import fetch from 'isomorphic-fetch';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
@@ -38,40 +40,49 @@ export default function SearchResults() {
   const [packageResults, setPackageResults] = useState<PackageResult[]>([]);
   const [functionResults, setFunctionResults] = useState<FunctionResult[]>([]);
   const [pagesShown, setPagesShown] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   // reset search results and page count when search term changes
   useEffect(() => {
+    setPagesShown(1);
     setPackageResults([]);
     setFunctionResults([]);
-    setPagesShown(1);
   }, [searchTerm]);
 
   // fetch first page of results and add pages as requested
   useEffect(() => {
-    async function getResults() {
-      const resPackages = await fetch(
-        `https://www.rdocumentation.org/search_packages?q=${searchTerm}&page=${pagesShown}&latest=1`,
-        {
-          headers: {
-            Accept: 'application/json',
+    async function fetchResults() {
+      setIsLoading(true);
+      console.log(`Fetching page ${pagesShown} for ${searchTerm}...`);
+
+      try {
+        const resPackages = await fetch(
+          `https://www.rdocumentation.org/search_packages?q=${searchTerm}&page=${pagesShown}&latest=1`,
+          {
+            headers: {
+              Accept: 'application/json',
+            },
           },
-        },
-      );
-      const resFunctions = await fetch(
-        `https://www.rdocumentation.org/search_functions?q=${searchTerm}&page=${pagesShown}&latest=1`,
-        {
-          headers: {
-            Accept: 'application/json',
+        );
+        const resFunctions = await fetch(
+          `https://www.rdocumentation.org/search_functions?q=${searchTerm}&page=${pagesShown}&latest=1`,
+          {
+            headers: {
+              Accept: 'application/json',
+            },
           },
-        },
-      );
-      const { packages } = await resPackages.json();
-      const { functions } = await resFunctions.json();
-      setPackageResults((prevState) => [...prevState, ...packages]);
-      setFunctionResults((prevState) => [...prevState, ...functions]);
+        );
+        const { packages } = await resPackages.json();
+        const { functions } = await resFunctions.json();
+        setPackageResults((prevState) => [...prevState, ...packages]);
+        setFunctionResults((prevState) => [...prevState, ...functions]);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
     }
     // get results once search term exists
-    if (searchTerm) getResults();
+    if (searchTerm) fetchResults();
   }, [searchTerm, pagesShown]);
 
   return (
@@ -106,15 +117,23 @@ export default function SearchResults() {
             ))}
           </div>
         </div>
-        {(functionResults.length > 0 || packageResults.length > 0) && (
+        {!isLoading && (
           <div className="flex justify-center mt-6">
-            <Button
-              appearance={theme === 'light' ? 'default' : 'primary'}
-              intent={theme === 'light' ? 'neutral' : 'b2b'}
-              onClick={() => setPagesShown(pagesShown + 1)}
-            >
-              See More
-            </Button>
+            <ButtonGroup>
+              <Button
+                appearance={theme === 'light' ? 'default' : 'inverted'}
+                onClick={() => setPagesShown(pagesShown + 1)}
+              >
+                See More
+              </Button>
+              <Button
+                appearance={theme === 'light' ? 'default' : 'inverted'}
+                onClick={() => window.scrollTo({ behavior: 'smooth', top: 0 })}
+              >
+                <ArrowUpIcon />
+                Back to Top
+              </Button>
+            </ButtonGroup>
           </div>
         )}
       </div>
