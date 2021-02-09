@@ -39,6 +39,7 @@ export default function SearchResults() {
 
   const [packageResults, setPackageResults] = useState<PackageResult[]>([]);
   const [functionResults, setFunctionResults] = useState<FunctionResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const pageNumber = page ? Number(page) : 1;
   const onFirstPage = pageNumber === 1;
@@ -48,6 +49,7 @@ export default function SearchResults() {
   useEffect(() => {
     async function fetchResults() {
       try {
+        setIsLoading(true);
         // fetch the data
         const resPackages = await fetch(
           `https://www.rdocumentation.org/search_packages?q=${searchTerm}&page=${pageNumber}&latest=1`,
@@ -69,6 +71,7 @@ export default function SearchResults() {
         const { functions } = await resFunctions.json();
         setPackageResults(packages);
         setFunctionResults(functions);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -94,9 +97,10 @@ export default function SearchResults() {
           Page {pageNumber} of results for '{searchTerm}':
         </h1>
         <div className="grid grid-cols-1 mt-5 md:grid-cols-2">
+          {/* package results */}
           <div className="pb-5 space-y-4 md:border-r md:space-y-5 md:pr-10">
             <h2 className="text-2xl">Packages</h2>
-            {packageResults.length > 0 ? (
+            {!isLoading && packageResults.length > 0 ? (
               <>
                 {packageResults.map((p: PackageResult) => (
                   <ClickableCard
@@ -110,12 +114,16 @@ export default function SearchResults() {
                 ))}
               </>
             ) : (
-              <p className="italic text-gray-600">No packages found</p>
+              <p className="italic text-gray-600">
+                {isLoading ? 'Loading results...' : 'No packages found'}
+              </p>
             )}
           </div>
+
+          {/* function results */}
           <div className="pb-5 mt-5 space-y-4 md:mt-0 md:space-y-5 md:pl-10">
             <h2 className="text-2xl">Functions</h2>
-            {functionResults.length > 0 ? (
+            {!isLoading && functionResults.length > 0 ? (
               <>
                 {functionResults.map((f: FunctionResult) => (
                   <ClickableCard
@@ -129,10 +137,14 @@ export default function SearchResults() {
                 ))}
               </>
             ) : (
-              <p className="italic text-gray-600">No functions found</p>
+              <p className="italic text-gray-600">
+                {isLoading ? 'Loading results...' : 'No functions found'}
+              </p>
             )}
           </div>
         </div>
+
+        {/* page toggle buttons */}
         {(packageResults.length > 0 || functionResults.length > 0) && (
           <div className="flex justify-center mt-6">
             <ButtonGroup>
