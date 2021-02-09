@@ -54,8 +54,8 @@ export default function SearchResults() {
     async function fetchResults() {
       setIsLoading(true);
       console.log(`Fetching page ${pagesShown} for ${searchTerm}...`);
-
       try {
+        // fetch the data
         const resPackages = await fetch(
           `https://www.rdocumentation.org/search_packages?q=${searchTerm}&page=${pagesShown}&latest=1`,
           {
@@ -72,10 +72,13 @@ export default function SearchResults() {
             },
           },
         );
+        // extract the results
         const { packages } = await resPackages.json();
         const { functions } = await resFunctions.json();
+        // append to the existing results
         setPackageResults((prevState) => [...prevState, ...packages]);
         setFunctionResults((prevState) => [...prevState, ...functions]);
+        // set loading state to false
         setIsLoading(false);
       } catch (error) {
         console.log(error);
