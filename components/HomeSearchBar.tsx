@@ -30,7 +30,7 @@ export default function HomeSearchBar({ onChange, value }: Props) {
         id="searchBarHome"
         onChange={onChange}
         placeholder={`For example, try '${p.package}' or '${p.function}'`}
-        type="text"
+        type="search"
         value={value}
       />
     </div>

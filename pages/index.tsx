@@ -14,6 +14,7 @@ export default function HomePage() {
 
   function onSubmitSearch(e) {
     e.preventDefault();
+    if (!searchInput) return;
     router.push(`/search?q=${encodeURIComponent(searchInput)}`);
     setSearchInput('');
   }
