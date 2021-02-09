@@ -35,12 +35,8 @@ export default function SearchResults() {
   const { q: searchTerm } = router.query;
   const { theme } = useContext(ThemeContext);
 
-  const [packageResults, setPackageResults] = useState<PackageResult[] | []>(
-    [],
-  );
-  const [functionResults, setFunctionResults] = useState<FunctionResult[] | []>(
-    [],
-  );
+  const [packageResults, setPackageResults] = useState<PackageResult[]>([]);
+  const [functionResults, setFunctionResults] = useState<FunctionResult[]>([]);
   const [pagesShown, setPagesShown] = useState(1);
 
   // reset search results and page count when search term changes
