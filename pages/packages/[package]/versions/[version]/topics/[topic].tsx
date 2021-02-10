@@ -12,6 +12,7 @@ type Props = {
       name: string;
       topic_id: number;
     }>;
+    canonicalLink: string;
     description: string;
     details: string;
     examples: string;
@@ -30,6 +31,7 @@ type Props = {
 export default function TopicPage({ topicData }: Props) {
   const {
     arguments: args,
+    canonicalLink,
     description,
     details,
     examples,
@@ -43,9 +45,12 @@ export default function TopicPage({ topicData }: Props) {
     usage,
     value,
   } = topicData;
-
   return (
-    <Layout description={description} title={pageTitle}>
+    <Layout
+      canonicalLink={canonicalLink}
+      description={description}
+      title={pageTitle}
+    >
       <div className="w-full max-w-screen-lg mx-auto mt-8 md:mt-12">
         <section className="text-xl text-gray-500">
           <Link href={`/packages/${packageName}/versions/${packageVersion}`}>

@@ -91,7 +91,11 @@ export default function PackageVersionPage({
     : null;
 
   return (
-    <Layout description={metadata.description} title={metadata.pageTitle}>
+    <Layout
+      canonicalLink={metadata.canonicalLink}
+      description={metadata.description}
+      title={metadata.pageTitle}
+    >
       <div className="mt-8 md:mt-12">
         <div className="block lg:flex">
           <div className="w-full pb-8 lg:pb-0 lg:w-2/3 lg:pr-8">
