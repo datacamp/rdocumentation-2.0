@@ -1,12 +1,12 @@
 import { GetServerSideProps } from 'next';
 
-export default function PackagePage() {
+export default function CampusHelpPage() {
   return null;
 }
 
-// if no version is specified, then just redirect to the latest version
+// redirect help requests from campus to the relevant page
 export const getServerSideProps: GetServerSideProps = async ({
-  params: { package: packageName },
+  params: { package: packageName, topic: topicName },
 }) => {
   try {
     const res = await fetch(
@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     // return a temporary redirect to the latest version
     return {
       redirect: {
-        destination: `/packages/${packageName}/versions/${latestVersion}`,
+        destination: `/packages/${packageName}/versions/${latestVersion}/topics/${topicName}`,
         permanent: false,
       },
     };

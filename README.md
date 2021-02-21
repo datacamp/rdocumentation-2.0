@@ -21,4 +21,4 @@ yarn dev
 
 ## Stack
 
-This project is built with [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) and our own [Waffles component library](https://waffles.datacamp.com/component-library). We ❤️ open source.
+This website was built by [Nick Carchedi](https://nickcarchedi.com/) using [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) and DataCamp's own [Waffles component library](https://waffles.datacamp.com/component-library). We ❤️ open source.
