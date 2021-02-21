@@ -1,5 +1,4 @@
 import { graphql } from '@octokit/graphql';
-import fetch from 'isomorphic-fetch';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 

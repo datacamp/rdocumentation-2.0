@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import Button, { ButtonGroup } from '@datacamp/waffles-button';
 import { ArrowLeftIcon, ArrowRightIcon } from '@datacamp/waffles-icons';
-import fetch from 'isomorphic-fetch';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 

@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-fetch';
 import { GetServerSideProps } from 'next';
 
 export default function CampusHelpPage() {

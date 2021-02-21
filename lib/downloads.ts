@@ -5,7 +5,6 @@ import {
   startOfMonth,
   subMonths,
 } from 'date-fns';
-import fetch from 'isomorphic-fetch';
 
 import { sumByGroup } from './utils';
 
