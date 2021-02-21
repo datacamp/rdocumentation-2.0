@@ -3,6 +3,7 @@ import { MoonInvertedIcon, SunIcon } from '@datacamp/waffles-icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
+import { FaGithub } from 'react-icons/fa';
 
 import { ThemeContext } from '../pages/_app';
 
@@ -32,16 +33,26 @@ export default function Navbar() {
           </nav>
         </div>
 
-        {/* dark mode toggle */}
-        <div className="md:absolute md:right-0 md:top-6">
+        <div className="flex items-center space-x-3 md:absolute md:right-0 md:top-6">
+          {/* dark mode toggle */}
           <button
             aria-label="toggle dark mode"
-            className="p-1 -mr-1"
+            className="p-1"
             onClick={toggleTheme}
             type="button"
           >
             {theme === 'light' ? <MoonInvertedIcon /> : <SunIcon />}
           </button>
+          {/* github link */}
+          <a
+            aria-label="github repository"
+            className="inline-block p-1 text-xl"
+            href="https://github.com/datacamp/rdocumentation-2.0"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <FaGithub />
+          </a>
         </div>
       </div>
 
