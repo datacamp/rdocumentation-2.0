@@ -13,6 +13,7 @@ export default function PackageReadme({ readme }: Props) {
           <ReactMarkdown
             plugins={[gfm]}
             renderers={{
+              image: () => null,
               link: ({ children, href }) => (
                 <a href={href} rel="noopener noreferrer" target="_blank">
                   {children}

@@ -13,11 +13,6 @@
 }
 
 @layer utilities {
-  /* get rid of badges at top of readmes */
-  .prose > p:first-of-type > a > img {
-    @apply hidden;
-  }
-
   .prose * {
     @apply dark:text-white;
   }
