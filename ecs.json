@@ -18,7 +18,7 @@
         "startPeriod": 30
       },
       "dockerLabels": {
-        "com.datadoghq.ad.instances": "[{ \"name\": \"service_check\", \"url\": \"http://%%host%%:%%port%%/local_health\", \"tags\": [\"service:rdocumentation\"], \"allow_redirects\": false }]",
+        "com.datadoghq.ad.instances": "[{ \"name\": \"service_check\", \"url\": \"http://%%host%%:%%port%%/\", \"tags\": [\"service:rdocumentation\"], \"allow_redirects\": false }]",
         "com.datadoghq.ad.check_names": "[\"http_check\"]",
         "com.datadoghq.ad.init_configs": "[{}]"
       }

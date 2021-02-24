@@ -27,6 +27,8 @@ workflows:
                 - main
       - datacamp-deploy/deploy: # Production
           context: org-global
+          requires:
+            - build
           new-deploy-opt-in: true
           deploy-url: $PROD_LAMBDA_DEPLOY_URL
           deploy-password: $PROD_LAMBDA_DEPLOY_PASSWORD
