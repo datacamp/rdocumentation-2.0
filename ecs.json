@@ -1,0 +1,41 @@
+{
+  "cluster": "datacamp-services",
+  "serviceName": "rdocumentation",
+  "containers": [
+    {
+      "containerName": "rdocumentation",
+      "containerURI": "708371444347.dkr.ecr.us-east-1.amazonaws.com/rdocumentation-2.0:${CIRCLE_SHA1}",
+      "memoryReservation": 256,
+      "cpu": 64,
+      "essential": true,
+      "containerPort": 3000,
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "curl -f http://localhost:3000/local_health || exit 1"
+        ],
+        "interval": 10,
+        "startPeriod": 30
+      },
+      "dockerLabels": {
+        "com.datadoghq.ad.instances": "[{ \"name\": \"service_check\", \"url\": \"http://%%host%%:%%port%%/local_health\", \"tags\": [\"service:rdocumentation\"], \"allow_redirects\": false }]",
+        "com.datadoghq.ad.check_names": "[\"http_check\"]",
+        "com.datadoghq.ad.init_configs": "[{}]"
+      }
+    }
+  ],
+  "deployment": {
+    "strategy": "rollout",
+    "parameters": {
+      "gracePeriod": 60,
+      "failureThreshold": 30,
+      "window": 240,
+      "interval": 10,
+      "slackChannel": "deploys",
+      "customMessage": "Deploying <https://github.com/datacamp/rdocumentation-2.0/tree/${CIRCLE_SHA1}|${CIRCLE_SHA1}>"
+    }
+  },
+  "serviceMesh": {
+    "enabled": true
+  }
+}

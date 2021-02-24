@@ -1,0 +1,36 @@
+version: 2.1
+orbs:
+  datacamp-ecr: datacamp/ecr@1
+  datacamp-deploy: datacamp/deploy@1
+  cypress: datacamp/cypress@0
+  
+workflows:
+  build-and-deploy:
+    jobs:
+      - datacamp-ecr/build_and_push_image_to_ecr:
+          name: build
+          context: org-global
+          aws-access-key-id: $OPS_AWS_ACCESS_KEY_ID
+          aws-secret-access-key: $OPS_AWS_SECRET_ACCESS_KEY
+          account-url: $OPS_ECR_URL
+          puller-account-ids: '["301258414863", "487088987264"]'
+      - datacamp-deploy/deploy: # Staging
+          context: org-global
+          requires:
+            - build
+          new-deploy-opt-in: true
+          deploy-url: $STAGING_LAMBDA_DEPLOY_URL
+          deploy-password: $STAGING_LAMBDA_DEPLOY_PASSWORD
+          filters:
+            branches:
+              only:
+                - master
+      - datacamp-deploy/deploy: # Production
+          context: org-global
+          new-deploy-opt-in: true
+          deploy-url: $PROD_LAMBDA_DEPLOY_URL
+          deploy-password: $PROD_LAMBDA_DEPLOY_PASSWORD
+          filters:
+            branches:
+              only:
+                - master
