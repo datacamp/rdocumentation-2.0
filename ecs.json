@@ -12,7 +12,7 @@
       "healthCheck": {
         "command": [
           "CMD-SHELL",
-          "curl -f http://localhost:3000/local_health || exit 1"
+          "curl -f http://localhost:3000/ || exit 1"
         ],
         "interval": 10,
         "startPeriod": 30
