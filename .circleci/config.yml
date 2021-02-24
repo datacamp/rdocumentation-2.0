@@ -24,7 +24,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
       - datacamp-deploy/deploy: # Production
           context: org-global
           new-deploy-opt-in: true
@@ -33,4 +33,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
