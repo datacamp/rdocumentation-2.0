@@ -11,11 +11,6 @@ module.exports = {
         permanent: false,
         source: '/taskviews',
       },
-      {
-        destination: '/',
-        permanent: false,
-        source: '/collaborators/name/:name*',
-      },
     ];
   },
 };
