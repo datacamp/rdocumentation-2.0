@@ -47,7 +47,10 @@ export default function CollaboratorPage({ collaboratorData }: Props) {
     subscores && subscores.find((score) => score.name === 'num_mentions').val;
 
   return (
-    <Layout title={`${personName} | Collaborator`}>
+    <Layout
+      description={`${personName} profile page`}
+      title={`${personName} | Collaborator`}
+    >
       <div className="mt-8 md:mt-12">
         <div className="block lg:flex">
           <div className="w-full pb-8 lg:pb-0 lg:w-2/3 lg:pr-8">
