@@ -2,12 +2,15 @@ import { Select, SelectOption } from '@datacamp/waffles-form-elements';
 import { CopyIcon } from '@datacamp/waffles-icons';
 import { toast, ToastContainer } from '@datacamp/waffles-toast';
 import { format } from 'date-fns';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FaGithub, FaHome } from 'react-icons/fa';
+import { FaGithub, FaHome, FaUser } from 'react-icons/fa';
 
 import { copyTextToClipboard } from '../lib/utils';
 
 import MonthlyDownloadsChart from './MonthlyDownloadsChart';
+import SidebarHeader from './SidebarHeader';
+import SidebarValue from './SidebarValue';
 
 type PackageSidebarProps = {
   downloadsLastMonth: number;
@@ -55,28 +58,6 @@ export default function PackageSidebar({
   versionsArray,
 }: PackageSidebarProps) {
   const router = useRouter();
-
-  type SidebarHeaderProps = {
-    children: React.ReactNode;
-  };
-
-  function SidebarHeader({ children }: SidebarHeaderProps) {
-    return <h4 className="mb-2 text-sm text-gray-500 uppercase">{children}</h4>;
-  }
-
-  type SidebarValueProps = {
-    children: React.ReactNode;
-    Icon?: React.ComponentType;
-  };
-
-  function SidebarValue({ Icon, children }: SidebarValueProps) {
-    return (
-      <div className="flex items-center">
-        {Icon && <Icon />}
-        <span className={Icon ? 'ml-2' : ''}>{children}</span>
-      </div>
-    );
-  }
 
   function handleCopyLink() {
     copyTextToClipboard(linkToCurrentVersion);
@@ -236,7 +217,11 @@ export default function PackageSidebar({
         <div className="flex">
           <div className="w-1/2">
             <SidebarHeader>Maintainer</SidebarHeader>
-            <SidebarValue>{maintainer.name}</SidebarValue>
+            <SidebarValue Icon={FaUser}>
+              <Link href={`/collaborators/name/${encodeURI(maintainer.name)}`}>
+                {maintainer.name}
+              </Link>
+            </SidebarValue>
           </div>
           {lastPublished && (
             <div className="w-1/2">
