@@ -25,7 +25,7 @@ export default function ClickableCard({
 
   return (
     <button
-      className="block w-full px-4 py-3 border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow focus:border-dc-navy dark:focus:border-dc-yellow focus:outline-none"
+      className="flex flex-col w-full px-4 py-3 border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow focus:border-dc-navy dark:focus:border-dc-yellow focus:outline-none"
       key={id}
       onClick={handleClick}
     >
