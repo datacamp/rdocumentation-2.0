@@ -55,16 +55,16 @@ export default function CollaboratorPage({ collaboratorData }: Props) {
         <div className="block lg:flex">
           <div className="w-full pb-8 lg:pb-0 lg:w-2/3 lg:pr-8">
             {/* Header */}
-            <div className="flex space-x-4 mb-8">
+            <div className="flex mb-8 sm:space-x-4">
               <img
                 alt={`Image of ${personName}`}
-                className="w-24 h-24 flex-none rounded-lg mx-auto"
+                className="hidden w-24 h-24 rounded-lg sm:block"
                 height={24}
                 src={image}
                 width={24}
               />
               <div className="flex-auto">
-                <h1 className="text-4xl mb-2">{personName}</h1>
+                <h1 className="mb-2 text-4xl">{personName}</h1>
                 <SidebarValue Icon={FaGithub}>
                   <a href={githubUrl} rel="noopener noreferrer" target="_blank">
                     {githubUrl}
@@ -73,22 +73,29 @@ export default function CollaboratorPage({ collaboratorData }: Props) {
               </div>
             </div>
 
-            <h2 className="text-xl mb-4">
-              Author or maintainer of the following packages
+            <h2 className="text-sm sm:text-xl">
+              Author or maintainer of the following packages:
             </h2>
 
             {/* Package list */}
             <div className="grid grid-cols-1 gap-4 mt-5 md:grid-cols-2 md:gap-5">
               {packages &&
-                packages.map((f) => (
-                  <ClickableCard
-                    description={f.summary}
-                    href={`/packages/${f.name}`}
-                    id={f.name}
-                    key={f.name}
-                    name={f.name}
-                  />
-                ))}
+                packages
+                  .sort((a, b) => {
+                    const aName = a.name.toLowerCase();
+                    const bName = b.name.toLowerCase();
+                    // eslint-disable-next-line no-nested-ternary
+                    return aName > bName ? 1 : bName > aName ? -1 : 0;
+                  })
+                  .map((f) => (
+                    <ClickableCard
+                      description={f.summary}
+                      href={`/packages/${f.name}`}
+                      id={f.name}
+                      key={f.name}
+                      name={f.name}
+                    />
+                  ))}
             </div>
           </div>
 
@@ -121,11 +128,11 @@ export default function CollaboratorPage({ collaboratorData }: Props) {
                 </div>
               </div>
 
-              <div>
-                <SidebarHeader>Top Collaborators</SidebarHeader>
-                <ul>
-                  {collaborators &&
-                    collaborators.map((collaborator) => {
+              {collaborators && (
+                <div>
+                  <SidebarHeader>Top Collaborators</SidebarHeader>
+                  <ul className="space-y-1">
+                    {collaborators.map((collaborator) => {
                       const { name } = collaborator;
                       return (
                         <li>
@@ -139,8 +146,9 @@ export default function CollaboratorPage({ collaboratorData }: Props) {
                         </li>
                       );
                     })}
-                </ul>
-              </div>
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -148,6 +156,7 @@ export default function CollaboratorPage({ collaboratorData }: Props) {
     </Layout>
   );
 }
+
 export const getServerSideProps: GetServerSideProps = async ({
   params: { collaborator: collaboratorName },
 }) => {
