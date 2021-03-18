@@ -29,7 +29,7 @@ export default function ClickableCard({
       key={id}
       onClick={handleClick}
     >
-      <div className="flex items-baseline justify-between">
+      <div className="flex items-baseline justify-between w-full">
         <div className="font-bold truncate">
           <Html>{name}</Html>
         </div>

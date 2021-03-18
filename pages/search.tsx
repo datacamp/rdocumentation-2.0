@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import ClickableCard from '../components/ClickableCard';
 import Layout from '../components/Layout';
+import { API_URL } from '../lib/utils';
 
 import { ThemeContext } from './_app';
 
@@ -51,7 +52,7 @@ export default function SearchResults() {
         setIsLoading(true);
         // fetch the data
         const resPackages = await fetch(
-          `https://www.rdocumentation.org/search_packages?q=${searchTerm}&page=${pageNumber}&latest=1`,
+          `${API_URL}/search_packages?q=${searchTerm}&page=${pageNumber}&latest=1`,
           {
             headers: {
               Accept: 'application/json',
@@ -59,7 +60,7 @@ export default function SearchResults() {
           },
         );
         const resFunctions = await fetch(
-          `https://www.rdocumentation.org/search_functions?q=${searchTerm}&page=${pageNumber}&latest=1`,
+          `${API_URL}/search_functions?q=${searchTerm}&page=${pageNumber}&latest=1`,
           {
             headers: {
               Accept: 'application/json',
