@@ -40,3 +40,5 @@ export function sumByGroup(objectArray: any, groupBy: string, sumBy: string) {
 export function copyTextToClipboard(text: string) {
   navigator.clipboard.writeText(text);
 }
+
+export const API_URL = 'https://api.rdocumentation.org';

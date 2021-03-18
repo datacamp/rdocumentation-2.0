@@ -7,7 +7,11 @@ import PackageFunctionList from '../../../../components/PackageFunctionList';
 import PackageReadme from '../../../../components/PackageReadme';
 import PackageSidebar from '../../../../components/PackageSidebar';
 import { getMonthlyDownloads } from '../../../../lib/downloads';
-import { getGithubOwnerRepo, getPackageUrls } from '../../../../lib/utils';
+import {
+  API_URL,
+  getGithubOwnerRepo,
+  getPackageUrls,
+} from '../../../../lib/utils';
 
 type Props = {
   metadata: {
@@ -146,7 +150,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   try {
     // get package metadata from rdocs API
     const res = await fetch(
-      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}`,
+      `${API_URL}/api/packages/${packageName}/versions/${version}`,
     );
     const metadata = await res.json();
 

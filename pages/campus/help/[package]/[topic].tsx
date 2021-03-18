@@ -1,5 +1,7 @@
 import { GetServerSideProps } from 'next';
 
+import { API_URL } from '../../../../lib/utils';
+
 export default function CampusHelpPage() {
   return null;
 }
@@ -9,9 +11,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   params: { package: packageName, topic: topicName },
 }) => {
   try {
-    const res = await fetch(
-      `https://www.rdocumentation.org/api/packages/${packageName}`,
-    );
+    const res = await fetch(`${API_URL}/api/packages/${packageName}`);
     const data = await res.json();
 
     // if package is found, get the latest version

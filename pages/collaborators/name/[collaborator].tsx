@@ -6,6 +6,7 @@ import ClickableCard from '../../../components/ClickableCard';
 import Layout from '../../../components/Layout';
 import SidebarHeader from '../../../components/SidebarHeader';
 import SidebarValue from '../../../components/SidebarValue';
+import { API_URL } from '../../../lib/utils';
 
 type Props = {
   collaboratorData: {
@@ -162,7 +163,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   try {
     const res = await fetch(
-      `https://www.rdocumentation.org/api/collaborators/name/${collaboratorName}/depsy`,
+      `${API_URL}/api/collaborators/name/${collaboratorName}/depsy`,
     );
     const collaboratorData = await res.json();
 

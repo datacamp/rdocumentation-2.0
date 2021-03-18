@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import Html from '../../../../../../components/Html';
 import Layout from '../../../../../../components/Layout';
+import { API_URL } from '../../../../../../lib/utils';
 
 type Props = {
   topicData: {
@@ -144,7 +145,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   try {
     const res = await fetch(
-      `https://www.rdocumentation.org/api/packages/${packageName}/versions/${version}/topics/${topic}`,
+      `${API_URL}/api/packages/${packageName}/versions/${version}/topics/${topic}`,
     );
     const topicData = await res.json();
 
