@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   datacamp-ecr: datacamp/ecr@1
-  datacamp-deploy: datacamp/deploy@1
+  datacamp-deploy: datacamp/deploy@2
   cypress: datacamp/cypress@0
   
 workflows:
@@ -15,23 +15,23 @@ workflows:
           account-url: $OPS_ECR_URL
           puller-account-ids: '["301258414863", "487088987264"]'
       - datacamp-deploy/deploy: # Staging
+          environment: staging
+          aws-access-key-id: $STAGING_AWS_ACCESS_KEY_ID
+          aws-secret-access-key: $STAGING_AWS_SECRET_ACCESS_KEY
           context: org-global
           requires:
             - build
-          new-deploy-opt-in: true
-          deploy-url: $STAGING_LAMBDA_DEPLOY_URL
-          deploy-password: $STAGING_LAMBDA_DEPLOY_PASSWORD
           filters:
             branches:
               only:
                 - main
       - datacamp-deploy/deploy: # Production
+          environment: prod
           context: org-global
           requires:
             - build
-          new-deploy-opt-in: true
-          deploy-url: $PROD_LAMBDA_DEPLOY_URL
-          deploy-password: $PROD_LAMBDA_DEPLOY_PASSWORD
+          aws-access-key-id: $PROD_AWS_ACCESS_KEY_ID
+          aws-secret-access-key: $PROD_AWS_SECRET_ACCESS_KEY
           filters:
             branches:
               only:
