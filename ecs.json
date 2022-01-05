@@ -6,7 +6,7 @@
       "containerName": "rdocumentation",
       "containerURI": "708371444347.dkr.ecr.us-east-1.amazonaws.com/rdocumentation-2.0:${CIRCLE_SHA1}",
       "memoryReservation": 256,
-      "cpu": 64,
+      "cpu": 128,
       "essential": true,
       "containerPort": 3000,
       "healthCheck": {
