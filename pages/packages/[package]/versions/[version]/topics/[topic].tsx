@@ -149,6 +149,15 @@ export default function TopicPage({ topicData }: Props) {
                   Run in Workspace
                 </a>
                 <pre>{examples}</pre>
+                <p>
+                  Instantly run the code above in your browser using{' '}
+                  <a
+                    href={`https://www.datacamp.com/workspace?utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
+                    target="_blank"
+                  >
+                    DataCamp Workspace
+                  </a>
+                </p>
               </div>
             </section>
           )}
