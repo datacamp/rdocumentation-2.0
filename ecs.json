@@ -34,8 +34,5 @@
       "slackChannel": "deploys",
       "customMessage": "Deploying <https://github.com/datacamp/rdocumentation-2.0/tree/${CIRCLE_SHA1}|${CIRCLE_SHA1}>"
     }
-  },
-  "serviceMesh": {
-    "enabled": true
   }
 }
