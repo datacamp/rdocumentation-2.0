@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import Html from '../../../../../../components/Html';
 import Layout from '../../../../../../components/Layout';
@@ -45,6 +46,8 @@ export default function TopicPage({ topicData }: Props) {
     usage,
     value,
   } = topicData;
+  const router = useRouter();
+  const { topic } = router.query;
   return (
     <Layout
       canonicalLink={canonicalLink}
@@ -130,8 +133,32 @@ export default function TopicPage({ topicData }: Props) {
           )}
           {examples && (
             <section>
-              <h2>Examples</h2>
-              <pre>{examples}</pre>
+              <div className="relative">
+                <h2>Examples</h2>
+                <a
+                  className="absolute p-2 text-sm rounded-md top-0	right-0 hover:bg-green-400 md:p-3 md:text-base md:top-16 md:right-2.5"
+                  href={`https://app.datacamp.com/workspace/new?_tag=template&templateKey=r-base&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
+                  style={{
+                    background: 'rgba(3, 239, 98)',
+                    color: '#1f2937',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                  }}
+                  target="_blank"
+                >
+                  Run in Workspace
+                </a>
+                <pre>{examples}</pre>
+                <p>
+                  Instantly run the code above in your browser using{' '}
+                  <a
+                    href={`https://app.datacamp.com/workspace/new?_tag=template&templateKey=r-base&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
+                    target="_blank"
+                  >
+                    DataCamp Workspace
+                  </a>
+                </p>
+              </div>
             </section>
           )}
         </div>
