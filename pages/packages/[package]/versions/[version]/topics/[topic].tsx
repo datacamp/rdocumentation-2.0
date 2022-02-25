@@ -48,7 +48,9 @@ export default function TopicPage({ topicData }: Props) {
   } = topicData;
   const router = useRouter();
   const { topic } = router.query;
-  const rdocsPath = `packages/${packageName}/versions/${packageVersion}/topics/${topic}`;
+  const rdocsPath = encodeURI(
+    `packages/${packageName}/versions/${packageVersion}/topics/${topic}`,
+  );
   return (
     <Layout
       canonicalLink={canonicalLink}
@@ -138,7 +140,7 @@ export default function TopicPage({ topicData }: Props) {
                 <h2>Examples</h2>
                 <a
                   className="absolute p-2 text-sm rounded-md top-0	right-0 hover:bg-green-400 md:p-3 md:text-base md:top-16 md:right-2.5"
-                  href={`https://app.datacamp.com/workspace/new?_tag=template&templateKey=r-base-rdocs&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace&rdocsPath=${rdocsPath}&rdocsTitle=${name}:${title}`}
+                  href={`https://app.datacamp-staging.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&title=${name}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
                   style={{
                     background: 'rgba(3, 239, 98)',
                     color: '#1f2937',
@@ -153,7 +155,7 @@ export default function TopicPage({ topicData }: Props) {
                 <p>
                   Instantly run the code above in your browser using{' '}
                   <a
-                    href={`https://app.datacamp.com/workspace/new?_tag=template&templateKey=r-base-rdocs&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace&rdocsPath=${rdocsPath}&rdocsTitle=${name}:${title}`}
+                    href={`https://app.datacamp-staging.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&title=${name}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
                     target="_blank"
                   >
                     DataCamp Workspace
