@@ -48,9 +48,10 @@ export default function TopicPage({ topicData }: Props) {
   } = topicData;
   const router = useRouter();
   const { topic } = router.query;
-  const rdocsPath = encodeURI(
+  const rdocsPath = encodeURIComponent(
     `packages/${packageName}/versions/${packageVersion}/topics/${topic}`,
   );
+
   return (
     <Layout
       canonicalLink={canonicalLink}
