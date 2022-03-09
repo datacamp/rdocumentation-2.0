@@ -151,7 +151,7 @@ export default function TopicPage({ topicData }: Props) {
                     }}
                     target="_blank"
                   >
-                    Run in Workspace
+                    Use this code
                   </a>
                 )}
                 <pre>{examples}</pre>
