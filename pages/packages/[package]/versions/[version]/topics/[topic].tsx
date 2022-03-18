@@ -158,7 +158,7 @@ export default function TopicPage({ topicData }: Props) {
                 <p>
                   Run the code above in your browser using{' '}
                   <a
-                    href={`https://app.datacamp.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&title=${name}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
+                    href={`https://app.datacamp.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
                     target="_blank"
                   >
                     DataCamp Workspace
