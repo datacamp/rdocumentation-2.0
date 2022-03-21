@@ -1,13 +1,13 @@
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useWindowSize } from 'react-use';
 
 import Html from '../../../../../../components/Html';
 import Layout from '../../../../../../components/Layout';
 import { API_URL } from '../../../../../../lib/utils';
 
 type Props = {
-  isMobile: boolean;
   topicData: {
     arguments: Array<{
       description: string;
@@ -30,7 +30,7 @@ type Props = {
   };
 };
 
-export default function TopicPage({ isMobile, topicData }: Props) {
+export default function TopicPage({ topicData }: Props) {
   const {
     arguments: args,
     canonicalLink,
@@ -52,6 +52,8 @@ export default function TopicPage({ isMobile, topicData }: Props) {
   const rdocsPath = encodeURIComponent(
     `packages/${packageName}/versions/${packageVersion}/topics/${topic}`,
   );
+  const { width: windowWidth } = useWindowSize();
+  const isMobile = windowWidth <= 576;
 
   return (
     <Layout
@@ -176,7 +178,6 @@ export default function TopicPage({ isMobile, topicData }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({
   params: { package: packageName, topic, version },
-  req,
 }) => {
   try {
     const res = await fetch(
@@ -187,22 +188,8 @@ export const getServerSideProps: GetServerSideProps = async ({
     // context: the API returns all package versions when the provided version doesn't match any
     if (topicData.type !== 'topic') throw new Error();
 
-    let userAgent;
-    if (req) {
-      userAgent = req.headers['user-agent'];
-    } else {
-      userAgent = navigator.userAgent;
-    }
-
-    const isMobile = Boolean(
-      userAgent.match(
-        /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
-      ),
-    );
-
     return {
       props: {
-        isMobile,
         topicData,
       },
     };
