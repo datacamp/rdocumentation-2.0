@@ -7,7 +7,6 @@ import Layout from '../../../../../../components/Layout';
 import { API_URL } from '../../../../../../lib/utils';
 
 type Props = {
-  isMobile: boolean;
   topicData: {
     arguments: Array<{
       description: string;
@@ -30,7 +29,7 @@ type Props = {
   };
 };
 
-export default function TopicPage({ isMobile, topicData }: Props) {
+export default function TopicPage({ topicData }: Props) {
   const {
     arguments: args,
     canonicalLink,
@@ -140,21 +139,19 @@ export default function TopicPage({ isMobile, topicData }: Props) {
             <section>
               <div className="relative">
                 <h2>Examples</h2>
-                {!isMobile && (
-                  <a
-                    className="absolute p-2 text-sm rounded-md top-0	right-0 hover:bg-green-400 md:p-3 md:text-base md:top-16 md:right-2.5"
-                    href={`https://app.datacamp.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
-                    style={{
-                      background: 'rgba(3, 239, 98)',
-                      color: '#1f2937',
-                      fontWeight: 600,
-                      textDecoration: 'none',
-                    }}
-                    target="_blank"
-                  >
-                    Run this code
-                  </a>
-                )}
+                <a
+                  className="absolute p-2 text-sm rounded-md top-0	right-0 hover:bg-green-400 md:p-3 md:text-base md:top-16 md:right-2.5"
+                  href={`https://app.datacamp.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
+                  style={{
+                    background: 'rgba(3, 239, 98)',
+                    color: '#1f2937',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                  }}
+                  target="_blank"
+                >
+                  Run this code
+                </a>
                 <pre>{examples}</pre>
                 <p>
                   Run the code above in your browser using{' '}
@@ -176,7 +173,6 @@ export default function TopicPage({ isMobile, topicData }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({
   params: { package: packageName, topic, version },
-  req,
 }) => {
   try {
     const res = await fetch(
@@ -187,22 +183,8 @@ export const getServerSideProps: GetServerSideProps = async ({
     // context: the API returns all package versions when the provided version doesn't match any
     if (topicData.type !== 'topic') throw new Error();
 
-    let userAgent;
-    if (req) {
-      userAgent = req.headers['user-agent'];
-    } else {
-      userAgent = navigator.userAgent;
-    }
-
-    const isMobile = Boolean(
-      userAgent.match(
-        /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
-      ),
-    );
-
     return {
       props: {
-        isMobile,
         topicData,
       },
     };
