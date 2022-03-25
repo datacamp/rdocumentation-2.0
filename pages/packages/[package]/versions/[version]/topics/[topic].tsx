@@ -1,10 +1,11 @@
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useWindowSize } from 'react-use';
+import ReactGA from 'react-ga';
 
 import Html from '../../../../../../components/Html';
 import Layout from '../../../../../../components/Layout';
+import * as gtag from '../../../../../../lib/gtag';
 import { API_URL } from '../../../../../../lib/utils';
 
 type Props = {
@@ -52,8 +53,13 @@ export default function TopicPage({ topicData }: Props) {
   const rdocsPath = encodeURIComponent(
     `packages/${packageName}/versions/${packageVersion}/topics/${topic}`,
   );
-  const { width: windowWidth } = useWindowSize();
-  const isMobile = windowWidth <= 576;
+  const registerClicks = (label) => {
+    ReactGA.event({
+      action: 'Click',
+      category: 'Run in workspace',
+      label,
+    });
+  };
 
   return (
     <Layout
@@ -145,6 +151,7 @@ export default function TopicPage({ topicData }: Props) {
                 <a
                   className="absolute p-2 text-sm rounded-md top-0	right-0 hover:bg-green-400 md:p-3 md:text-base md:top-16 md:right-2.5"
                   href={`https://app.datacamp.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
+                  onClick={() => registerClicks('Button')}
                   style={{
                     background: 'rgba(3, 239, 98)',
                     color: '#1f2937',
@@ -160,6 +167,7 @@ export default function TopicPage({ topicData }: Props) {
                   Run the code above in your browser using{' '}
                   <a
                     href={`https://app.datacamp.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
+                    onClick={() => registerClicks('Link')}
                     target="_blank"
                   >
                     DataCamp Workspace
