@@ -26,6 +26,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   // if we're client-side, check local storage on mount
   useEffect(() => {
+    ReactGA.initialize(gtag.GA_TRACKING_ID);
+
     if (window) {
       const savedTheme = localStorage.getItem('theme');
       setTheme(savedTheme || 'light');
@@ -40,7 +42,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
   useEffect(() => {
-    ReactGA.initialize(gtag.GA_TRACKING_ID);
     const handleRouteChange = (url) => {
       gtag.pageview(url);
     };
