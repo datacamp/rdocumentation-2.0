@@ -6,3 +6,8 @@ export const pageview = (url) => {
     page_path: url,
   });
 };
+export const buttonClick = (url) => {
+  window.gtag('config', GA_TRACKING_ID, {
+    workspace_btn_click: url,
+  });
+};

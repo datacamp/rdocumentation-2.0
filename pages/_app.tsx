@@ -4,6 +4,7 @@ import { GlobalFontFaces } from '@datacamp/waffles-text';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from 'react';
+import ReactGA from 'react-ga';
 
 import * as gtag from '../lib/gtag';
 
@@ -39,6 +40,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
   useEffect(() => {
+    ReactGA.initialize(gtag.GA_TRACKING_ID);
     const handleRouteChange = (url) => {
       gtag.pageview(url);
     };
