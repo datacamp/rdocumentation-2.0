@@ -150,7 +150,7 @@ export default function TopicPage({ topicData }: Props) {
                 <h2>Examples</h2>
                 <a
                   className="absolute p-2 text-sm rounded-md top-0	right-0 hover:bg-green-400 md:p-3 md:text-base md:top-16 md:right-2.5"
-                  href={`https://app.datacamp.com/workspace/preview?_tag=rdocs&rdocsPath=${rdocsPath}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
+                  href={`https://app.datacamp.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
                   onClick={() => registerClicks('Button')}
                   style={{
                     background: 'rgba(3, 239, 98)',
@@ -166,7 +166,7 @@ export default function TopicPage({ topicData }: Props) {
                 <p>
                   Run the code above in your browser using{' '}
                   <a
-                    href={`https://app.datacamp.com/workspace/preview?_tag=rdocs&rdocsPath=${rdocsPath}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
+                    href={`https://app.datacamp.com/workspace/new?_tag=rdocs&rdocsPath=${rdocsPath}&utm_source=r-docs&utm_medium=docs&utm_term=${topic}&utm_content=run_example_in_workspace`}
                     onClick={() => registerClicks('Link')}
                     target="_blank"
                   >
