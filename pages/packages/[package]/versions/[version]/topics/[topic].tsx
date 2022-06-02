@@ -157,6 +157,9 @@ export default function TopicPage({ topicData }: Props) {
                     color: '#1f2937',
                     fontWeight: 600,
                     textDecoration: 'none',
+                    ...(examples.split(/\r\n|\r|\n/)?.length <= 2
+                      ? { padding: '4px 8px' }
+                      : {}),
                   }}
                   target="_blank"
                 >
