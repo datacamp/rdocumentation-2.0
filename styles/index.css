@@ -25,3 +25,46 @@
     @apply w-full;
   }
 }
+
+.arguments dl {
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.arguments dt {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  font-weight: 600;
+  float: left;
+  width: 20%;
+  padding: 0;
+  margin: 0;
+}
+
+.arguments dd {
+  display: block;
+  margin-left: 40px;
+  float: left;
+  width: 80%;
+  padding: 0;
+  margin: 0;
+}
+
+.arguments dd p {
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  .arguments dt {
+    float: none;
+    width: 100%;
+  }
+
+  .arguments dd {
+    float: none;
+    width: 100%;
+    margin: 0.5rem 0 1.5rem 0;
+  }
+}

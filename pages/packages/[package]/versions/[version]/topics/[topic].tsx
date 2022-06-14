@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 import ReactGA from 'react-ga';
 
 import Html from '../../../../../../components/Html';
@@ -61,6 +62,15 @@ export default function TopicPage({ topicData }: Props) {
     });
   };
 
+  const showLegacyArguments = useMemo(() => {
+    return (
+      args &&
+      sections.filter((section) =>
+        section.name?.toLowerCase()?.includes('argument'),
+      )?.length < 1
+    );
+  }, [args, sections]);
+
   return (
     <Layout
       canonicalLink={canonicalLink}
@@ -95,7 +105,7 @@ export default function TopicPage({ topicData }: Props) {
               </pre>
             </section>
           )}
-          {args && (
+          {showLegacyArguments && (
             <section>
               <h2>Arguments</h2>
               {args.map((arg) => (
@@ -118,12 +128,22 @@ export default function TopicPage({ topicData }: Props) {
           )}
           {sections && sections.length > 0 && (
             <section>
-              {sections.map((section) => (
-                <div key={section.name}>
-                  <h2>{section.name}</h2>
-                  <Html>{section.description}</Html>
-                </div>
-              ))}
+              {sections.map((section) => {
+                if (section.name?.toLowerCase()?.includes('argument')) {
+                  return (
+                    <div key={section.name}>
+                      <h2>{section.name}</h2>
+                      <Html className="arguments">{section.description}</Html>
+                    </div>
+                  );
+                }
+                return (
+                  <div key={section.name}>
+                    <h2>{section.name}</h2>
+                    <Html>{section.description}</Html>
+                  </div>
+                );
+              })}
             </section>
           )}
           {details && (
