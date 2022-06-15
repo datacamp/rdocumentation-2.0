@@ -50,7 +50,7 @@ workflows:
           dockerfile: Dockerfile
           docker-version: 20.10.2
           executor: datacamp-artifactory/buildkit
-          repp: rdocumentation
+          repo: rdocumentation
           filters:
             branches:
               only:
