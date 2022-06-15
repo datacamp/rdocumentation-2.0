@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   datacamp-ecr: datacamp/ecr@1
   datacamp-deploy: datacamp/deploy@2
-  cypress: datacamp/cypress@
+  cypress: datacamp/cypress@0
   queue: eddiewebb/queue@1.6.4
   datacamp-deploy-branch: datacamp/deploy-branch@1
   datacamp-artifactory: datacamp/artifactory@1
