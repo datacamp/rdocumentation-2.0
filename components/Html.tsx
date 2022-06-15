@@ -1,7 +1,13 @@
 type Props = {
   children: string;
+  className?: string;
 };
 
-export default function Html({ children }: Props) {
-  return <span dangerouslySetInnerHTML={{ __html: children }} />;
+export default function Html({ children, className }: Props) {
+  return (
+    <span
+      className={className}
+      dangerouslySetInnerHTML={{ __html: children }}
+    />
+  );
 }
