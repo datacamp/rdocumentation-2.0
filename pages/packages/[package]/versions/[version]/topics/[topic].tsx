@@ -129,18 +129,14 @@ export default function TopicPage({ topicData }: Props) {
           {sections && sections.length > 0 && (
             <section>
               {sections.map((section) => {
-                if (section.name?.toLowerCase()?.includes('argument')) {
-                  return (
-                    <div key={section.name}>
-                      <h2>{section.name}</h2>
-                      <Html className="arguments">{section.description}</Html>
-                    </div>
-                  );
-                }
                 return (
                   <div key={section.name}>
                     <h2>{section.name}</h2>
-                    <Html>{section.description}</Html>
+                    {section.name?.toLowerCase()?.includes('argument') ? (
+                      <Html className="arguments">{section.description}</Html>
+                    ) : (
+                      <Html>{section.description}</Html>
+                    )}
                   </div>
                 );
               })}
