@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  description: "rdocumentations service"
+  name: rdocumentation
+  annotations:
+    github.com/project-slug: "datacamp/rdocumentation-2.0"
+    circleci.com/project-slug: "github/datacamp/rdocumentation-2.0"
+  tags:
+    - infrastructure-data
+spec:
+  lifecycle: "production"
+  owner: "infrastructure-data"
+  type: "service"
