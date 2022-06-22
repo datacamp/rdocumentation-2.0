@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
+    "dev:watch": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext ts,tsx,js,jsx,json --ignore-path .gitignore",
