@@ -1,10 +1,12 @@
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import HomeSearchBar from '../components/HomeSearchBar';
 import Layout from '../components/Layout';
+import { API_URL } from '../lib/utils';
 
-export default function HomePage() {
+export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
   const router = useRouter();
 
@@ -25,9 +27,9 @@ export default function HomePage() {
       title="Home"
     >
       <div className="w-full max-w-4xl mx-auto mt-32 md:mt-56">
-        <h1 className="text-xl md:text-2xl lg:text-3xl">
-          Search all R packages on CRAN and Bioconductor
-        </h1>
+        <div className="text-xl md:text-2xl lg:text-3xl">
+          {`Search all ${packageCount > 0 ? `${packageCount.toLocaleString(undefined, {maximumFractionDigits:0})}`:''} R packages on CRAN and Bioconductor`}
+        </div>
         <form onSubmit={onSubmitSearch}>
           <HomeSearchBar
             onChange={handleChangeSearchInput}
@@ -38,3 +40,20 @@ export default function HomePage() {
     </Layout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (_context) => {
+  let packageCount;
+  try {
+    const response = await fetch(`${API_URL}/api/packages?limit=${Number.MAX_SAFE_INTEGER}`, {
+      method: 'HEAD'
+    });
+    packageCount = parseInt(response.headers.get('x-total-count'));
+  } catch (error) {
+    packageCount = null
+  }
+  return {
+    props: {
+      packageCount
+    }
+  };
+};
