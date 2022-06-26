@@ -1,4 +1,4 @@
-ARG NODE_VERSION=12.14-alpine3.9
+ARG NODE_VERSION=16.4-alpine3.11
 
 FROM node:${NODE_VERSION} as dependencies
 
@@ -7,7 +7,7 @@ WORKDIR /usr/app
 # First copy only package.json & yarn.lock and run yarn install, this will make
 # docker cache these steps if those files didn't change
 COPY package.json yarn.lock ./
-RUN yarn install
+RUN yarn install --frozen-lock-file
 
 # Copy all the other source files we need to build
 COPY . . 

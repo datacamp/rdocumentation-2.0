@@ -102,6 +102,7 @@ workflows:
           aws-secret-access-key: $OPS_AWS_SECRET_ACCESS_KEY
           account-url: $OPS_ECR_URL
           puller-account-ids: '["301258414863", "487088987264"]'
+          docker-version: 20.10.2
       - datacamp-deploy/deploy: # Staging
           environment: staging
           aws-access-key-id: $STAGING_AWS_ACCESS_KEY_ID

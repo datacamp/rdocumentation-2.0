@@ -1,3 +1,5 @@
+import { MathJax, MathJaxContext } from "better-react-mathjax";
+
 type Props = {
   children: string;
   className?: string;
@@ -5,9 +7,14 @@ type Props = {
 
 export default function Html({ children, className }: Props) {
   return (
-    <span
-      className={className}
-      dangerouslySetInnerHTML={{ __html: children }}
-    />
+    <MathJaxContext>
+      <MathJax>
+        <span
+          className={className}
+          dangerouslySetInnerHTML={{ __html: children }}
+        />
+      </MathJax>
+    </MathJaxContext>
+    
   );
 }
