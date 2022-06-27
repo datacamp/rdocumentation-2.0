@@ -88,7 +88,7 @@ export default function TopicPage({ topicData }: Props) {
         <div className="mt-2 prose-sm prose sm:prose max-w-none sm:max-w-none">
           <header>
             <h1>
-              {name}: <Html>{title}</Html>
+              <Html>{`${name}: ${title}`}</Html>
             </h1>
           </header>
           {description && (
@@ -129,14 +129,13 @@ export default function TopicPage({ topicData }: Props) {
           {sections && sections.length > 0 && (
             <section>
               {sections.map((section) => {
+                if (section.description.length<1) {
+                  return
+                }
                 return (
                   <div key={section.name}>
                     <h2>{section.name}</h2>
-                    {section.name?.toLowerCase()?.includes('argument') ? (
-                      <Html className="arguments">{section.description}</Html>
-                    ) : (
-                      <Html>{section.description}</Html>
-                    )}
+                    <Html className="list-view">{section.description}</Html>
                   </div>
                 );
               })}
