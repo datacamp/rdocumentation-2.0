@@ -20,6 +20,7 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <link href="/favicon.ico" rel="icon" />
+          <meta name="google-site-verification" content="l7VjaJvG_OgqxbCyZDDtk_ykMcPXyqwTSoWnf94hGQk" />
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}

@@ -123,7 +123,7 @@ export default function TopicPage({ topicData }: Props) {
           {value && (
             <section>
               <h2>Value</h2>
-              <Html>{value}</Html>
+              <Html className="list-view">{value}</Html>
             </section>
           )}
           {sections && sections.length > 0 && (
@@ -144,7 +144,7 @@ export default function TopicPage({ topicData }: Props) {
           {details && (
             <section>
               <h2>Details</h2>
-              <Html>{details}</Html>
+              <Html className="list-view">{details}</Html>
             </section>
           )}
           {references && (
