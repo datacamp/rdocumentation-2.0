@@ -8,13 +8,12 @@ type Props = {
 export default function Html({ children, className }: Props) {
   return (
     <MathJaxContext>
-      <MathJax>
+      <MathJax hideUntilTypeset="first">
         <span
           className={className}
           dangerouslySetInnerHTML={{ __html: children }}
         />
       </MathJax>
     </MathJaxContext>
-    
   );
 }
