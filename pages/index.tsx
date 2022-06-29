@@ -1,13 +1,15 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import HomeSearchBar from '../components/HomeSearchBar';
 import Layout from '../components/Layout';
 import { API_URL } from '../lib/utils';
+import AutoComplete from '../components/Autocomplete';
 
 export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
+
   const router = useRouter();
 
   function handleChangeSearchInput(e) {
@@ -20,6 +22,9 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
     router.push(`/search?q=${encodeURIComponent(searchInput)}`);
     setSearchInput('');
   }
+
+  useEffect(() => {
+  }, [searchInput])
 
   return (
     <Layout
@@ -36,6 +41,9 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             value={searchInput}
           />
         </form>
+        <AutoComplete
+          searchInput={searchInput}
+        />
       </div>
     </Layout>
   );
