@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import ReactGA from 'react-ga';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import ocean from 'react-syntax-highlighter/dist/cjs/styles/hljs/ocean.js';
 
 import Html from '../../../../../../components/Html';
 import Layout from '../../../../../../components/Layout';
@@ -180,7 +182,11 @@ export default function TopicPage({ topicData }: Props) {
                 >
                   Run this code
                 </a>
-                <pre>{examples}</pre>
+                <div>
+                  <SyntaxHighlighter language="r" style={ocean}>
+                    {examples}
+                  </SyntaxHighlighter>
+                </div>
                 <p>
                   Run the code above in your browser using{' '}
                   <a
