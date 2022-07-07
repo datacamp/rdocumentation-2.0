@@ -133,11 +133,15 @@ export default function PackageVersionPage({
           </div>
         </div>
         <div className="w-full pt-8 mt-12 border-t lg:pt-0 lg:border-t-0 max-w-none">
-          <PackageFunctionList
-            functions={metadata.topics}
-            packageName={metadata.package_name}
-            packageVersion={metadata.version}
-          />
+          {
+            metadata.topics.length > 0
+            &&
+            <PackageFunctionList
+              functions={metadata.topics}
+              packageName={metadata.package_name}
+              packageVersion={metadata.version}
+            />
+          }
         </div>
       </div>
     </Layout>
@@ -153,6 +157,8 @@ export const getServerSideProps: GetServerSideProps = async ({
       `${API_URL}/api/packages/${packageName}/versions/${version}`,
     );
     const metadata = await res.json();
+
+    console.log({topics: metadata.topics})
 
     // create an array of all package versions
     const versionsArray = metadata.package.versions.map((v) => v.version);
