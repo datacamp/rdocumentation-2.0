@@ -1,15 +1,13 @@
 import Html from './Html';
 
 type Props = {
-    data: {
-        packageName: string,
-        version: string,
-        title: string,
-        description: string
-    }
+      packageName: string,
+      version: string,
+      title: string,
+      description: string
 }
 
-export default function PackageReadMePlaceholder({data}: Props) {
+export default function PackageReadMePlaceholder(data: Props) {
   const {
     packageName,
     version,

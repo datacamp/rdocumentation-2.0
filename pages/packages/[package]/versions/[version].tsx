@@ -119,12 +119,10 @@ export default function PackageVersionPage({
             <PackageReadme readme={metadata.readmemd} />
             :
             <PackageReadMePlaceholder
-              data={{
-                packageName: metadata.package_name,
-                version: metadata.version,
-                title: metadata.title,
-                description: metadata.description
-              }}
+                packageName = {metadata.package_name}
+                version = {metadata.version}
+                title = {metadata.title}
+                description = {metadata.description}
               />
             }
           </div>
