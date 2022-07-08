@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import ReactGA from 'react-ga';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import ocean from 'react-syntax-highlighter/dist/cjs/styles/hljs/ocean.js';
+import sunburst from 'react-syntax-highlighter/dist/cjs/styles/hljs/sunburst.js';
 
 import Html from '../../../../../../components/Html';
 import Layout from '../../../../../../components/Layout';
@@ -183,7 +183,7 @@ export default function TopicPage({ topicData }: Props) {
                   Run this code
                 </a>
                 <div>
-                  <SyntaxHighlighter language="r" style={ocean}>
+                  <SyntaxHighlighter language="r" style={sunburst}>
                     {examples}
                   </SyntaxHighlighter>
                 </div>
