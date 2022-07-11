@@ -12,8 +12,12 @@ export default function AutoComplete({ searchInput }: Props) {
   const [packageSuggestions, setPackageSuggestions] = useState([]);
   const [topicSuggestions, setTopicSuggestions] = useState([]);
 
-    function onClick(query) {
-      router.push(`/search?q=${encodeURIComponent(query)}`);
+    function onClick(query, type) {
+      if (type==="topic") {
+        router.push(`/packages/${encodeURIComponent(query?.fields?.package_name)}/versions/${encodeURIComponent(query?.fields?.version)}/topics/${encodeURIComponent(query?.fields?.name)}`);
+      } else {
+        router.push(`/search?q=${encodeURIComponent(query)}`);
+      }
     };
 
     async function autoComplete(query) {
@@ -61,7 +65,7 @@ export default function AutoComplete({ searchInput }: Props) {
             searchInput
             &&
             <div
-            onClick={()=>onClick(searchInput)}
+            onClick={()=>onClick(searchInput, "search")}
             className="flex items-center px-4 py-4 cursor-pointer hover:bg-dc-beige200 hover:opacity-0.5"
             >
               <Paragraph className="pl-2 py-2">{`View results for "${searchInput}"`}</Paragraph>
@@ -82,7 +86,7 @@ export default function AutoComplete({ searchInput }: Props) {
                     return (
                       <li
                       key={p?.fields?.package_name}
-                      onClick={()=>onClick(p?.fields?.package_name)}
+                      onClick={()=>onClick(p?.fields?.package_name, "package")}
                       className="flex items-center px-4 py-2 cursor-pointer hover:bg-dc-beige200 hover:opacity-0.5"
                       >
                         <Paragraph className="pl-2 text-lg">{p?.fields?.package_name}</Paragraph>
@@ -107,7 +111,7 @@ export default function AutoComplete({ searchInput }: Props) {
                     return (
                       <li
                       key={t?.fields?.package_name+t?.fields?.name}
-                      onClick={()=>onClick(t?.fields?.name)}
+                      onClick={()=>onClick(t, "topic")}
                       className="flex items-center px-4 py-2 cursor-pointer hover:bg-dc-beige200 hover:opacity-0.5"
                       >
                         <div>
