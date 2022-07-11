@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import ReactGA from 'react-ga';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import atomOneDark from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark';
 
 import Html from '../../../../../../components/Html';
 import Layout from '../../../../../../components/Layout';
@@ -180,7 +182,11 @@ export default function TopicPage({ topicData }: Props) {
                 >
                   Run this code
                 </a>
-                <pre>{examples}</pre>
+                <div>
+                  <SyntaxHighlighter language="r" style={atomOneDark}>
+                    {examples}
+                  </SyntaxHighlighter>
+                </div>
                 <p>
                   Run the code above in your browser using{' '}
                   <a
