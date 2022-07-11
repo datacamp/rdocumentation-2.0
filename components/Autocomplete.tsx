@@ -40,7 +40,7 @@ export default function AutoComplete({ searchInput }: Props) {
   
           const { packages }  = await resPackages?.json();
           const functions = await resTopics?.json();
-          const topics = functions.functions;
+          const topics = functions?.functions;
           const relevantPackages = packages?.filter((p)=>(p?.score>1));
           const relevantTopics = topics?.filter((p)=>(p?.score>1));
           setPackageSuggestions(relevantPackages?.slice(0, Math.min(relevantPackages?.length, 5)));
@@ -81,11 +81,11 @@ export default function AutoComplete({ searchInput }: Props) {
                   packageSuggestions?.map((p)=>{
                     return (
                       <li
-                      key={p.fields.package_name}
-                      onClick={()=>onClick(p.fields.package_name)}
+                      key={p?.fields?.package_name}
+                      onClick={()=>onClick(p?.fields?.package_name)}
                       className="flex items-center px-4 py-2 cursor-pointer hover:bg-dc-beige200 hover:opacity-0.5"
                       >
-                        <Paragraph className="pl-2 text-lg">{p.fields.package_name}</Paragraph>
+                        <Paragraph className="pl-2 text-lg">{p?.fields?.package_name}</Paragraph>
                       </li>
                     )
                 })}
@@ -106,15 +106,15 @@ export default function AutoComplete({ searchInput }: Props) {
                   topicSuggestions?.map((t)=>{
                     return (
                       <li
-                      key={t.fields.package_name+t.fields.name}
-                      onClick={()=>onClick(t.fields.name)}
+                      key={t?.fields?.package_name+t?.fields?.name}
+                      onClick={()=>onClick(t?.fields?.name)}
                       className="flex items-center px-4 py-2 cursor-pointer hover:bg-dc-beige200 hover:opacity-0.5"
                       >
                         <div>
-                          <Paragraph className="px-2 text-lg">{`${t.fields.name}`}</Paragraph>
+                          <Paragraph className="px-2 text-lg">{`${t?.fields?.name}`}</Paragraph>
                         </div>
                         <div>
-                          <Paragraph className="text-lg text-dc-red">{`(${t.fields.package_name})`}</Paragraph>
+                          <Paragraph className="text-lg text-dc-red">{`(${t?.fields?.package_name})`}</Paragraph>
                         </div>
                       </li>
                     )
