@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import HomeSearchBar from '../components/HomeSearchBar';
 import Layout from '../components/Layout';
@@ -22,9 +22,6 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
     router.push(`/search?q=${encodeURIComponent(searchInput)}`);
     setSearchInput('');
   }
-
-  useEffect(() => {
-  }, [searchInput])
 
   return (
     <Layout

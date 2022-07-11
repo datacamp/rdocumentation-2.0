@@ -69,7 +69,7 @@ export default function AutoComplete({ searchInput }: Props) {
           }
           <div>
             {
-              packageSuggestions.length>0
+              packageSuggestions?.length>0
               &&
               searchInput
               &&
@@ -78,7 +78,7 @@ export default function AutoComplete({ searchInput }: Props) {
                   <Heading as="h3" size={300}>PACKAGES</Heading>
                 </li>
                 {
-                  packageSuggestions.map((p)=>{
+                  packageSuggestions?.map((p)=>{
                     return (
                       <li
                       key={p.fields.package_name}
@@ -94,7 +94,7 @@ export default function AutoComplete({ searchInput }: Props) {
           </div>
           <div>
             {
-              topicSuggestions.length>0
+              topicSuggestions?.length>0
               &&
               searchInput
               &&
@@ -103,7 +103,7 @@ export default function AutoComplete({ searchInput }: Props) {
                   <Heading as="h3" size={300}>FUNCTIONS</Heading>
                 </li>
                 {
-                  topicSuggestions.map((t)=>{
+                  topicSuggestions?.map((t)=>{
                     return (
                       <li
                       key={t.fields.package_name+t.fields.name}
