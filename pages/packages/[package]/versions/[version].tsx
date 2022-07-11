@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Layout from '../../../../components/Layout';
 import PackageFunctionList from '../../../../components/PackageFunctionList';
 import PackageReadme from '../../../../components/PackageReadme';
+import PackageReadMePlaceholder from '../../../../components/PackageReadMePlaceholder';
 import PackageSidebar from '../../../../components/PackageSidebar';
 import { getMonthlyDownloads } from '../../../../lib/downloads';
 import {
@@ -112,7 +113,18 @@ export default function PackageVersionPage({
                 </Link>
               </div>
             )}
+            {
+            metadata.readmemd 
+            ?
             <PackageReadme readme={metadata.readmemd} />
+            :
+            <PackageReadMePlaceholder
+                packageName = {metadata.package_name}
+                version = {metadata.version}
+                title = {metadata.title}
+                description = {metadata.description}
+              />
+            }
           </div>
           <div className="w-full pt-8 border-t lg:border-t-0 lg:w-1/3 lg:pt-0 lg:pl-8 lg:border-l">
             <PackageSidebar
