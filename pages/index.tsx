@@ -5,9 +5,11 @@ import { useState } from 'react';
 import HomeSearchBar from '../components/HomeSearchBar';
 import Layout from '../components/Layout';
 import { API_URL } from '../lib/utils';
+import AutoComplete from '../components/Autocomplete';
 
 export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
+
   const router = useRouter();
 
   function handleChangeSearchInput(e) {
@@ -36,6 +38,9 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             value={searchInput}
           />
         </form>
+        <AutoComplete
+          searchInput={searchInput}
+        />
       </div>
     </Layout>
   );
