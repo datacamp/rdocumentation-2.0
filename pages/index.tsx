@@ -38,9 +38,14 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             value={searchInput}
           />
         </form>
-        <AutoComplete
+        {
+          searchInput 
+          &&
+          <AutoComplete
+          onSearch={()=>setSearchInput("")}
           searchInput={searchInput}
-        />
+          />
+        }
       </div>
     </Layout>
   );

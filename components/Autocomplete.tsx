@@ -4,19 +4,30 @@ import { useEffect, useState } from "react";
 import { API_URL } from "../lib/utils";
 
 type Props = {
-    searchInput: string
+    searchInput: string,
+    onSearch: () => void,
 };
 
-export default function AutoComplete({ searchInput }: Props) {
-
+export default function AutoComplete({ searchInput, onSearch }: Props) {
   const [packageSuggestions, setPackageSuggestions] = useState([]);
   const [topicSuggestions, setTopicSuggestions] = useState([]);
 
     function onClick(query, type) {
-      if (type==="topic") {
-        router.push(`/packages/${encodeURIComponent(query?.fields?.package_name)}/versions/${encodeURIComponent(query?.fields?.version)}/topics/${encodeURIComponent(query?.fields?.name)}`);
-      } else {
-        router.push(`/search?q=${encodeURIComponent(query)}`);
+      switch (type) {
+        case "topic":
+          router.push(`/packages/${encodeURIComponent(query?.fields?.package_name)}/versions/${encodeURIComponent(query?.fields?.version)}/topics/${encodeURIComponent(query?.fields?.name)}`);
+          onSearch();
+          break
+        case "package":
+          router.push(`/search?q=${encodeURIComponent(query)}`);
+          onSearch();
+          break
+        case "search":
+          router.push(`/search?q=${encodeURIComponent(query)}`);
+          onSearch();
+          break
+        default:
+          break
       }
     };
 
@@ -89,7 +100,7 @@ export default function AutoComplete({ searchInput }: Props) {
                       onClick={()=>onClick(p?.fields?.package_name, "package")}
                       className="flex items-center px-4 py-2 cursor-pointer hover:bg-dc-beige200 hover:opacity-0.5"
                       >
-                        <Paragraph className="pl-2 text-lg">{p?.fields?.package_name}</Paragraph>
+                        <Paragraph className="pl-2 sm:text-lg">{p?.fields?.package_name}</Paragraph>
                       </li>
                     )
                 })}
@@ -112,13 +123,13 @@ export default function AutoComplete({ searchInput }: Props) {
                       <li
                       key={t?.fields?.package_name+t?.fields?.name}
                       onClick={()=>onClick(t, "topic")}
-                      className="flex items-center px-4 py-2 cursor-pointer hover:bg-dc-beige200 hover:opacity-0.5"
+                      className="flex flex-wrap items-center px-4 py-2 cursor-pointer hover:bg-dc-beige200 hover:opacity-0.5"
                       >
                         <div>
-                          <Paragraph className="px-2 text-lg">{`${t?.fields?.name}`}</Paragraph>
+                          <Paragraph className="pl-2 pr-1 sm:pr-2 sm:text-lg">{`${t?.fields?.name}`}</Paragraph>
                         </div>
                         <div>
-                          <Paragraph className="text-lg text-dc-red">{`(${t?.fields?.package_name})`}</Paragraph>
+                          <Paragraph className="sm:text-lg">{`(${t?.fields?.package_name})`}</Paragraph>
                         </div>
                       </li>
                     )
