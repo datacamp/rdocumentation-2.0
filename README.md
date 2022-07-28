@@ -28,3 +28,4 @@ We welcome all sorts of contributions, be it new features, bug fixes or document
 ## Stack
 
 This website was built by [Nick Carchedi](https://nickcarchedi.com/) using [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) and DataCamp's own [Waffles component library](https://waffles.datacamp.com/component-library). We ❤️ open source.
+
