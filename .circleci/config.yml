@@ -93,35 +93,35 @@ workflows:
           requires:
             - testing-complete
 # END ANSIBLE MANAGED BLOCK
-  build-and-deploy:
-    jobs:
-      - datacamp-ecr/build_and_push_image_to_ecr:
-          name: build
-          context: org-global
-          aws-access-key-id: $OPS_AWS_ACCESS_KEY_ID
-          aws-secret-access-key: $OPS_AWS_SECRET_ACCESS_KEY
-          account-url: $OPS_ECR_URL
-          puller-account-ids: '["301258414863", "487088987264"]'
-          docker-version: 20.10.2
-      - datacamp-deploy/deploy: # Staging
-          environment: staging
-          aws-access-key-id: $STAGING_AWS_ACCESS_KEY_ID
-          aws-secret-access-key: $STAGING_AWS_SECRET_ACCESS_KEY
-          context: org-global
-          requires:
-            - build
-          filters:
-            branches:
-              only:
-                - main
-      - datacamp-deploy/deploy: # Production
-          environment: prod
-          context: org-global
-          requires:
-            - build
-          aws-access-key-id: $PROD_AWS_ACCESS_KEY_ID
-          aws-secret-access-key: $PROD_AWS_SECRET_ACCESS_KEY
-          filters:
-            branches:
-              only:
-                - main
+  # build-and-deploy:
+  #   jobs:
+  #     - datacamp-ecr/build_and_push_image_to_ecr:
+  #         name: build
+  #         context: org-global
+  #         aws-access-key-id: $OPS_AWS_ACCESS_KEY_ID
+  #         aws-secret-access-key: $OPS_AWS_SECRET_ACCESS_KEY
+  #         account-url: $OPS_ECR_URL
+  #         puller-account-ids: '["301258414863", "487088987264"]'
+  #         docker-version: 20.10.2
+  #     - datacamp-deploy/deploy: # Staging
+  #         environment: staging
+  #         aws-access-key-id: $STAGING_AWS_ACCESS_KEY_ID
+  #         aws-secret-access-key: $STAGING_AWS_SECRET_ACCESS_KEY
+  #         context: org-global
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             only:
+  #               - main
+  #     - datacamp-deploy/deploy: # Production
+  #         environment: prod
+  #         context: org-global
+  #         requires:
+  #           - build
+  #         aws-access-key-id: $PROD_AWS_ACCESS_KEY_ID
+  #         aws-secret-access-key: $PROD_AWS_SECRET_ACCESS_KEY
+  #         filters:
+  #           branches:
+  #             only:
+  #               - main
