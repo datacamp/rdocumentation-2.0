@@ -1,3 +1,4 @@
+/* eslint-disable filenames/match-exported */
 import { Heading, Paragraph } from '@datacamp/waffles-text';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
@@ -44,6 +45,7 @@ export default function AutoComplete({ searchInput }: Props) {
         relevantTopics?.slice(0, Math.min(relevantTopics?.length, 5)),
       );
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   }

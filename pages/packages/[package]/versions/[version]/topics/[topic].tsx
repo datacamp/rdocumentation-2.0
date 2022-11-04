@@ -132,7 +132,7 @@ export default function TopicPage({ topicData }: Props) {
             <section>
               {sections.map((section) => {
                 if (section.description.length < 1) {
-                  return;
+                  return null;
                 }
                 return (
                   <div key={section.name}>

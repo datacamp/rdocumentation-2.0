@@ -59,7 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (_context) => {
         method: 'HEAD',
       },
     );
-    packageCount = parseInt(response.headers.get('x-total-count'));
+    packageCount = parseInt(response.headers.get('x-total-count'), 10);
   } catch (error) {
     packageCount = null;
   }
