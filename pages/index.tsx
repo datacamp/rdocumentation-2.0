@@ -2,10 +2,10 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import AutoComplete from '../components/Autocomplete';
 import HomeSearchBar from '../components/HomeSearchBar';
 import Layout from '../components/Layout';
 import { API_URL } from '../lib/utils';
-import AutoComplete from '../components/Autocomplete';
 
 export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
@@ -30,7 +30,13 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
     >
       <div className="w-full max-w-4xl mx-auto mt-32 md:mt-56">
         <div className="text-xl md:text-2xl lg:text-3xl">
-          {`Search all ${packageCount > 0 ? `${packageCount.toLocaleString(undefined, {maximumFractionDigits:0})}`:''} R packages on CRAN and Bioconductor`}
+          {`Search all ${
+            packageCount > 0
+              ? `${packageCount.toLocaleString(undefined, {
+                  maximumFractionDigits: 0,
+                })}`
+              : ''
+          } R packages on CRAN and Bioconductor`}
         </div>
         <form onSubmit={onSubmitSearch}>
           <HomeSearchBar
@@ -38,9 +44,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             value={searchInput}
           />
         </form>
-        <AutoComplete
-          searchInput={searchInput}
-        />
+        <AutoComplete searchInput={searchInput} />
       </div>
     </Layout>
   );
@@ -49,16 +53,19 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
 export const getServerSideProps: GetServerSideProps = async (_context) => {
   let packageCount;
   try {
-    const response = await fetch(`${API_URL}/api/packages?limit=${Number.MAX_SAFE_INTEGER}`, {
-      method: 'HEAD'
-    });
+    const response = await fetch(
+      `${API_URL}/api/packages?limit=${Number.MAX_SAFE_INTEGER}`,
+      {
+        method: 'HEAD',
+      },
+    );
     packageCount = parseInt(response.headers.get('x-total-count'));
   } catch (error) {
-    packageCount = null
+    packageCount = null;
   }
   return {
     props: {
-      packageCount
-    }
+      packageCount,
+    },
   };
 };
