@@ -6,9 +6,32 @@ orbs:
   queue: eddiewebb/queue@1.6.4
   datacamp-deploy-branch: datacamp/deploy-branch@1
   datacamp-artifactory: datacamp/artifactory@1
-  
+
+jobs:
+  lint:
+    executor: node
+    steps:
+      - checkout
+      - run:
+          name: Install all dependencies
+          command: yarn
+      - run:
+          name: Lint all files
+          command: yarn lint
+
+executors:
+  node:
+    docker:
+      - image: cimg/node:16.18.0
 workflows:
-# BEGIN ANSIBLE MANAGED BLOCK
+  test_pr:
+    jobs:
+      - lint:
+          filters:
+            branches:
+              ignore:
+                - master
+  # BEGIN ANSIBLE MANAGED BLOCK
   build-and-deploy-eks:
     jobs:
       - queue/block_workflow:
@@ -46,7 +69,7 @@ workflows:
       - datacamp-artifactory/build_and_push_image_to_artifactory:
           name: docker-build
           context: org-global
-          extra-docker-args: "--build-arg NPM_TOKEN=${NPM_TOKEN}"
+          extra-docker-args: '--build-arg NPM_TOKEN=${NPM_TOKEN}'
           dockerfile: Dockerfile
           docker-version: 20.10.2
           executor: datacamp-artifactory/buildkit
@@ -62,7 +85,7 @@ workflows:
           env: staging
           roles: terraform-role,k8s-role
           region: us-east-1
-          extra-vars: "backstage=true"
+          extra-vars: 'backstage=true'
           filters:
             branches:
               only:
@@ -93,35 +116,35 @@ workflows:
           requires:
             - testing-complete
 # END ANSIBLE MANAGED BLOCK
-  # build-and-deploy:
-  #   jobs:
-  #     - datacamp-ecr/build_and_push_image_to_ecr:
-  #         name: build
-  #         context: org-global
-  #         aws-access-key-id: $OPS_AWS_ACCESS_KEY_ID
-  #         aws-secret-access-key: $OPS_AWS_SECRET_ACCESS_KEY
-  #         account-url: $OPS_ECR_URL
-  #         puller-account-ids: '["301258414863", "487088987264"]'
-  #         docker-version: 20.10.2
-  #     - datacamp-deploy/deploy: # Staging
-  #         environment: staging
-  #         aws-access-key-id: $STAGING_AWS_ACCESS_KEY_ID
-  #         aws-secret-access-key: $STAGING_AWS_SECRET_ACCESS_KEY
-  #         context: org-global
-  #         requires:
-  #           - build
-  #         filters:
-  #           branches:
-  #             only:
-  #               - main
-  #     - datacamp-deploy/deploy: # Production
-  #         environment: prod
-  #         context: org-global
-  #         requires:
-  #           - build
-  #         aws-access-key-id: $PROD_AWS_ACCESS_KEY_ID
-  #         aws-secret-access-key: $PROD_AWS_SECRET_ACCESS_KEY
-  #         filters:
-  #           branches:
-  #             only:
-  #               - main
+# build-and-deploy:
+#   jobs:
+#     - datacamp-ecr/build_and_push_image_to_ecr:
+#         name: build
+#         context: org-global
+#         aws-access-key-id: $OPS_AWS_ACCESS_KEY_ID
+#         aws-secret-access-key: $OPS_AWS_SECRET_ACCESS_KEY
+#         account-url: $OPS_ECR_URL
+#         puller-account-ids: '["301258414863", "487088987264"]'
+#         docker-version: 20.10.2
+#     - datacamp-deploy/deploy: # Staging
+#         environment: staging
+#         aws-access-key-id: $STAGING_AWS_ACCESS_KEY_ID
+#         aws-secret-access-key: $STAGING_AWS_SECRET_ACCESS_KEY
+#         context: org-global
+#         requires:
+#           - build
+#         filters:
+#           branches:
+#             only:
+#               - main
+#     - datacamp-deploy/deploy: # Production
+#         environment: prod
+#         context: org-global
+#         requires:
+#           - build
+#         aws-access-key-id: $PROD_AWS_ACCESS_KEY_ID
+#         aws-secret-access-key: $PROD_AWS_SECRET_ACCESS_KEY
+#         filters:
+#           branches:
+#             only:
+#               - main
