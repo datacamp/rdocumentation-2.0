@@ -44,6 +44,7 @@ workflows:
   deploy-backstage:
     jobs:
       - datacamp-artifactory/build_and_push_image_to_artifactory:
+          artifactory-url: artifactory-proxy-public.ops.datacamp.com
           name: docker-build
           context: org-global
           extra-docker-args: "--build-arg NPM_TOKEN=${NPM_TOKEN}"
