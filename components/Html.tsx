@@ -1,4 +1,4 @@
-import { MathJax, MathJaxContext } from "better-react-mathjax";
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
 
 type Props = {
   children: string;
