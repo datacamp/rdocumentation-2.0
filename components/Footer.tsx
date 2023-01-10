@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="absolute inset-x-0 bottom-0 flex items-center justify-center h-20 mt-5 md:mt-10">
+    <footer className="flex items-center justify-center h-20 mt-5 md:mt-10">
       <div>
         Powered by{' '}
         <a
