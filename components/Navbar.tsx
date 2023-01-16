@@ -6,6 +6,7 @@ import { useContext, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 
 import { ThemeContext } from '../pages/_app';
+import AutoComplete from './Autocomplete';
 
 export default function Navbar() {
   const [searchInput, setSearchInput] = useState('');
@@ -58,23 +59,35 @@ export default function Navbar() {
 
       {/* show search bar if relevant */}
       {showSearch && (
-        <form onSubmit={onSubmitSearch}>
-          <div className="dc-input">
-            <label className="sr-only" htmlFor="searchBarNav">
-              Search all packages and functions
-            </label>
-            <Input
-              className="w-full md:w-80 lg:w-96"
-              id="searchBarNav"
-              name="searchBarNav"
-              onChange={setSearchInput}
-              placeholder="Search all packages and functions"
-              size="small"
-              type="search"
-              value={searchInput}
-            />
+        <div className="flex flex-col max-h-4 max-w-4xl">
+          <form onSubmit={onSubmitSearch}>
+            <div className="dc-input">
+              <label className="sr-only" htmlFor="searchBarNav">
+                Search all packages and functions
+              </label>
+              <Input
+                className="w-full"
+                id="searchBarNav"
+                name="searchBarNav"
+                onChange={setSearchInput}
+                placeholder="Search all packages and functions"
+                size="small"
+                type="search"
+                value={searchInput}
+              />
+            </div>
+          </form>
+          <div className="md:w-80 lg:w-96">
+            {
+              searchInput 
+              &&
+              <AutoComplete
+              onSearch={()=>setSearchInput("")}
+              searchInput={searchInput}
+              />
+            }
           </div>
-        </form>
+        </div>
       )}
     </header>
   );
