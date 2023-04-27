@@ -53,6 +53,12 @@ export default function Navbar() {
           >
             <FaGithub />
           </a>
+          <a
+            className="px-4 py-2 border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow focus:border-dc-navy dark:focus:border-dc-yellow focus:outline-none"
+            href="https://www.datacamp.com/learn/r"
+          >
+            Learn R
+          </a>
         </div>
       </div>
 
