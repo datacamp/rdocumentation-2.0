@@ -82,9 +82,12 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
           </ul>
         </div>
         <div className="col-span-2 mt-8 md:mt-0">
-          <strong className="text-xl md:text-2xl lg:text-3xl">
-            Popular R Tutorials
-          </strong>
+          <a
+            className="text-xl md:text-2xl lg:text-3xl"
+            href="https://www.datacamp.com/tutorial/category/r-programming"
+          >
+            <strong>Popular R Tutorials</strong>
+          </a>
           <ol className="list-decimal md:grid-cols-2 grid list-inside gap-4">
             <li>
               <a
@@ -97,7 +100,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             <li>
               <a
                 className="underline"
-                href="https://www.datacamp.com/blog/all-about-r"
+                href="https://www.datacamp.com/tutorial/logistic-regression-R"
               >
                 Logistic regression in&nbsp;R
               </a>
@@ -105,7 +108,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             <li>
               <a
                 className="underline"
-                href="https://www.datacamp.com/tutorial/r-or-python-for-data-analysis"
+                href="https://www.datacamp.com/tutorial/pca-analysis-r"
               >
                 Principal Component Analysis in&nbsp;R
               </a>
@@ -113,7 +116,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             <li>
               <a
                 className="underline"
-                href="https://www.datacamp.com/courses/free-introduction-to-r"
+                href="https://www.datacamp.com/tutorial/make-histogram-basic-r"
               >
                 Histograms in&nbsp;R
               </a>
@@ -121,7 +124,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             <li>
               <a
                 className="underline"
-                href="https://www.datacamp.com/blog/all-about-r"
+                href="https://www.datacamp.com/tutorial/hierarchical-clustering-R"
               >
                 Hierarchical Clustering in&nbsp;R
               </a>
@@ -129,7 +132,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             <li>
               <a
                 className="underline"
-                href="https://www.datacamp.com/tutorial/r-or-python-for-data-analysis"
+                href="https://www.datacamp.com/tutorial/decision-trees-R"
               >
                 Decision Trees in R
               </a>
@@ -137,7 +140,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             <li>
               <a
                 className="underline"
-                href="https://www.datacamp.com/courses/free-introduction-to-r"
+                href="https://www.datacamp.com/tutorial/r-data-import-tutorial"
               >
                 Importing Data into R
               </a>
@@ -145,7 +148,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             <li>
               <a
                 className="underline"
-                href="https://www.datacamp.com/blog/all-about-r"
+                href="https://www.datacamp.com/tutorial/contingency-tables-r"
               >
                 Contingency Tables in R
               </a>
