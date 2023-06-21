@@ -2,9 +2,8 @@ import '../styles/index.css';
 
 import { GlobalFontFaces } from '@datacamp/waffles-text';
 import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from 'react';
-import ReactGA from 'react-ga';
+import ReactGA4 from 'react-ga4';
 
 import * as gtag from '../lib/gtag';
 
@@ -26,7 +25,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   // if we're client-side, check local storage on mount
   useEffect(() => {
-    ReactGA.initialize(gtag.GA_TRACKING_ID);
+    ReactGA4.initialize(gtag.GA4_TRACKING_ID);
 
     if (window) {
       const savedTheme = localStorage.getItem('theme');
@@ -39,17 +38,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     document.querySelector('html').classList.toggle('dark', theme === 'dark');
     if (window) localStorage.setItem('theme', theme);
   }, [theme]);
-
-  const router = useRouter();
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      gtag.pageview(url);
-    };
-    router.events.on('routeChangeComplete', handleRouteChange);
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events]);
 
   return (
     <>

@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import ReactGA from 'react-ga';
+import ReactGA4 from 'react-ga4';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import atomOneDark from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark';
 
@@ -57,7 +57,7 @@ export default function TopicPage({ topicData }: Props) {
     `packages/${packageName}/versions/${packageVersion}/topics/${topic}`,
   );
   const registerClicks = (label) => {
-    ReactGA.event({
+    ReactGA4.event({
       action: 'Click',
       category: 'Run in workspace',
       label,
@@ -131,8 +131,8 @@ export default function TopicPage({ topicData }: Props) {
           {sections && sections.length > 0 && (
             <section>
               {sections.map((section) => {
-                if (section.description.length<1) {
-                  return
+                if (section.description.length < 1) {
+                  return;
                 }
                 return (
                   <div key={section.name}>
