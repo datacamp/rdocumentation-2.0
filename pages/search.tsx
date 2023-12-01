@@ -60,7 +60,7 @@ export default function SearchResults() {
           },
         );
         const resFunctions = await fetch(
-          `${API_URL}/search_functions?q=${searchTerm}&package=${searchTerm}&page=${pageNumber}&latest=1`,
+          `${API_URL}/search_functions?q=${searchTerm}&page=${pageNumber}&latest=1`,
           {
             headers: {
               Accept: 'application/json',
