@@ -1,0 +1,21 @@
+{
+  "name": "acceptance_tests",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "playwright test",
+    "show-report": "playwright show-report",
+    "lint": "eslint . --ext ts,js --ignore-path .gitignore"
+  },
+  "devDependencies": {
+    "@datacamp/eslint-config": "^6.0.0",
+    "@datacamp/prettier-config": "^3.0.0",
+    "eslint": "^7",
+    "prettier": "^2.8.1"
+  },
+  "dependencies": {
+    "@datacamp/playwright-helpers": "^1.1.0",
+    "@playwright/test": "1.31.2"
+  },
+  "private": true
+}

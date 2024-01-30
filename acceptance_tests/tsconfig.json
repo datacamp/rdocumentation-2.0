@@ -1,0 +1,4 @@
+// This file is only required for TypeScript to find typeRoots (@types packages) correctly.
+// You should not need to edit this file.
+// See https://playwright.dev/docs/test-typescript#tsconfigjson if you want to, as Playwright only supports a few options.
+{}
