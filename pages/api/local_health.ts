@@ -9,7 +9,7 @@ export default function handler(
   res: NextApiResponse<ResponseData>,
 ) {
   if (req.method === 'GET') {
-    res.status(200);
+    res.status(200).send(null);
   } else {
     res.status(405).json({ message: 'Only GET requests allowed' });
   }
