@@ -1,5 +1,6 @@
 module.exports = {
   extends: ['@datacamp/eslint-config/typescript'],
+  ignorePatterns: ['acceptance_tests'],
   overrides: [
     {
       files: [
