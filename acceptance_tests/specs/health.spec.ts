@@ -6,7 +6,7 @@ import test, { expect } from '@playwright/test';
 
 test('API is healthy', async ({ playwright }) => {
   const healthy = await checkApiHealth(
-    getInternalServiceUrl('rdocumentaion'),
+    getInternalServiceUrl('rdocumentation'),
     playwright,
     {
       healthEndpoint: '/api/local_health',
