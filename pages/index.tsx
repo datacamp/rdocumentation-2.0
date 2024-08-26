@@ -1,16 +1,41 @@
+import { Heading } from '@datacamp/waffles/heading';
+import { mediaQuery } from '@datacamp/waffles/helpers';
+import {
+  darkThemeStyle,
+  lightThemeStyle,
+  theme as themeTokens,
+} from '@datacamp/waffles/theme';
+import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import AutoComplete from '../components/Autocomplete';
 import HomeSearchBar from '../components/HomeSearchBar';
 import Layout from '../components/Layout';
 import { API_URL } from '../lib/utils';
 
+import { ThemeContext } from './_app';
+
+const SearchWrapper = styled.div({
+  '&, &[data-theme="light"]': {
+    ...lightThemeStyle,
+  },
+  '&[data-theme="dark"]': {
+    ...darkThemeStyle,
+  },
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  [mediaQuery.aboveMedium]: {
+    marginTop: '14rem',
+    width: '65%',
+  },
+});
+
 export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
-
   const router = useRouter();
+  const { theme } = useContext(ThemeContext);
 
   function handleChangeSearchInput(e) {
     setSearchInput(e.target.value);
@@ -23,21 +48,23 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
     setSearchInput('');
   }
 
+  const numberOfPackages =
+    packageCount > 0
+      ? `${packageCount.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })}`
+      : '';
+
   return (
     <Layout
+      data-theme={theme}
       description="Easily search the documentation for every version of every R package on CRAN and Bioconductor."
       title="Home"
     >
-      <div className="w-full max-w-4xl mx-auto mt-32 md:mt-56">
-        <div className="text-xl md:text-2xl lg:text-3xl">
-          {`Search from ${
-            packageCount > 0
-              ? `${packageCount.toLocaleString(undefined, {
-                  maximumFractionDigits: 0,
-                })}`
-              : ''
-          } R packages on CRAN and Bioconductor`}
-        </div>
+      <SearchWrapper data-theme={theme}>
+        <Heading size="xlarge" style={{ color: themeTokens.text.main }}>
+          {`Search from ${numberOfPackages} R packages on CRAN and Bioconductor`}
+        </Heading>
         <form onSubmit={onSubmitSearch}>
           <HomeSearchBar
             onChange={handleChangeSearchInput}
@@ -45,7 +72,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
           />
         </form>
         <AutoComplete searchInput={searchInput} />
-      </div>
+      </SearchWrapper>
       <div className="grid md:grid-cols-3 w-full max-w-4xl mx-auto px-8 mt-8 md:mt-16">
         <div className="flex flex-col">
           <a

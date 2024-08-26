@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import Head from 'next/head';
 
 import Footer from './Footer';
@@ -11,6 +12,12 @@ type Props = {
 };
 
 const BASE_URL = 'https://www.rdocumentation.org';
+
+const ContentWrapper = styled.div({
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'column',
+});
 
 export default function Layout({
   canonicalLink,
@@ -29,7 +36,7 @@ export default function Layout({
       </Head>
       <div className="flex flex-col max-w-screen-xl min-h-screen px-5 mx-auto overflow-x-hidden md:px-10">
         <Navbar />
-        <div className="flex flex-col flex-grow">{children}</div>
+        <ContentWrapper>{children}</ContentWrapper>
         <Footer />
       </div>
     </>

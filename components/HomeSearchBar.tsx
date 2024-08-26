@@ -2,7 +2,7 @@ import { Button } from '@datacamp/waffles/button';
 import { Search } from '@datacamp/waffles/icon';
 import { Input } from '@datacamp/waffles/input';
 import { tokens } from '@datacamp/waffles/tokens';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { ChangeEvent } from 'react';
 
 type Props = {
@@ -17,23 +17,27 @@ const PLACEHOLDERS = [
   { function: 'geom_point', package: 'ggplot2' },
 ];
 
+const Wrapper = styled.div(`
+  display: flex;
+  justify-content: space-between;
+  margin-top: ${tokens.spacing.small};
+  gap: ${tokens.spacing.small};
+`);
+
 export default function HomeSearchBar({ onChange, value }: Props) {
   // select a random placeholder
   const p = PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)];
 
   return (
-    <div style={css({ display: 'flex', justifyContent: 'space-between' })}>
+    <Wrapper>
       <Input
         iconLeft={<Search aria-label="Search all packages and functions" />}
         placeholder={`For example, try '${p.package}' or '${p.function}'`}
+        size="large"
       />
-      <Button
-        css={{ marginTop: tokens.spacing.small }}
-        type="submit"
-        variant="primary"
-      >
+      <Button size="large" type="submit" variant="primary">
         Search
       </Button>
-    </div>
+    </Wrapper>
   );
 }

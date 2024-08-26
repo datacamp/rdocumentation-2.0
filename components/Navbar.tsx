@@ -5,7 +5,11 @@ import { Button } from '@datacamp/waffles/button';
 import { Heading } from '@datacamp/waffles/heading';
 import { mediaQuery } from '@datacamp/waffles/helpers';
 import { Paragraph } from '@datacamp/waffles/paragraph';
-import { darkThemeStyle, lightThemeStyle } from '@datacamp/waffles/theme';
+import {
+  darkThemeStyle,
+  lightThemeStyle,
+  theme as themeTokens,
+} from '@datacamp/waffles/theme';
 import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
 import Link from 'next/link';
@@ -16,26 +20,23 @@ import { FaGithub } from 'react-icons/fa';
 import { ThemeContext } from '../pages/_app';
 
 const Header = styled.header({
-  '&, &[data-theme="light"]': {
-    ...lightThemeStyle,
-  },
   '&[data-theme="dark"]': {
     ...darkThemeStyle,
   },
-  '[data-theme="dark"]': {
-    border: `1px solid ${tokens.colors.greyLight}`,
+  '&[data-theme="light"]': {
+    ...lightThemeStyle,
   },
-  '[data-theme="light"]': {
-    border: `1px solid ${tokens.colors.navy}`,
-  },
+
+  // TODO: fix border somehow
+  // borderBottom: `1px solid ${themeTokens.border.main}`,
   display: 'block',
-  position: 'relative',
   [mediaQuery.aboveMedium]: {
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
     paddingTop: tokens.spacing.small,
   },
+  position: 'relative',
 });
 
 const LogoWrapper = styled.div(`
@@ -45,7 +46,7 @@ const LogoWrapper = styled.div(`
 
 const VerticalDivider = styled.hr(`
   border: 1px inset;
-  color: ${tokens.colors.white};
+  color: ${themeTokens.border.strong};
   display: block;
   height: 30px;
   margin: 0 ${tokens.spacing.small};
@@ -67,20 +68,25 @@ export default function Navbar() {
   const showSearch = router.pathname !== '/';
 
   return (
-    <Header data-theme={theme ? 'dark' : 'light'}>
+    <Header data-theme={theme}>
       <div className="flex items-center justify-between mt-5 mb-3">
-        {/* logo */}
         <div className="md:absolute md:left-0 md:top-6">
           <nav className="text-lg">
             <Link href="/">
               <LogoWrapper>
-                <Heading>RDocumentation</Heading>
+                <Heading style={{ color: themeTokens.text.main }}>
+                  RDocumentation
+                </Heading>
                 <div>
-                  {' '}
                   <VerticalDivider />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <Paragraph variant="secondary">powered by</Paragraph>
+                  <Paragraph
+                    style={{ color: themeTokens.text.secondary }}
+                    variant="secondary"
+                  >
+                    powered by
+                  </Paragraph>
                   <DataCampLogo />
                 </div>
               </LogoWrapper>
