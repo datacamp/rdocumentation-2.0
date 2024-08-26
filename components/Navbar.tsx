@@ -1,11 +1,56 @@
 import { Input } from '@datacamp/waffles-form-elements';
 import { MoonInvertedIcon, SunIcon } from '@datacamp/waffles-icons';
+import { DataCampLogo } from '@datacamp/waffles/brand';
+import { Button } from '@datacamp/waffles/button';
+import { Heading } from '@datacamp/waffles/heading';
+import { mediaQuery } from '@datacamp/waffles/helpers';
+import { Paragraph } from '@datacamp/waffles/paragraph';
+import { darkThemeStyle, lightThemeStyle } from '@datacamp/waffles/theme';
+import { tokens } from '@datacamp/waffles/tokens';
+import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 
 import { ThemeContext } from '../pages/_app';
+
+const Header = styled.header({
+  '&, &[data-theme="light"]': {
+    ...lightThemeStyle,
+  },
+  '&[data-theme="dark"]': {
+    ...darkThemeStyle,
+  },
+  '[data-theme="dark"]': {
+    border: `1px solid ${tokens.colors.greyLight}`,
+  },
+  '[data-theme="light"]': {
+    border: `1px solid ${tokens.colors.navy}`,
+  },
+  display: 'block',
+  position: 'relative',
+  [mediaQuery.aboveMedium]: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    paddingTop: tokens.spacing.small,
+  },
+});
+
+const LogoWrapper = styled.div(`
+  display: flex;
+  align-items: center;
+`);
+
+const VerticalDivider = styled.hr(`
+  border: 1px inset;
+  color: ${tokens.colors.white};
+  display: block;
+  height: 30px;
+  margin: 0 ${tokens.spacing.small};
+  width: 1px;
+`);
 
 export default function Navbar() {
   const [searchInput, setSearchInput] = useState('');
@@ -22,46 +67,58 @@ export default function Navbar() {
   const showSearch = router.pathname !== '/';
 
   return (
-    <header className="relative block md:items-center md:justify-center md:flex md:pt-5">
+    <Header data-theme={theme ? 'dark' : 'light'}>
       <div className="flex items-center justify-between mt-5 mb-3">
         {/* logo */}
         <div className="md:absolute md:left-0 md:top-6">
           <nav className="text-lg">
             <Link href="/">
-              <a className="p-1 -ml-1">RDocumentation</a>
+              <LogoWrapper>
+                <Heading>RDocumentation</Heading>
+                <div>
+                  {' '}
+                  <VerticalDivider />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <Paragraph variant="secondary">powered by</Paragraph>
+                  <DataCampLogo />
+                </div>
+              </LogoWrapper>
             </Link>
           </nav>
         </div>
 
         <div className="flex items-center space-x-3 md:absolute md:right-0 md:top-6">
           {/* dark mode toggle */}
-          <button
+          <Button
             aria-label="toggle dark mode"
             className="p-1"
             onClick={toggleTheme}
             type="button"
           >
             {theme === 'light' ? <MoonInvertedIcon /> : <SunIcon />}
-          </button>
+          </Button>
           {/* github link */}
-          <a
+          <Button
             aria-label="github repository"
-            className="inline-block p-1 text-xl"
+            as="a"
             href="https://github.com/datacamp/rdocumentation-2.0"
             rel="noopener noreferrer"
             target="_blank"
           >
             <FaGithub />
-          </a>
-          <a
-            className="px-4 py-2 border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow focus:border-dc-navy dark:focus:border-dc-yellow focus:outline-none"
+          </Button>
+          <Button
+            as="a"
             href="https://www.datacamp.com/learn/r"
+            variant="primary"
           >
-            Learn R
-          </a>
+            Learn R Programming
+          </Button>
         </div>
       </div>
 
+      {/* TODO: check what this exactly is */}
       {/* show search bar if relevant */}
       {showSearch && (
         <form onSubmit={onSubmitSearch}>
@@ -82,6 +139,6 @@ export default function Navbar() {
           </div>
         </form>
       )}
-    </header>
+    </Header>
   );
 }

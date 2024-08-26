@@ -30,7 +30,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
     >
       <div className="w-full max-w-4xl mx-auto mt-32 md:mt-56">
         <div className="text-xl md:text-2xl lg:text-3xl">
-          {`Search all ${
+          {`Search from ${
             packageCount > 0
               ? `${packageCount.toLocaleString(undefined, {
                   maximumFractionDigits: 0,
