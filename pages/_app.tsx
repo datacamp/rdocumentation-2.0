@@ -1,4 +1,4 @@
-import '../styles/index.css';
+import '../styles/Index.css';
 
 import { GlobalFontFaces } from '@datacamp/waffles-text';
 import type { AppProps } from 'next/app';

@@ -1,5 +1,9 @@
+import { darkThemeStyle, lightThemeStyle } from '@datacamp/waffles/theme';
 import styled from '@emotion/styled';
 import Head from 'next/head';
+import { useContext } from 'react';
+
+import { ThemeContext } from '../pages/_app';
 
 import Footer from './Footer';
 import Navbar from './Navbar';
@@ -14,6 +18,12 @@ type Props = {
 const BASE_URL = 'https://www.rdocumentation.org';
 
 const ContentWrapper = styled.div({
+  '&[data-theme="dark"] *': {
+    ...darkThemeStyle,
+  },
+  '&[data-theme="light"] *': {
+    ...lightThemeStyle,
+  },
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
@@ -25,6 +35,7 @@ export default function Layout({
   description,
   title,
 }: Props) {
+  const { theme } = useContext(ThemeContext);
   return (
     <>
       <Head>
@@ -36,7 +47,7 @@ export default function Layout({
       </Head>
       <div className="flex flex-col max-w-screen-xl min-h-screen px-5 mx-auto overflow-x-hidden md:px-10">
         <Navbar />
-        <ContentWrapper>{children}</ContentWrapper>
+        <ContentWrapper data-theme={theme}>{children}</ContentWrapper>
         <Footer />
       </div>
     </>

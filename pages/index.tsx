@@ -1,10 +1,14 @@
+import { Button } from '@datacamp/waffles/button';
 import { Heading } from '@datacamp/waffles/heading';
 import { mediaQuery } from '@datacamp/waffles/helpers';
+import { ExternalLink } from '@datacamp/waffles/icon';
+import { Link } from '@datacamp/waffles/link';
 import {
   darkThemeStyle,
   lightThemeStyle,
   theme as themeTokens,
 } from '@datacamp/waffles/theme';
+import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
@@ -18,12 +22,6 @@ import { API_URL } from '../lib/utils';
 import { ThemeContext } from './_app';
 
 const SearchWrapper = styled.div({
-  '&, &[data-theme="light"]': {
-    ...lightThemeStyle,
-  },
-  '&[data-theme="dark"]': {
-    ...darkThemeStyle,
-  },
   marginLeft: 'auto',
   marginRight: 'auto',
   [mediaQuery.aboveMedium]: {
@@ -31,6 +29,48 @@ const SearchWrapper = styled.div({
     width: '65%',
   },
 });
+
+const ContentWrapper = styled.div({
+  '&, &[data-theme="light"]': {
+    ...lightThemeStyle,
+  },
+  '&[data-theme="dark"]': {
+    ...darkThemeStyle,
+  },
+  display: 'grid',
+  marginTop: tokens.spacing.large,
+  padding: `0 ${tokens.spacing.large}`,
+  [mediaQuery.aboveMedium]: {
+    gridGap: tokens.spacing.large,
+    gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+    marginTop: tokens.spacing.xlarge,
+  },
+});
+
+const Column = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: tokens.spacing.large,
+});
+
+const ListWrapper = styled.div(`
+  display: flex;
+  flex-direction: column;
+  gap: ${tokens.spacing.small};
+  `);
+
+const linkStyle = {
+  '&:hover': {
+    backgroundColor: 'unset',
+    border: 'none',
+    boxShadow: 'none',
+    textDecoration: 'underline',
+  },
+  backgroundColor: 'unset',
+  border: 'none',
+  color: themeTokens.text.main,
+};
+const buttonStyle = {};
 
 export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
@@ -57,7 +97,6 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
 
   return (
     <Layout
-      data-theme={theme}
       description="Easily search the documentation for every version of every R package on CRAN and Bioconductor."
       title="Home"
     >
@@ -73,116 +112,108 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
         </form>
         <AutoComplete searchInput={searchInput} />
       </SearchWrapper>
-      <div className="grid md:grid-cols-3 w-full max-w-4xl mx-auto px-8 mt-8 md:mt-16">
-        <div className="flex flex-col">
-          <a
-            className="text-xl md:text-2xl lg:text-3xl"
+      <Heading
+        size="xxlarge"
+        style={{
+          color: themeTokens.text.main,
+          marginTop: tokens.spacing.xxlarge,
+          textAlign: 'center',
+        }}
+      >
+        Explore learning paths with DataCamp
+      </Heading>
+      <ContentWrapper data-theme={theme}>
+        <Column>
+          <Button
+            as="a"
             href="https://www.datacamp.com/learn/r"
+            iconRight={<ExternalLink />}
+            style={buttonStyle}
           >
-            <strong>Learn R</strong>
-          </a>
-          <ul className="list-inside list-disc">
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/courses/free-introduction-to-r"
-              >
-                Introduction to R Course
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/blog/all-about-r"
-              >
-                What is R?
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/r-or-python-for-data-analysis"
-              >
-                R vs Python
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="col-span-2 mt-8 md:mt-0">
-          <a
-            className="text-xl md:text-2xl lg:text-3xl"
+            Learn R
+          </Button>
+          <ListWrapper>
+            <Link
+              href="https://www.datacamp.com/courses/free-introduction-to-r"
+              style={linkStyle}
+            >
+              Introduction to R Course
+            </Link>
+            <Link
+              href="https://www.datacamp.com/blog/all-about-r"
+              style={linkStyle}
+            >
+              What is R?
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tutorial/r-or-python-for-data-analysis"
+              style={linkStyle}
+            >
+              R vs Python
+            </Link>
+          </ListWrapper>
+        </Column>
+        <Column>
+          <Button
+            as="a"
             href="https://www.datacamp.com/tutorial/category/r-programming"
+            iconRight={<ExternalLink />}
+            style={buttonStyle}
           >
-            <strong>Popular R Tutorials</strong>
-          </a>
-          <ol className="list-decimal md:grid-cols-2 grid list-inside gap-4">
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/linear-regression-R"
-              >
-                Linear Regression in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/logistic-regression-R"
-              >
-                Logistic regression in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/pca-analysis-r"
-              >
-                Principal Component Analysis in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/make-histogram-basic-r"
-              >
-                Histograms in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/hierarchical-clustering-R"
-              >
-                Hierarchical Clustering in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/decision-trees-R"
-              >
-                Decision Trees in R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/r-data-import-tutorial"
-              >
-                Importing Data into R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/contingency-tables-r"
-              >
-                Contingency Tables in R
-              </a>
-            </li>
-          </ol>
-        </div>
-      </div>
+            Popular R Tutorials
+          </Button>
+          <ListWrapper>
+            <Link
+              href="https://www.datacamp.com/tutorial/linear-regression-R"
+              style={linkStyle}
+            >
+              Linear Regression in&nbsp;R
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tutorial/logistic-regression-R"
+              style={linkStyle}
+            >
+              Logistic regression in&nbsp;R
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tutorial/pca-analysis-r"
+              style={linkStyle}
+            >
+              Principal Component Analysis in&nbsp;R
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tutorial/make-histogram-basic-r"
+              style={linkStyle}
+            >
+              Histograms in&nbsp;R
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tutorial/hierarchical-clustering-R"
+              style={linkStyle}
+            >
+              Hierarchical Clustering in&nbsp;R
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tutorial/decision-trees-R"
+              style={linkStyle}
+            >
+              Decision Trees in R
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tutorial/r-data-import-tutorial"
+              style={linkStyle}
+            >
+              Importing Data into R
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tutorial/contingency-tables-r"
+              style={linkStyle}
+            >
+              Contingency Tables in R
+            </Link>
+          </ListWrapper>
+        </Column>
+      </ContentWrapper>
     </Layout>
   );
 }
