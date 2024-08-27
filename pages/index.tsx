@@ -22,9 +22,10 @@ import { API_URL } from '../lib/utils';
 import { ThemeContext } from './_app';
 
 const SearchWrapper = styled.div({
-  marginLeft: 'auto',
-  marginRight: 'auto',
+  margin: tokens.spacing.medium,
+  width: `calc(100% - 2 * ${tokens.spacing.medium}`,
   [mediaQuery.aboveMedium]: {
+    margin: '0 auto',
     marginTop: '14rem',
     width: '65%',
   },
@@ -38,8 +39,8 @@ const ContentWrapper = styled.div({
     ...darkThemeStyle,
   },
   display: 'grid',
-  marginTop: tokens.spacing.large,
-  padding: `0 ${tokens.spacing.large}`,
+  margin: '0 auto',
+  padding: `0 ${tokens.spacing.large} ${tokens.spacing.large}`,
   [mediaQuery.aboveMedium]: {
     gridGap: tokens.spacing.large,
     gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
@@ -70,6 +71,7 @@ const linkStyle = {
   border: 'none',
   color: themeTokens.text.main,
 };
+
 const buttonStyle = {};
 
 export default function HomePage({ packageCount }: { packageCount?: number }) {

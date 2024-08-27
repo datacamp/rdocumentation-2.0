@@ -3,6 +3,7 @@ import { DataCampLogo } from '@datacamp/waffles/brand';
 import { Button } from '@datacamp/waffles/button';
 import { Heading } from '@datacamp/waffles/heading';
 import { mediaQuery } from '@datacamp/waffles/helpers';
+import { DataCampBrand } from '@datacamp/waffles/icon';
 import { Input } from '@datacamp/waffles/input';
 import { Paragraph } from '@datacamp/waffles/paragraph';
 import {
@@ -26,14 +27,20 @@ const Header = styled.header({
   '&[data-theme="light"]': {
     ...lightThemeStyle,
   },
-
-  // TODO: fix border somehow
-  // borderBottom: `1px solid ${themeTokens.border.main}`,
+  alignItems: 'center',
   display: 'flex',
-  padding: `${tokens.spacing.medium} 0`,
+  flexDirection: 'column',
+  gap: tokens.spacing.medium,
+  justifyContent: 'center',
+  margin: '0 auto',
+  maxWidth: 1200,
+  padding: `${tokens.spacing.large} ${tokens.spacing.medium}`,
   [mediaQuery.aboveMedium]: {
     alignItems: 'center',
+    flexDirection: 'unset',
+    gap: 0,
     justifyContent: 'space-between',
+    padding: `${tokens.spacing.medium} 70px`,
   },
 });
 
@@ -41,10 +48,23 @@ const LogoWrapper = styled.div(`
   display: flex;
   align-items: center;
 `);
-const RightContainer = styled.div(`
-  display: flex;
-  gap: ${tokens.spacing.small};
-`);
+
+const RightContainer = styled.div({
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'column-reverse',
+  gap: tokens.spacing.medium,
+  [mediaQuery.aboveMedium]: {
+    flexDirection: 'unset',
+    justifyContent: 'space-between',
+  },
+});
+
+const ButtonContainer = styled.div({
+  display: 'flex',
+  flexGrow: 1,
+  gap: tokens.spacing.small,
+});
 
 const VerticalDivider = styled.hr(`
   border: 1px inset;
@@ -73,7 +93,7 @@ export default function Navbar() {
 
   return (
     <Header data-theme={theme}>
-      <nav className="text-lg">
+      <nav>
         <Link href="/">
           <LogoWrapper>
             <Heading style={{ color: themeTokens.text.main }}>
@@ -110,30 +130,33 @@ export default function Navbar() {
             />
           </form>
         )}
-        <Button
-          aria-label="toggle dark mode"
-          className="p-1"
-          onClick={toggleTheme}
-          type="button"
-        >
-          {theme === 'light' ? <MoonInvertedIcon /> : <SunIcon />}
-        </Button>
-        <Button
-          aria-label="github repository"
-          as="a"
-          href="https://github.com/datacamp/rdocumentation-2.0"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <FaGithub />
-        </Button>
-        <Button
-          as="a"
-          href="https://www.datacamp.com/learn/r"
-          variant="primary"
-        >
-          Learn R Programming
-        </Button>
+        <ButtonContainer>
+          <Button
+            aria-label="toggle dark mode"
+            className="p-1"
+            onClick={toggleTheme}
+            type="button"
+          >
+            {theme === 'light' ? <MoonInvertedIcon /> : <SunIcon />}
+          </Button>
+          <Button
+            aria-label="github repository"
+            as="a"
+            href="https://github.com/datacamp/rdocumentation-2.0"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <FaGithub />
+          </Button>
+          <Button
+            as="a"
+            href="https://www.datacamp.com/learn/r"
+            iconLeft={<DataCampBrand />}
+            variant="primary"
+          >
+            Learn R Programming
+          </Button>
+        </ButtonContainer>
       </RightContainer>
     </Header>
   );
