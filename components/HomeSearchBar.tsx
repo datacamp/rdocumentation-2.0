@@ -32,8 +32,10 @@ export default function HomeSearchBar({ onChange, value }: Props) {
     <Wrapper>
       <Input
         iconLeft={<Search aria-label="Search all packages and functions" />}
+        onChange={onChange}
         placeholder={`For example, try '${p.package}' or '${p.function}'`}
         size="large"
+        value={value}
       />
       <Button size="large" type="submit" variant="primary">
         Search
