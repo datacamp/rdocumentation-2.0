@@ -24,7 +24,7 @@ workflows:
       - datacamp-artifactory/build_and_push_image_to_artifactory: &dockerBuild
           name: docker-build
           context: org-global
-          extra-docker-args: '--build-arg VERSION=$(git describe --tags) --build-arg NPM_TOKEN=${NPM_TOKEN}'
+          extra-docker-args: '--build-arg VERSION=$(git describe --tags) --build-arg NPM_TOKEN=${NPM_TOKEN_INSTALL_PACKAGES_READ}'
           dockerfile: Dockerfile
           executor: datacamp-artifactory/buildkit
           repo: rdocumentation
@@ -47,7 +47,7 @@ workflows:
           artifactory-url: artifactory-proxy-public.ops.datacamp.com
           name: docker-build
           context: org-global
-          extra-docker-args: "--build-arg NPM_TOKEN=${NPM_TOKEN}"
+          extra-docker-args: '--build-arg VERSION=$(git describe --tags) --build-arg NPM_TOKEN=${NPM_TOKEN_INSTALL_PACKAGES_READ}'
           dockerfile: Dockerfile
           executor: datacamp-artifactory/buildkit
           repo: rdocumentation
