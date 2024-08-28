@@ -1,6 +1,6 @@
 ARG NODE_VERSION=16.4-alpine3.11
 
-FROM node:${NODE_VERSION} as dependencies
+FROM node:${NODE_VERSION} AS dependencies
 
 WORKDIR /usr/app
 ARG NPM_TOKEN

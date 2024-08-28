@@ -6,7 +6,7 @@ orbs:
   queue: eddiewebb/queue@1.6.4
   datacamp-deploy-branch: datacamp/deploy-branch@1
   datacamp-artifactory: datacamp/artifactory@1
-  datacamp-npm: datacamp/npm@1
+  datacamp-circleci: datacamp/central-ci@2
 
 workflows:
 # BEGIN ANSIBLE MANAGED BLOCK
