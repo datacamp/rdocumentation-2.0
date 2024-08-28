@@ -90,8 +90,11 @@ const Autocomplete = ({ searchInput }: Props) => {
         {packageSuggestions?.length > 0 && searchInput && (
           <ul>
             <li className="my-2 pl-4 flex justify-between">
-              <Heading as="h3" css={paragraphStyle}>
-                PACKAGES
+              <Heading
+                as="h3"
+                css={{ ...paragraphStyle, textTransform: 'uppercase' }}
+              >
+                Packages
               </Heading>
             </li>
             {packageSuggestions?.map((p) => {
@@ -115,8 +118,11 @@ const Autocomplete = ({ searchInput }: Props) => {
         {topicSuggestions?.length > 0 && searchInput && (
           <ul>
             <li className="my-2 pl-4 flex justify-between">
-              <Heading as="h3" css={paragraphStyle}>
-                FUNCTIONS
+              <Heading
+                as="h3"
+                css={{ ...paragraphStyle, textTransform: 'uppercase' }}
+              >
+                Functions
               </Heading>
             </li>
             {topicSuggestions?.map((t) => {
