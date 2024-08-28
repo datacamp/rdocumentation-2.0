@@ -9,13 +9,8 @@
     "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
-    "@datacamp/waffles": "^5.12.0",
-    "@datacamp/waffles-button": "^6.2.6",
-    "@datacamp/waffles-form-elements": "^3.2.3",
-    "@datacamp/waffles-icons": "^2.2.1",
-    "@datacamp/waffles-text": "^4.1.1",
-    "@datacamp/waffles-toast": "^2.1.7",
-    "@emotion/core": "^10.1.1",
+    "@datacamp/waffles": "5.12.0",
+    "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@octokit/graphql": "^4.5.8",
@@ -38,7 +33,7 @@
     "react-use": "^17.3.2",
     "recharts": "2.0.0-beta.8",
     "remark-gfm": "^1.0.0",
-    "tailwindcss": "^2.0.2"
+    "tailwindcss": "^2.2.19"
   },
   "devDependencies": {
     "@datacamp/eslint-config": "^4.1.0",

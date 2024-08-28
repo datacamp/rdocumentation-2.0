@@ -1,9 +1,8 @@
-import { MoonInvertedIcon, SunIcon } from '@datacamp/waffles-icons';
 import { DataCampLogo } from '@datacamp/waffles/brand';
 import { Button } from '@datacamp/waffles/button';
 import { Heading } from '@datacamp/waffles/heading';
 import { mediaQuery } from '@datacamp/waffles/helpers';
-import { DataCampBrand } from '@datacamp/waffles/icon';
+import { DataCampBrand, MoonSolid, SunSolid } from '@datacamp/waffles/icon';
 import { Input } from '@datacamp/waffles/input';
 import { Paragraph } from '@datacamp/waffles/paragraph';
 import {
@@ -137,7 +136,7 @@ export default function Navbar() {
             onClick={toggleTheme}
             type="button"
           >
-            {theme === 'light' ? <MoonInvertedIcon /> : <SunIcon />}
+            {theme === 'light' ? <MoonSolid /> : <SunSolid />}
           </Button>
           <Button
             aria-label="github repository"

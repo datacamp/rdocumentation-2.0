@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { Button } from '@datacamp/waffles/button';
 import { Heading } from '@datacamp/waffles/heading';
 import { mediaQuery } from '@datacamp/waffles/helpers';
@@ -76,8 +77,6 @@ const categoryStyle = {
   marginBottom: 0,
 };
 
-const buttonStyle = {};
-
 export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
   const router = useRouter();
@@ -135,7 +134,6 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             as="a"
             href="https://www.datacamp.com/tracks/r-programming-fundamentals"
             iconRight={<ExternalLink />}
-            style={buttonStyle}
           >
             R Fundamentals
           </Button>
@@ -144,14 +142,14 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
               Course
             </Paragraph>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/courses/free-introduction-to-r"
-              style={linkStyle}
             >
               Introduction to R
             </Link>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tracks/data-visualization-with-r"
-              style={linkStyle}
             >
               Data Visualization with R
             </Link>
@@ -159,20 +157,20 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
               Tutorial
             </Paragraph>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/cheat-sheet/getting-started-r"
-              style={linkStyle}
             >
               R Basics Cheat Sheet
             </Link>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tutorial/linear-regression-R"
-              style={linkStyle}
             >
               Linear Regression in R
             </Link>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tutorial/make-histogram-basic-r"
-              style={linkStyle}
             >
               Histograms in R
             </Link>
@@ -183,7 +181,6 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             as="a"
             href="https://www.datacamp.com/tracks/big-data-with-r"
             iconRight={<ExternalLink />}
-            style={buttonStyle}
           >
             Big Data with R
           </Button>
@@ -192,14 +189,14 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
               Course
             </Paragraph>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/courses/practicing-statistics-interview-questions-in-r"
-              style={linkStyle}
             >
               Practicing Interview Questions in R
             </Link>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tracks/data-manipulation-with-r"
-              style={linkStyle}
             >
               Data Manipulation with R
             </Link>
@@ -207,20 +204,20 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
               Course
             </Paragraph>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tutorial/r-data-import-tutorial"
-              style={linkStyle}
             >
               Importing Data into R
             </Link>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tutorial/pca-analysis-r"
-              style={linkStyle}
             >
               Principal Component Analysis in R
             </Link>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tutorial/contingency-tables-r"
-              style={linkStyle}
             >
               Contingency Tables in R
             </Link>
@@ -231,7 +228,6 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
             as="a"
             href="https://www.datacamp.com/tracks/machine-learning-scientist-with-r"
             iconRight={<ExternalLink />}
-            style={buttonStyle}
           >
             Machine Learning with R
           </Button>
@@ -240,14 +236,14 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
               Course
             </Paragraph>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/courses/machine-learning-in-the-tidyverse"
-              style={linkStyle}
             >
               Machine Learning in the Tidyverse
             </Link>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tracks/supervised-machine-learning-in-r"
-              style={linkStyle}
             >
               Supervised Machine Learning in R
             </Link>
@@ -255,14 +251,14 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
               Tutorial
             </Paragraph>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tutorial/decision-trees-R"
-              style={linkStyle}
             >
               Decision Trees in R
             </Link>
             <Link
+              css={linkStyle}
               href="https://www.datacamp.com/tracks/supervised-machine-learning-in-r"
-              style={linkStyle}
             >
               Hierarchical Clustering in R
             </Link>

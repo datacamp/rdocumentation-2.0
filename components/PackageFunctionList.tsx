@@ -1,4 +1,4 @@
-import { Input } from '@datacamp/waffles-form-elements';
+import { Input } from '@datacamp/waffles/input';
 import { useState } from 'react';
 
 import ClickableCard from './ClickableCard';
@@ -46,7 +46,7 @@ export default function PackageFunctionList({
             className="w-full md:w-72"
             id="functionSearch"
             name="functionSearch"
-            onChange={setSearchInput}
+            onChange={(event) => setSearchInput(event.target.value)}
             placeholder="Search all functions"
             size="small"
             value={searchInput}

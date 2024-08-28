@@ -1,11 +1,14 @@
 import '../styles/Index.css';
 
-import { GlobalFontFaces } from '@datacamp/waffles-text';
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { createContext, useEffect, useState } from 'react';
 import ReactGA4 from 'react-ga4';
 
 import * as gtag from '../lib/gtag';
+
+const emotionCache = createCache({ key: 'rdocs' });
 
 export const ThemeContext = createContext({
   theme: 'light',
@@ -41,10 +44,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <GlobalFontFaces />
-      <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <Component {...pageProps} />
-      </ThemeContext.Provider>
+      <CacheProvider value={emotionCache}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+          <Component {...pageProps} />
+        </ThemeContext.Provider>
+      </CacheProvider>
     </>
   );
 }

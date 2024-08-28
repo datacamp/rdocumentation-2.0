@@ -1,6 +1,7 @@
-import { Select, SelectOption } from '@datacamp/waffles-form-elements';
-import { CopyIcon } from '@datacamp/waffles-icons';
-import { toast, ToastContainer } from '@datacamp/waffles-toast';
+// TODO: fix toast and select
+// import { Select, SelectOption } from '@datacamp/waffles-form-elements';
+// import { toast, ToastContainer } from '@datacamp/waffles-toast';
+import { Copy } from '@datacamp/waffles/icon';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -61,7 +62,7 @@ export default function PackageSidebar({
 
   function handleCopyLink() {
     copyTextToClipboard(linkToCurrentVersion);
-    toast({ intent: 'success', title: 'Copied to clipboard!' });
+    // toast({ intent: 'success', title: 'Copied to clipboard!' });
   }
 
   function handleChangeVersion(selectedVersion) {
@@ -70,7 +71,7 @@ export default function PackageSidebar({
 
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="space-y-6">
         <div>
           <SidebarHeader>Copy Link</SidebarHeader>
@@ -81,7 +82,7 @@ export default function PackageSidebar({
               onClick={handleCopyLink}
               type="button"
             >
-              <CopyIcon size={18} />
+              <Copy size={'medium'} />
             </button>
             <label className="sr-only" htmlFor="linkToCurrentVersion">
               Link to current version
@@ -100,7 +101,7 @@ export default function PackageSidebar({
           <label className="sr-only" htmlFor="version">
             Version
           </label>
-          <Select
+          {/* <Select
             id="version"
             name="version"
             onChange={handleChangeVersion}
@@ -111,7 +112,7 @@ export default function PackageSidebar({
                 {v}
               </SelectOption>
             ))}
-          </Select>
+          </Select> */}
         </div>
         {/* show install code if it's a CRAN package */}
         {showInstallCode && (

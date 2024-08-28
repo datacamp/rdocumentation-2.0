@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import Button, { ButtonGroup } from '@datacamp/waffles-button';
-import { ArrowLeftIcon, ArrowRightIcon } from '@datacamp/waffles-icons';
+import { Button } from '@datacamp/waffles/button';
+import { ArrowLeft, ArrowRight } from '@datacamp/waffles/icon';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
@@ -148,24 +148,24 @@ export default function SearchResults() {
         {/* page toggle buttons */}
         {(packageResults.length > 0 || functionResults.length > 0) && (
           <div className="flex justify-center mt-6">
-            <ButtonGroup>
-              <Button
-                appearance={theme === 'light' ? 'default' : 'inverted'}
-                disabled={onFirstPage}
-                onClick={handlePreviousPage}
-              >
-                <ArrowLeftIcon />
-                Previous Page
-              </Button>
-              <Button
-                appearance={theme === 'light' ? 'default' : 'inverted'}
-                disabled={onLastPage}
-                onClick={handleNextPage}
-              >
-                Next Page
-                <ArrowRightIcon />
-              </Button>
-            </ButtonGroup>
+            <Button
+              // TODO: fix appearance
+              // appearance={theme === 'light' ? 'default' : 'inverted'}
+              disabled={onFirstPage}
+              onClick={handlePreviousPage}
+            >
+              <ArrowLeft />
+              Previous Page
+            </Button>
+            <Button
+              // TODO: fix appearance
+              // appearance={theme === 'light' ? 'default' : 'inverted'}
+              disabled={onLastPage}
+              onClick={handleNextPage}
+            >
+              Next Page
+              <ArrowRight />
+            </Button>
           </div>
         )}
       </div>
