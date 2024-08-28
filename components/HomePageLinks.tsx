@@ -2,6 +2,7 @@
 
 import { Button } from '@datacamp/waffles/button';
 import { mediaQuery } from '@datacamp/waffles/helpers';
+import { useMediaQuery } from '@datacamp/waffles/hooks';
 import { ExternalLink } from '@datacamp/waffles/icon';
 import { Link } from '@datacamp/waffles/link';
 import { Paragraph } from '@datacamp/waffles/paragraph';
@@ -25,11 +26,13 @@ const ContentWrapper = styled.div({
   },
   display: 'grid',
   margin: '0 auto',
-  padding: `0 ${tokens.spacing.large} ${tokens.spacing.large}`,
+  width: '100%',
   [mediaQuery.aboveMedium]: {
     gridGap: tokens.spacing.large,
     gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
     marginTop: tokens.spacing.xlarge,
+    padding: `0 ${tokens.spacing.large} ${tokens.spacing.large}`,
+    width: 'auto',
   },
 });
 
@@ -37,17 +40,24 @@ const Column = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: tokens.spacing.large,
+  marginBottom: tokens.spacing.large,
+  [mediaQuery.aboveMedium]: {
+    marginBottom: 0,
+  },
 });
 
 const ListWrapper = styled.div(`
   display: flex;
   flex-direction: column;
   gap: ${tokens.spacing.small};
-  `);
+  padding: 0 ${tokens.spacing.medium};
+  [${mediaQuery.aboveMedium}]: {
+    padding: 0;
+  }
+`);
 
 const linkStyle = {
   '&:hover': {
-    backgroundColor: 'unset',
     border: 'none',
     boxShadow: 'none',
     textDecoration: 'underline',
@@ -63,6 +73,8 @@ const categoryStyle = {
 
 export const HomePageLinks = () => {
   const { theme } = useContext(ThemeContext);
+  const { isAboveSmall } = useMediaQuery();
+  const buttonSize = isAboveSmall ? 'medium' : 'large';
   return (
     <ContentWrapper data-theme={theme}>
       <Column>
@@ -70,6 +82,7 @@ export const HomePageLinks = () => {
           as="a"
           href="https://www.datacamp.com/tracks/r-programming-fundamentals"
           iconRight={<ExternalLink />}
+          size={buttonSize}
         >
           R Fundamentals
         </Button>
@@ -117,6 +130,7 @@ export const HomePageLinks = () => {
           as="a"
           href="https://www.datacamp.com/tracks/big-data-with-r"
           iconRight={<ExternalLink />}
+          size={buttonSize}
         >
           Big Data with R
         </Button>
@@ -137,7 +151,7 @@ export const HomePageLinks = () => {
             Data Manipulation with R
           </Link>
           <Paragraph style={categoryStyle} variant="secondary">
-            Course
+            Tutorial
           </Paragraph>
           <Link
             css={linkStyle}
@@ -164,6 +178,7 @@ export const HomePageLinks = () => {
           as="a"
           href="https://www.datacamp.com/tracks/machine-learning-scientist-with-r"
           iconRight={<ExternalLink />}
+          size={buttonSize}
         >
           Machine Learning with R
         </Button>

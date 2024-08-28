@@ -1,4 +1,6 @@
+/** @jsxImportSource @emotion/react */
 import { Button } from '@datacamp/waffles/button';
+import { mediaQuery } from '@datacamp/waffles/helpers';
 import { Search } from '@datacamp/waffles/icon';
 import { Input } from '@datacamp/waffles/input';
 import { tokens } from '@datacamp/waffles/tokens';
@@ -37,7 +39,17 @@ export default function HomeSearchBar({ onChange, value }: Props) {
         size="large"
         value={value}
       />
-      <Button size="large" type="submit" variant="primary">
+      <Button
+        css={{
+          display: 'none',
+          [mediaQuery.aboveMedium]: {
+            display: 'block',
+          },
+        }}
+        size="large"
+        type="submit"
+        variant="primary"
+      >
         Search
       </Button>
     </Wrapper>

@@ -17,8 +17,8 @@ import { API_URL } from '../lib/utils';
 import { ThemeContext } from './_app';
 
 const SearchWrapper = styled.div({
-  margin: tokens.spacing.medium,
-  width: `calc(100% - 2 * ${tokens.spacing.medium})`,
+  margin: `${tokens.spacing.large} 0`,
+  width: `100%`,
   [mediaQuery.aboveMedium]: {
     margin: `${tokens.spacing.xxlarge} auto`,
     width: '70%',
@@ -67,12 +67,14 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
       </SearchWrapper>
       <Heading
         as="h3"
-        size="large"
-        style={{
+        css={{
           color: themeTokens.text.main,
-          fontWeight: tokens.fontWeights.regular,
-          textAlign: 'center',
+          textAlign: 'left',
+          [mediaQuery.aboveMedium]: {
+            textAlign: 'center',
+          },
         }}
+        size="medium"
       >
         Explore learning paths with DataCamp
       </Heading>
