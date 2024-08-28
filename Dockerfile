@@ -8,7 +8,10 @@ WORKDIR /usr/app
 COPY package.json yarn.lock ./
 
 ARG NPM_TOKEN
-RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && yarn install --frozen-lock-file && rm -f .npmrc
+RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+RUN cat .npmrc
+RUN yarn install --frozen-lock-file
+RUN rm -f .npmrc
 
 # Copy all the other source files we need to build
 COPY . .
