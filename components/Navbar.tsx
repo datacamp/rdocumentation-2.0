@@ -27,13 +27,11 @@ const Header = styled.header({
   '&[data-theme="light"]': {
     ...lightThemeStyle,
   },
-  alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
   gap: tokens.spacing.medium,
-  justifyContent: 'center',
   margin: '0 auto',
-  maxWidth: 1200,
+  maxWidth: 1600, // make sure the header doesn't get too wide, but still get's wider than the content
   padding: `${tokens.spacing.large} ${tokens.spacing.medium}`,
   [mediaQuery.aboveMedium]: {
     alignItems: 'center',
@@ -62,8 +60,10 @@ const RightContainer = styled.div({
 
 const ButtonContainer = styled.div({
   display: 'flex',
+  flex: '1 1 100%',
   flexGrow: 1,
   gap: tokens.spacing.small,
+  width: '100%',
 });
 
 const VerticalDivider = styled.hr(`
@@ -75,7 +75,7 @@ const VerticalDivider = styled.hr(`
   width: 1px;
 `);
 
-const inputStyle = { minWidth: '343px' };
+const inputStyle = { flexGrow: 1, minWidth: '343px' };
 
 export default function Navbar() {
   const [searchInput, setSearchInput] = useState('');
@@ -117,7 +117,7 @@ export default function Navbar() {
 
       <RightContainer>
         {showSearch && (
-          <form onSubmit={onSubmitSearch}>
+          <form onSubmit={onSubmitSearch} style={{ width: '100%' }}>
             <Input
               id="searchBarNav"
               name="searchBarNav"
@@ -150,8 +150,9 @@ export default function Navbar() {
           </Button>
           <Button
             as="a"
-            href="https://www.datacamp.com/learn/r"
+            href="https://www.datacamp.com/category/r"
             iconLeft={<DataCampBrand />}
+            style={{ flexGrow: 1 }}
             variant="primary"
           >
             Learn R Programming

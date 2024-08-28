@@ -10,7 +10,6 @@ import { useContext } from 'react';
 
 import { ThemeContext } from '../pages/_app';
 
-import Footer from './Footer';
 import Navbar from './Navbar';
 
 type Props = {
@@ -66,7 +65,6 @@ export default function Layout({
       <Navbar />
       <Divider data-theme={theme} />
       <ContentWrapper data-theme={theme}>{children}</ContentWrapper>
-      <Footer />
     </>
   );
 }

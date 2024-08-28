@@ -3,6 +3,7 @@ import { Heading } from '@datacamp/waffles/heading';
 import { mediaQuery } from '@datacamp/waffles/helpers';
 import { ExternalLink } from '@datacamp/waffles/icon';
 import { Link } from '@datacamp/waffles/link';
+import { Paragraph } from '@datacamp/waffles/paragraph';
 import {
   darkThemeStyle,
   lightThemeStyle,
@@ -23,11 +24,10 @@ import { ThemeContext } from './_app';
 
 const SearchWrapper = styled.div({
   margin: tokens.spacing.medium,
-  width: `calc(100% - 2 * ${tokens.spacing.medium}`,
+  width: `calc(100% - 2 * ${tokens.spacing.medium})`,
   [mediaQuery.aboveMedium]: {
-    margin: '0 auto',
-    marginTop: '14rem',
-    width: '65%',
+    margin: `${tokens.spacing.xxlarge} auto`,
+    width: '70%',
   },
 });
 
@@ -72,6 +72,10 @@ const linkStyle = {
   color: themeTokens.text.main,
 };
 
+const categoryStyle = {
+  marginBottom: 0,
+};
+
 const buttonStyle = {};
 
 export default function HomePage({ packageCount }: { packageCount?: number }) {
@@ -103,7 +107,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
       title="Home"
     >
       <SearchWrapper data-theme={theme}>
-        <Heading size="xlarge" style={{ color: themeTokens.text.main }}>
+        <Heading as="h2" size="xlarge" style={{ color: themeTokens.text.main }}>
           {`Search from ${numberOfPackages} R packages on CRAN and Bioconductor`}
         </Heading>
         <form onSubmit={onSubmitSearch}>
@@ -115,10 +119,11 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
         <AutoComplete searchInput={searchInput} />
       </SearchWrapper>
       <Heading
-        size="xxlarge"
+        as="h3"
+        size="large"
         style={{
           color: themeTokens.text.main,
-          marginTop: tokens.spacing.xxlarge,
+          fontWeight: tokens.fontWeights.regular,
           textAlign: 'center',
         }}
       >
@@ -128,79 +133,79 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
         <Column>
           <Button
             as="a"
-            href="https://www.datacamp.com/learn/r"
+            href="https://www.datacamp.com/tracks/r-programming-fundamentals"
             iconRight={<ExternalLink />}
             style={buttonStyle}
           >
-            Learn R
+            R Fundamentals
           </Button>
           <ListWrapper>
+            <Paragraph style={categoryStyle} variant="secondary">
+              Course
+            </Paragraph>
             <Link
               href="https://www.datacamp.com/courses/free-introduction-to-r"
               style={linkStyle}
             >
-              Introduction to R Course
+              Introduction to R
             </Link>
             <Link
-              href="https://www.datacamp.com/blog/all-about-r"
+              href="https://www.datacamp.com/tracks/data-visualization-with-r"
               style={linkStyle}
             >
-              What is R?
+              Data Visualization with R
+            </Link>
+            <Paragraph style={categoryStyle} variant="secondary">
+              Tutorial
+            </Paragraph>
+            <Link
+              href="https://www.datacamp.com/cheat-sheet/getting-started-r"
+              style={linkStyle}
+            >
+              R Basics Cheat Sheet
             </Link>
             <Link
-              href="https://www.datacamp.com/tutorial/r-or-python-for-data-analysis"
+              href="https://www.datacamp.com/tutorial/linear-regression-R"
               style={linkStyle}
             >
-              R vs Python
+              Linear Regression in R
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tutorial/make-histogram-basic-r"
+              style={linkStyle}
+            >
+              Histograms in R
             </Link>
           </ListWrapper>
         </Column>
         <Column>
           <Button
             as="a"
-            href="https://www.datacamp.com/tutorial/category/r-programming"
+            href="https://www.datacamp.com/tracks/big-data-with-r"
             iconRight={<ExternalLink />}
             style={buttonStyle}
           >
-            Popular R Tutorials
+            Big Data with R
           </Button>
           <ListWrapper>
+            <Paragraph style={categoryStyle} variant="secondary">
+              Course
+            </Paragraph>
             <Link
-              href="https://www.datacamp.com/tutorial/linear-regression-R"
+              href="https://www.datacamp.com/courses/practicing-statistics-interview-questions-in-r"
               style={linkStyle}
             >
-              Linear Regression in&nbsp;R
+              Practicing Interview Questions in R
             </Link>
             <Link
-              href="https://www.datacamp.com/tutorial/logistic-regression-R"
+              href="https://www.datacamp.com/tracks/data-manipulation-with-r"
               style={linkStyle}
             >
-              Logistic regression in&nbsp;R
+              Data Manipulation with R
             </Link>
-            <Link
-              href="https://www.datacamp.com/tutorial/pca-analysis-r"
-              style={linkStyle}
-            >
-              Principal Component Analysis in&nbsp;R
-            </Link>
-            <Link
-              href="https://www.datacamp.com/tutorial/make-histogram-basic-r"
-              style={linkStyle}
-            >
-              Histograms in&nbsp;R
-            </Link>
-            <Link
-              href="https://www.datacamp.com/tutorial/hierarchical-clustering-R"
-              style={linkStyle}
-            >
-              Hierarchical Clustering in&nbsp;R
-            </Link>
-            <Link
-              href="https://www.datacamp.com/tutorial/decision-trees-R"
-              style={linkStyle}
-            >
-              Decision Trees in R
-            </Link>
+            <Paragraph style={categoryStyle} variant="secondary">
+              Course
+            </Paragraph>
             <Link
               href="https://www.datacamp.com/tutorial/r-data-import-tutorial"
               style={linkStyle}
@@ -208,10 +213,58 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
               Importing Data into R
             </Link>
             <Link
+              href="https://www.datacamp.com/tutorial/pca-analysis-r"
+              style={linkStyle}
+            >
+              Principal Component Analysis in R
+            </Link>
+            <Link
               href="https://www.datacamp.com/tutorial/contingency-tables-r"
               style={linkStyle}
             >
               Contingency Tables in R
+            </Link>
+          </ListWrapper>
+        </Column>
+        <Column>
+          <Button
+            as="a"
+            href="https://www.datacamp.com/tracks/machine-learning-scientist-with-r"
+            iconRight={<ExternalLink />}
+            style={buttonStyle}
+          >
+            Machine Learning with R
+          </Button>
+          <ListWrapper>
+            <Paragraph style={categoryStyle} variant="secondary">
+              Course
+            </Paragraph>
+            <Link
+              href="https://www.datacamp.com/courses/machine-learning-in-the-tidyverse"
+              style={linkStyle}
+            >
+              Machine Learning in the Tidyverse
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tracks/supervised-machine-learning-in-r"
+              style={linkStyle}
+            >
+              Supervised Machine Learning in R
+            </Link>
+            <Paragraph style={categoryStyle} variant="secondary">
+              Tutorial
+            </Paragraph>
+            <Link
+              href="https://www.datacamp.com/tutorial/decision-trees-R"
+              style={linkStyle}
+            >
+              Decision Trees in R
+            </Link>
+            <Link
+              href="https://www.datacamp.com/tracks/supervised-machine-learning-in-r"
+              style={linkStyle}
+            >
+              Hierarchical Clustering in R
             </Link>
           </ListWrapper>
         </Column>
