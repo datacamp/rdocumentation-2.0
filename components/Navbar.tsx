@@ -44,6 +44,9 @@ const Header = styled.header({
 const LogoWrapper = styled.div(`
   display: flex;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
 `);
 
 const RightContainer = styled.div({

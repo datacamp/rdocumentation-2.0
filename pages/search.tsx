@@ -1,14 +1,15 @@
 /* eslint-disable no-console */
 import { Button } from '@datacamp/waffles/button';
+import { Heading } from '@datacamp/waffles/heading';
 import { ArrowLeft, ArrowRight } from '@datacamp/waffles/icon';
+import { tokens } from '@datacamp/waffles/tokens';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ClickableCard from '../components/ClickableCard';
 import Layout from '../components/Layout';
 import { API_URL } from '../lib/utils';
-
-import { ThemeContext } from './_app';
 
 type PackageResult = {
   description: string;
@@ -32,10 +33,16 @@ type FunctionResult = {
   title: string;
 };
 
+const ButtonWrapper = styled.div(`
+  display: flex;
+  gap: ${tokens.spacing.medium};
+  padding: ${tokens.spacing.large};
+  justify-content: center;
+`);
+
 export default function SearchResults() {
   const router = useRouter();
   const { p: page, q: searchTerm } = router.query;
-  const { theme } = useContext(ThemeContext);
 
   const [packageResults, setPackageResults] = useState<PackageResult[]>([]);
   const [functionResults, setFunctionResults] = useState<FunctionResult[]>([]);
@@ -94,9 +101,9 @@ export default function SearchResults() {
   return (
     <Layout title={searchTerm ? `Results for '${searchTerm}'` : ''}>
       <div className="mt-8 md:mt-12">
-        <h1 className="text-lg">
+        <Heading size="large">
           Page {pageNumber} of results for '{searchTerm}':
-        </h1>
+        </Heading>
         <div className="grid grid-cols-1 mt-5 md:grid-cols-2">
           {/* package results */}
           <div className="pb-5 space-y-4 md:border-r md:space-y-5 md:pr-10">
@@ -147,7 +154,7 @@ export default function SearchResults() {
 
         {/* page toggle buttons */}
         {(packageResults.length > 0 || functionResults.length > 0) && (
-          <div className="flex justify-center mt-6">
+          <ButtonWrapper>
             <Button disabled={onFirstPage} onClick={handlePreviousPage}>
               <ArrowLeft />
               Previous Page
@@ -156,7 +163,7 @@ export default function SearchResults() {
               Next Page
               <ArrowRight />
             </Button>
-          </div>
+          </ButtonWrapper>
         )}
       </div>
     </Layout>
