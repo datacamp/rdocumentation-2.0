@@ -1,16 +1,17 @@
 ARG NODE_VERSION=16.4-alpine3.11
 
-FROM node:${NODE_VERSION} as dependencies
+FROM node:${NODE_VERSION} AS dependencies
 
 WORKDIR /usr/app
-
 # First copy only package.json & yarn.lock and run yarn install, this will make
 # docker cache these steps if those files didn't change
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lock-file
+
+ARG NPM_TOKEN
+RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && yarn install --frozen-lock-file && rm -f .npmrc
 
 # Copy all the other source files we need to build
-COPY . . 
+COPY . .
 
 RUN yarn build
 

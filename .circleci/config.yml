@@ -6,7 +6,8 @@ orbs:
   queue: eddiewebb/queue@1.6.4
   datacamp-deploy-branch: datacamp/deploy-branch@1
   datacamp-artifactory: datacamp/artifactory@1
-  
+  datacamp-circleci: datacamp/central-ci@2
+
 workflows:
 # BEGIN ANSIBLE MANAGED BLOCK
   build-and-deploy-eks:
@@ -23,9 +24,8 @@ workflows:
       - datacamp-artifactory/build_and_push_image_to_artifactory: &dockerBuild
           name: docker-build
           context: org-global
-          extra-docker-args: '--build-arg VERSION=$(git describe --tags)'
+          extra-docker-args: '--build-arg NPM_TOKEN=${NPM_TOKEN} --build-arg VERSION=$(git describe --tags)'
           dockerfile: Dockerfile
-          docker-version: 20.10.2
           executor: datacamp-artifactory/buildkit
           repo: rdocumentation
           requires:
@@ -47,9 +47,8 @@ workflows:
           artifactory-url: artifactory-proxy-public.ops.datacamp.com
           name: docker-build
           context: org-global
-          extra-docker-args: "--build-arg NPM_TOKEN=${NPM_TOKEN}"
+          extra-docker-args: '--build-arg NPM_TOKEN=${NPM_TOKEN} --build-arg VERSION=$(git describe --tags)'
           dockerfile: Dockerfile
-          docker-version: 20.10.2
           executor: datacamp-artifactory/buildkit
           repo: rdocumentation
           filters:

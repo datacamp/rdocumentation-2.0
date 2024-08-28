@@ -4,11 +4,11 @@ _Note:_ Please read this [confluence page](https://datacamp.atlassian.net/wiki/s
 
 Available at:
 
-https://rdocumentation.org
+<https://rdocumentation.org>
 
 Internally:
 
-https://rdocumentation.us-east-1.internal.datacamp-staging.com/
+<https://rdocumentation.us-east-1.internal.datacamp-staging.com/>
 
 RDocumentation provides an easy way to search the documentation for every version of every R package on [CRAN](https://cran.r-project.org/) and [Bioconductor](http://bioconductor.org/).
 
@@ -25,6 +25,7 @@ GITHUB_TOKEN=YOUR_PERSONAL_ACCESS_TOKEN
 Then run the following to install dependencies and start the development server on `http://localhost:3000`:
 
 ```
+nvm use
 yarn
 yarn dev
 ```

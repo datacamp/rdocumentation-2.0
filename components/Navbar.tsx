@@ -1,11 +1,83 @@
-import { Input } from '@datacamp/waffles-form-elements';
-import { MoonInvertedIcon, SunIcon } from '@datacamp/waffles-icons';
+import { DataCampLogo } from '@datacamp/waffles/brand';
+import { Button } from '@datacamp/waffles/button';
+import { Heading } from '@datacamp/waffles/heading';
+import { mediaQuery } from '@datacamp/waffles/helpers';
+import { DataCampBrand, MoonSolid, SunSolid } from '@datacamp/waffles/icon';
+import { Input } from '@datacamp/waffles/input';
+import { Paragraph } from '@datacamp/waffles/paragraph';
+import {
+  darkThemeStyle,
+  lightThemeStyle,
+  theme as themeTokens,
+} from '@datacamp/waffles/theme';
+import { tokens } from '@datacamp/waffles/tokens';
+import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 
 import { ThemeContext } from '../pages/_app';
+
+const Header = styled.header({
+  '&[data-theme="dark"]': {
+    ...darkThemeStyle,
+  },
+  '&[data-theme="light"]': {
+    ...lightThemeStyle,
+  },
+  display: 'flex',
+  flexDirection: 'column',
+  gap: tokens.spacing.medium,
+  margin: '0 auto',
+  maxWidth: 1600, // make sure the header doesn't get too wide, but still get's wider than the content
+  padding: `${tokens.spacing.large} ${tokens.spacing.medium}`,
+  [mediaQuery.aboveMedium]: {
+    alignItems: 'center',
+    flexDirection: 'unset',
+    gap: 0,
+    justifyContent: 'space-between',
+    padding: `${tokens.spacing.medium} 70px`,
+  },
+});
+
+const LogoWrapper = styled.div(`
+  display: flex;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+`);
+
+const RightContainer = styled.div({
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'column-reverse',
+  gap: tokens.spacing.medium,
+  [mediaQuery.aboveMedium]: {
+    flexDirection: 'unset',
+    justifyContent: 'space-between',
+  },
+});
+
+const ButtonContainer = styled.div({
+  display: 'flex',
+  flex: '1 1 100%',
+  flexGrow: 1,
+  gap: tokens.spacing.small,
+  width: '100%',
+});
+
+const VerticalDivider = styled.hr(`
+  border: 1px inset;
+  color: ${themeTokens.border.strong};
+  display: block;
+  height: 30px;
+  margin: 0 ${tokens.spacing.small};
+  width: 1px;
+`);
+
+const inputStyle = { flexGrow: 1, minWidth: '343px' };
 
 export default function Navbar() {
   const [searchInput, setSearchInput] = useState('');
@@ -22,66 +94,73 @@ export default function Navbar() {
   const showSearch = router.pathname !== '/';
 
   return (
-    <header className="relative block md:items-center md:justify-center md:flex md:pt-5">
-      <div className="flex items-center justify-between mt-5 mb-3">
-        {/* logo */}
-        <div className="md:absolute md:left-0 md:top-6">
-          <nav className="text-lg">
-            <Link href="/">
-              <a className="p-1 -ml-1">RDocumentation</a>
-            </Link>
-          </nav>
-        </div>
+    <Header data-theme={theme}>
+      <nav>
+        <Link href="/">
+          <LogoWrapper>
+            <Heading style={{ color: themeTokens.text.main }}>
+              RDocumentation
+            </Heading>
+            <div>
+              <VerticalDivider />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <Paragraph
+                style={{ color: themeTokens.text.secondary }}
+                variant="secondary"
+              >
+                powered by
+              </Paragraph>
+              <DataCampLogo />
+            </div>
+          </LogoWrapper>
+        </Link>
+      </nav>
 
-        <div className="flex items-center space-x-3 md:absolute md:right-0 md:top-6">
-          {/* dark mode toggle */}
-          <button
+      <RightContainer>
+        {showSearch && (
+          <form onSubmit={onSubmitSearch} style={{ width: '100%' }}>
+            <Input
+              id="searchBarNav"
+              name="searchBarNav"
+              onChange={(event) => setSearchInput(event.target.value)}
+              placeholder="Search all packages and functions"
+              size="medium"
+              style={inputStyle}
+              type="search"
+              value={searchInput}
+            />
+          </form>
+        )}
+        <ButtonContainer>
+          <Button
             aria-label="toggle dark mode"
             className="p-1"
             onClick={toggleTheme}
             type="button"
           >
-            {theme === 'light' ? <MoonInvertedIcon /> : <SunIcon />}
-          </button>
-          {/* github link */}
-          <a
+            {theme === 'light' ? <MoonSolid /> : <SunSolid />}
+          </Button>
+          <Button
             aria-label="github repository"
-            className="inline-block p-1 text-xl"
+            as="a"
             href="https://github.com/datacamp/rdocumentation-2.0"
             rel="noopener noreferrer"
             target="_blank"
           >
             <FaGithub />
-          </a>
-          <a
-            className="px-4 py-2 border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow focus:border-dc-navy dark:focus:border-dc-yellow focus:outline-none"
-            href="https://www.datacamp.com/learn/r"
+          </Button>
+          <Button
+            as="a"
+            href="https://www.datacamp.com/category/r"
+            iconLeft={<DataCampBrand />}
+            style={{ flexGrow: 1 }}
+            variant="primary"
           >
-            Learn R
-          </a>
-        </div>
-      </div>
-
-      {/* show search bar if relevant */}
-      {showSearch && (
-        <form onSubmit={onSubmitSearch}>
-          <div className="dc-input">
-            <label className="sr-only" htmlFor="searchBarNav">
-              Search all packages and functions
-            </label>
-            <Input
-              className="w-full md:w-80 lg:w-96"
-              id="searchBarNav"
-              name="searchBarNav"
-              onChange={setSearchInput}
-              placeholder="Search all packages and functions"
-              size="small"
-              type="search"
-              value={searchInput}
-            />
-          </div>
-        </form>
-      )}
-    </header>
+            Learn R Programming
+          </Button>
+        </ButtonContainer>
+      </RightContainer>
+    </Header>
   );
 }

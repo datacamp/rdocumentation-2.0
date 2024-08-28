@@ -1,16 +1,34 @@
+/** @jsxImportSource @emotion/react */
+import { Heading } from '@datacamp/waffles/heading';
+import { mediaQuery } from '@datacamp/waffles/helpers';
+import { theme as themeTokens } from '@datacamp/waffles/theme';
+import { tokens } from '@datacamp/waffles/tokens';
+import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import AutoComplete from '../components/Autocomplete';
+import { HomePageLinks } from '../components/HomePageLinks';
 import HomeSearchBar from '../components/HomeSearchBar';
 import Layout from '../components/Layout';
 import { API_URL } from '../lib/utils';
 
+import { ThemeContext } from './_app';
+
+const SearchWrapper = styled.div({
+  margin: `${tokens.spacing.large} 0`,
+  width: `100%`,
+  [mediaQuery.aboveMedium]: {
+    margin: `${tokens.spacing.xxlarge} auto`,
+    width: '70%',
+  },
+});
+
 export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
-
   const router = useRouter();
+  const { theme } = useContext(ThemeContext);
 
   function handleChangeSearchInput(e) {
     setSearchInput(e.target.value);
@@ -23,21 +41,22 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
     setSearchInput('');
   }
 
+  const numberOfPackages =
+    packageCount > 0
+      ? `${packageCount.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })}`
+      : '';
+
   return (
     <Layout
       description="Easily search the documentation for every version of every R package on CRAN and Bioconductor."
       title="Home"
     >
-      <div className="w-full max-w-4xl mx-auto mt-32 md:mt-56">
-        <div className="text-xl md:text-2xl lg:text-3xl">
-          {`Search all ${
-            packageCount > 0
-              ? `${packageCount.toLocaleString(undefined, {
-                  maximumFractionDigits: 0,
-                })}`
-              : ''
-          } R packages on CRAN and Bioconductor`}
-        </div>
+      <SearchWrapper data-theme={theme}>
+        <Heading as="h2" size="xlarge" style={{ color: themeTokens.text.main }}>
+          {`Search from ${numberOfPackages} R packages on CRAN and Bioconductor`}
+        </Heading>
         <form onSubmit={onSubmitSearch}>
           <HomeSearchBar
             onChange={handleChangeSearchInput}
@@ -45,117 +64,21 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
           />
         </form>
         <AutoComplete searchInput={searchInput} />
-      </div>
-      <div className="grid md:grid-cols-3 w-full max-w-4xl mx-auto px-8 mt-8 md:mt-16">
-        <div className="flex flex-col">
-          <a
-            className="text-xl md:text-2xl lg:text-3xl"
-            href="https://www.datacamp.com/learn/r"
-          >
-            <strong>Learn R</strong>
-          </a>
-          <ul className="list-inside list-disc">
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/courses/free-introduction-to-r"
-              >
-                Introduction to R Course
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/blog/all-about-r"
-              >
-                What is R?
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/r-or-python-for-data-analysis"
-              >
-                R vs Python
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="col-span-2 mt-8 md:mt-0">
-          <a
-            className="text-xl md:text-2xl lg:text-3xl"
-            href="https://www.datacamp.com/tutorial/category/r-programming"
-          >
-            <strong>Popular R Tutorials</strong>
-          </a>
-          <ol className="list-decimal md:grid-cols-2 grid list-inside gap-4">
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/linear-regression-R"
-              >
-                Linear Regression in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/logistic-regression-R"
-              >
-                Logistic regression in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/pca-analysis-r"
-              >
-                Principal Component Analysis in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/make-histogram-basic-r"
-              >
-                Histograms in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/hierarchical-clustering-R"
-              >
-                Hierarchical Clustering in&nbsp;R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/decision-trees-R"
-              >
-                Decision Trees in R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/r-data-import-tutorial"
-              >
-                Importing Data into R
-              </a>
-            </li>
-            <li>
-              <a
-                className="underline"
-                href="https://www.datacamp.com/tutorial/contingency-tables-r"
-              >
-                Contingency Tables in R
-              </a>
-            </li>
-          </ol>
-        </div>
-      </div>
+      </SearchWrapper>
+      <Heading
+        as="h3"
+        css={{
+          color: themeTokens.text.main,
+          textAlign: 'left',
+          [mediaQuery.aboveMedium]: {
+            textAlign: 'center',
+          },
+        }}
+        size="medium"
+      >
+        Explore learning paths with DataCamp
+      </Heading>
+      <HomePageLinks />
     </Layout>
   );
 }
