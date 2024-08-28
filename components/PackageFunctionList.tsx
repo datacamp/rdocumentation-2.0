@@ -48,7 +48,6 @@ export default function PackageFunctionList({
             name="functionSearch"
             onChange={(event) => setSearchInput(event.target.value)}
             placeholder="Search all functions"
-            size="small"
             value={searchInput}
           />
         </div>

@@ -69,7 +69,6 @@ const Autocomplete = ({ searchInput }: Props) => {
     autoComplete(searchInput);
   }, [searchInput]);
 
-  // TODO: fix dark mode styles
   return (
     <div
       className="my-2 bg-white shadow-lg"

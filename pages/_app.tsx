@@ -1,5 +1,6 @@
 import '../styles/index.css';
 
+import { ToastProvider } from '@datacamp/waffles/toast';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import type { AppProps } from 'next/app';
@@ -43,12 +44,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [theme]);
 
   return (
-    <>
-      <CacheProvider value={emotionCache}>
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <CacheProvider value={emotionCache}>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ToastProvider>
           <Component {...pageProps} />
-        </ThemeContext.Provider>
-      </CacheProvider>
-    </>
+        </ToastProvider>
+      </ThemeContext.Provider>
+    </CacheProvider>
   );
 }
