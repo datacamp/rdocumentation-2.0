@@ -1,15 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { Button } from '@datacamp/waffles/button';
 import { Heading } from '@datacamp/waffles/heading';
 import { mediaQuery } from '@datacamp/waffles/helpers';
-import { ExternalLink } from '@datacamp/waffles/icon';
-import { Link } from '@datacamp/waffles/link';
-import { Paragraph } from '@datacamp/waffles/paragraph';
-import {
-  darkThemeStyle,
-  lightThemeStyle,
-  theme as themeTokens,
-} from '@datacamp/waffles/theme';
+import { theme as themeTokens } from '@datacamp/waffles/theme';
 import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
@@ -17,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 
 import AutoComplete from '../components/Autocomplete';
+import { HomePageLinks } from '../components/HomePageLinks';
 import HomeSearchBar from '../components/HomeSearchBar';
 import Layout from '../components/Layout';
 import { API_URL } from '../lib/utils';
@@ -31,51 +24,6 @@ const SearchWrapper = styled.div({
     width: '70%',
   },
 });
-
-const ContentWrapper = styled.div({
-  '&, &[data-theme="light"]': {
-    ...lightThemeStyle,
-  },
-  '&[data-theme="dark"]': {
-    ...darkThemeStyle,
-  },
-  display: 'grid',
-  margin: '0 auto',
-  padding: `0 ${tokens.spacing.large} ${tokens.spacing.large}`,
-  [mediaQuery.aboveMedium]: {
-    gridGap: tokens.spacing.large,
-    gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-    marginTop: tokens.spacing.xlarge,
-  },
-});
-
-const Column = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: tokens.spacing.large,
-});
-
-const ListWrapper = styled.div(`
-  display: flex;
-  flex-direction: column;
-  gap: ${tokens.spacing.small};
-  `);
-
-const linkStyle = {
-  '&:hover': {
-    backgroundColor: 'unset',
-    border: 'none',
-    boxShadow: 'none',
-    textDecoration: 'underline',
-  },
-  backgroundColor: 'unset',
-  border: 'none',
-  color: themeTokens.text.main,
-};
-
-const categoryStyle = {
-  marginBottom: 0,
-};
 
 export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
@@ -128,143 +76,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
       >
         Explore learning paths with DataCamp
       </Heading>
-      <ContentWrapper data-theme={theme}>
-        <Column>
-          <Button
-            as="a"
-            href="https://www.datacamp.com/tracks/r-programming-fundamentals"
-            iconRight={<ExternalLink />}
-          >
-            R Fundamentals
-          </Button>
-          <ListWrapper>
-            <Paragraph style={categoryStyle} variant="secondary">
-              Course
-            </Paragraph>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/courses/free-introduction-to-r"
-            >
-              Introduction to R
-            </Link>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tracks/data-visualization-with-r"
-            >
-              Data Visualization with R
-            </Link>
-            <Paragraph style={categoryStyle} variant="secondary">
-              Tutorial
-            </Paragraph>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/cheat-sheet/getting-started-r"
-            >
-              R Basics Cheat Sheet
-            </Link>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tutorial/linear-regression-R"
-            >
-              Linear Regression in R
-            </Link>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tutorial/make-histogram-basic-r"
-            >
-              Histograms in R
-            </Link>
-          </ListWrapper>
-        </Column>
-        <Column>
-          <Button
-            as="a"
-            href="https://www.datacamp.com/tracks/big-data-with-r"
-            iconRight={<ExternalLink />}
-          >
-            Big Data with R
-          </Button>
-          <ListWrapper>
-            <Paragraph style={categoryStyle} variant="secondary">
-              Course
-            </Paragraph>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/courses/practicing-statistics-interview-questions-in-r"
-            >
-              Practicing Interview Questions in R
-            </Link>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tracks/data-manipulation-with-r"
-            >
-              Data Manipulation with R
-            </Link>
-            <Paragraph style={categoryStyle} variant="secondary">
-              Course
-            </Paragraph>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tutorial/r-data-import-tutorial"
-            >
-              Importing Data into R
-            </Link>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tutorial/pca-analysis-r"
-            >
-              Principal Component Analysis in R
-            </Link>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tutorial/contingency-tables-r"
-            >
-              Contingency Tables in R
-            </Link>
-          </ListWrapper>
-        </Column>
-        <Column>
-          <Button
-            as="a"
-            href="https://www.datacamp.com/tracks/machine-learning-scientist-with-r"
-            iconRight={<ExternalLink />}
-          >
-            Machine Learning with R
-          </Button>
-          <ListWrapper>
-            <Paragraph style={categoryStyle} variant="secondary">
-              Course
-            </Paragraph>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/courses/machine-learning-in-the-tidyverse"
-            >
-              Machine Learning in the Tidyverse
-            </Link>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tracks/supervised-machine-learning-in-r"
-            >
-              Supervised Machine Learning in R
-            </Link>
-            <Paragraph style={categoryStyle} variant="secondary">
-              Tutorial
-            </Paragraph>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tutorial/decision-trees-R"
-            >
-              Decision Trees in R
-            </Link>
-            <Link
-              css={linkStyle}
-              href="https://www.datacamp.com/tracks/supervised-machine-learning-in-r"
-            >
-              Hierarchical Clustering in R
-            </Link>
-          </ListWrapper>
-        </Column>
-      </ContentWrapper>
+      <HomePageLinks />
     </Layout>
   );
 }
