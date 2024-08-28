@@ -6,7 +6,7 @@ orbs:
   queue: eddiewebb/queue@1.6.4
   datacamp-deploy-branch: datacamp/deploy-branch@1
   datacamp-artifactory: datacamp/artifactory@1
-  
+
 workflows:
 # BEGIN ANSIBLE MANAGED BLOCK
   build-and-deploy-eks:
@@ -25,7 +25,6 @@ workflows:
           context: org-global
           extra-docker-args: '--build-arg VERSION=$(git describe --tags)'
           dockerfile: Dockerfile
-          docker-version: 20.10.2
           executor: datacamp-artifactory/buildkit
           repo: rdocumentation
           requires:

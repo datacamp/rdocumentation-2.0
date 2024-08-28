@@ -148,21 +148,11 @@ export default function SearchResults() {
         {/* page toggle buttons */}
         {(packageResults.length > 0 || functionResults.length > 0) && (
           <div className="flex justify-center mt-6">
-            <Button
-              // TODO: fix appearance
-              // appearance={theme === 'light' ? 'default' : 'inverted'}
-              disabled={onFirstPage}
-              onClick={handlePreviousPage}
-            >
+            <Button disabled={onFirstPage} onClick={handlePreviousPage}>
               <ArrowLeft />
               Previous Page
             </Button>
-            <Button
-              // TODO: fix appearance
-              // appearance={theme === 'light' ? 'default' : 'inverted'}
-              disabled={onLastPage}
-              onClick={handleNextPage}
-            >
+            <Button disabled={onLastPage} onClick={handleNextPage}>
               Next Page
               <ArrowRight />
             </Button>
