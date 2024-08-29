@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { tokens } from '@datacamp/waffles/tokens';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -6,6 +8,7 @@ import ReactGA4 from 'react-ga4';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import atomOneDark from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark';
 
+import CourseAds from '../../../../../../components/CourseAds';
 import Html from '../../../../../../components/Html';
 import Layout from '../../../../../../components/Layout';
 import * as gtag from '../../../../../../lib/gtag';
@@ -79,7 +82,7 @@ export default function TopicPage({ topicData }: Props) {
       description={description}
       title={pageTitle}
     >
-      <div className="max-w-screen-lg mt-8 md:mt-12">
+      <div css={{ marginTop: tokens.spacing.large }}>
         <section className="text-xl text-gray-500">
           <Link href={`/packages/${packageName}/versions/${packageVersion}`}>
             <a>
@@ -132,7 +135,7 @@ export default function TopicPage({ topicData }: Props) {
             <section>
               {sections.map((section) => {
                 if (section.description.length < 1) {
-                  return;
+                  return null;
                 }
                 return (
                   <div key={section.name}>
@@ -202,6 +205,7 @@ export default function TopicPage({ topicData }: Props) {
           )}
         </div>
       </div>
+      <CourseAds />
     </Layout>
   );
 }

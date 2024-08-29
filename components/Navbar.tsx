@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { DataCampLogo } from '@datacamp/waffles/brand';
 import { Button } from '@datacamp/waffles/button';
 import { Heading } from '@datacamp/waffles/heading';
@@ -12,7 +13,6 @@ import {
 } from '@datacamp/waffles/theme';
 import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
@@ -78,6 +78,9 @@ const VerticalDivider = styled.hr(`
 `);
 
 const inputStyle = { flexGrow: 1, minWidth: '343px' };
+const buttonStyle = {
+  height: tokens.sizing.medium,
+};
 
 export default function Navbar() {
   const [searchInput, setSearchInput] = useState('');
@@ -96,25 +99,33 @@ export default function Navbar() {
   return (
     <Header data-theme={theme}>
       <nav>
-        <Link href="/">
-          <LogoWrapper>
-            <Heading style={{ color: themeTokens.text.main }}>
-              RDocumentation
+        <LogoWrapper>
+          <a href="/">
+            <Heading css={{ color: themeTokens.text.main, margin: 0 }}>
+              Rdocumentation
             </Heading>
-            <div>
-              <VerticalDivider />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <Paragraph
-                style={{ color: themeTokens.text.secondary }}
-                variant="secondary"
-              >
-                powered by
-              </Paragraph>
-              <DataCampLogo />
-            </div>
-          </LogoWrapper>
-        </Link>
+          </a>
+
+          <div>
+            <VerticalDivider />
+          </div>
+          <a
+            css={{ display: 'flex', flexDirection: 'column' }}
+            href="https://www.datacamp.com"
+          >
+            <Paragraph
+              size="small"
+              style={{
+                color: themeTokens.text.secondary,
+                marginBottom: 0,
+              }}
+              variant="secondary"
+            >
+              powered by
+            </Paragraph>
+            <DataCampLogo css={{ flexShrink: 0, height: 18, width: 86 }} />
+          </a>
+        </LogoWrapper>
       </nav>
 
       <RightContainer>
@@ -136,6 +147,7 @@ export default function Navbar() {
           <Button
             aria-label="toggle dark mode"
             className="p-1"
+            css={{ ...buttonStyle, padding: '12px' }}
             onClick={toggleTheme}
             type="button"
           >
@@ -144,6 +156,7 @@ export default function Navbar() {
           <Button
             aria-label="github repository"
             as="a"
+            css={{ ...buttonStyle, padding: '12px' }}
             href="https://github.com/datacamp/rdocumentation-2.0"
             rel="noopener noreferrer"
             target="_blank"
@@ -152,9 +165,13 @@ export default function Navbar() {
           </Button>
           <Button
             as="a"
+            css={{
+              ...buttonStyle,
+              flexGrow: 1,
+              padding: `${tokens.spacing.small} ${tokens.spacing.medium}`,
+            }}
             href="https://www.datacamp.com/category/r"
             iconLeft={<DataCampBrand />}
-            style={{ flexGrow: 1 }}
             variant="primary"
           >
             Learn R Programming

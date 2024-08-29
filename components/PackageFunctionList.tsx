@@ -2,6 +2,7 @@ import { Input } from '@datacamp/waffles/input';
 import { useState } from 'react';
 
 import ClickableCard from './ClickableCard';
+import CourseAds from './CourseAds';
 
 type Props = {
   functions: Array<{
@@ -36,6 +37,7 @@ export default function PackageFunctionList({
 
   return (
     <div>
+      <CourseAds />
       <div className="block md:flex md:items-center md:justify-between">
         <h2 className="text-2xl font-bold">{`Functions in ${packageName} (${packageVersion})`}</h2>
         <div className="mt-5 dc-input md:mt-0">

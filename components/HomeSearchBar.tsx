@@ -3,6 +3,7 @@ import { Button } from '@datacamp/waffles/button';
 import { mediaQuery } from '@datacamp/waffles/helpers';
 import { Search } from '@datacamp/waffles/icon';
 import { Input } from '@datacamp/waffles/input';
+import { lightThemeStyle } from '@datacamp/waffles/theme';
 import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
 import { ChangeEvent } from 'react';
@@ -31,7 +32,14 @@ export default function HomeSearchBar({ onChange, value }: Props) {
   const p = PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)];
 
   return (
-    <Wrapper>
+    <Wrapper
+      css={{
+        '&, &[data-theme="light"] *': {
+          ...lightThemeStyle,
+        },
+      }}
+      data-theme={'light'}
+    >
       <Input
         iconLeft={<Search aria-label="Search all packages and functions" />}
         onChange={onChange}

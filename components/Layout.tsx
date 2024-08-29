@@ -1,3 +1,4 @@
+import { mediaQuery } from '@datacamp/waffles/helpers';
 import {
   darkThemeStyle,
   lightThemeStyle,
@@ -32,8 +33,11 @@ const ContentWrapper = styled.div({
   flex: 1,
   flexDirection: 'column',
   margin: '0 auto',
-  maxWidth: 1200,
+  maxWidth: '100%',
   padding: `0 ${tokens.spacing.medium}`,
+  [mediaQuery.aboveSmall]: {
+    maxWidth: 1200,
+  },
 });
 
 const Divider = styled.hr({

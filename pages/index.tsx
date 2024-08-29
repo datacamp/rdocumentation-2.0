@@ -6,15 +6,13 @@ import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 import AutoComplete from '../components/Autocomplete';
 import { HomePageLinks } from '../components/HomePageLinks';
 import HomeSearchBar from '../components/HomeSearchBar';
 import Layout from '../components/Layout';
 import { API_URL } from '../lib/utils';
-
-import { ThemeContext } from './_app';
 
 const SearchWrapper = styled.div({
   margin: `${tokens.spacing.large} 0`,
@@ -28,7 +26,6 @@ const SearchWrapper = styled.div({
 export default function HomePage({ packageCount }: { packageCount?: number }) {
   const [searchInput, setSearchInput] = useState('');
   const router = useRouter();
-  const { theme } = useContext(ThemeContext);
 
   function handleChangeSearchInput(e) {
     setSearchInput(e.target.value);
@@ -53,8 +50,14 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
       description="Easily search the documentation for every version of every R package on CRAN and Bioconductor."
       title="Home"
     >
-      <SearchWrapper data-theme={theme}>
-        <Heading as="h2" size="xlarge" style={{ color: themeTokens.text.main }}>
+      <SearchWrapper>
+        <Heading
+          as="h2"
+          size="xxlarge"
+          style={{
+            color: themeTokens.text.main,
+          }}
+        >
           {`Search from ${numberOfPackages} R packages on CRAN and Bioconductor`}
         </Heading>
         <form onSubmit={onSubmitSearch}>
@@ -69,10 +72,11 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
         as="h3"
         css={{
           color: themeTokens.text.main,
-          textAlign: 'left',
+          fontSize: tokens.fontSizes.large,
           [mediaQuery.aboveMedium]: {
             textAlign: 'center',
           },
+          textAlign: 'left',
         }}
         size="medium"
       >
