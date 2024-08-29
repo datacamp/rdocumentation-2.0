@@ -1,15 +1,22 @@
 /** @jsxImportSource @emotion/react */
-import { RLogomark } from '@datacamp/waffles/asset';
 import { Card } from '@datacamp/waffles/card';
+import { Heading } from '@datacamp/waffles/heading';
+import { mediaQuery } from '@datacamp/waffles/helpers';
 import { Link } from '@datacamp/waffles/link';
 import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+
+import { useRenderCourseAds } from '../helpers/hooks/useRenderCourseAds';
 
 const Wrapper = styled.div({
   display: 'grid',
   gridGap: tokens.spacing.medium,
-  gridTemplateColumns: 'repeat(3, 1fr)',
+  gridTemplateColumns: '1fr',
   marginBottom: tokens.spacing.medium,
+  [mediaQuery.aboveMedium]: {
+    gridTemplateColumns: 'repeat(3, 1fr)',
+  },
 });
 
 const cards = [
@@ -34,39 +41,47 @@ const cards = [
 ];
 
 function CourseAds() {
-  return (
-    <Wrapper>
-      {cards.map(({ description, link, title }) => (
-        <Card
-          css={{
-            '&:active, &:focus, &:hover': {
-              cursor: 'pointer',
-            },
-          }}
-          headstone={<Card.HeadstoneAvatar content={<RLogomark />} />}
-          key={title}
-          onClick={() => {
-            // TODO: use router
-            window.location.href = link;
-          }}
-        >
-          <Card.Header>
-            <Link
-              css={{
-                '&:active, &:focus, &:hover': {
-                  cursor: 'pointer',
-                },
-              }}
-              href={link}
-            >
-              {title}
-            </Link>
-          </Card.Header>
+  const shouldRender = useRenderCourseAds();
+  const router = useRouter();
 
-          <Card.Body>{description}</Card.Body>
-        </Card>
-      ))}
-    </Wrapper>
+  if (!shouldRender) {
+    return null;
+  }
+
+  return (
+    <section>
+      <Heading css={{ marginBottom: tokens.spacing.medium }}>
+        Continue Improving Your R Skills
+      </Heading>
+      <Wrapper>
+        {cards.map(({ description, link, title }) => (
+          <Card
+            css={{
+              '&:active, &:focus, &:hover': {
+                cursor: 'pointer',
+              },
+            }}
+            key={title}
+            onClick={() => router.push(link)}
+          >
+            <Card.Header>
+              <Link
+                css={{
+                  '&:active, &:focus, &:hover': {
+                    cursor: 'pointer',
+                  },
+                }}
+                href={link}
+              >
+                {title}
+              </Link>
+            </Card.Header>
+
+            <Card.Body>{description}</Card.Body>
+          </Card>
+        ))}
+      </Wrapper>
+    </section>
   );
 }
 
