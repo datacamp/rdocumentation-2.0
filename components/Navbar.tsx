@@ -78,6 +78,9 @@ const VerticalDivider = styled.hr(`
 `);
 
 const inputStyle = { flexGrow: 1, minWidth: '343px' };
+const buttonStyle = {
+  height: '36px',
+};
 
 export default function Navbar() {
   const [searchInput, setSearchInput] = useState('');
@@ -144,6 +147,7 @@ export default function Navbar() {
           <Button
             aria-label="toggle dark mode"
             className="p-1"
+            css={{ ...buttonStyle, padding: '12px' }}
             onClick={toggleTheme}
             type="button"
           >
@@ -152,6 +156,7 @@ export default function Navbar() {
           <Button
             aria-label="github repository"
             as="a"
+            css={{ ...buttonStyle, padding: '12px' }}
             href="https://github.com/datacamp/rdocumentation-2.0"
             rel="noopener noreferrer"
             target="_blank"
@@ -160,9 +165,13 @@ export default function Navbar() {
           </Button>
           <Button
             as="a"
+            css={{
+              ...buttonStyle,
+              flexGrow: 1,
+              padding: `${tokens.spacing.small} ${tokens.spacing.medium}`,
+            }}
             href="https://www.datacamp.com/category/r"
             iconLeft={<DataCampBrand />}
-            style={{ flexGrow: 1 }}
             variant="primary"
           >
             Learn R Programming

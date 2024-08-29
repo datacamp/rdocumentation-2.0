@@ -51,7 +51,13 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
       title="Home"
     >
       <SearchWrapper>
-        <Heading as="h2" size="xlarge" style={{ color: themeTokens.text.main }}>
+        <Heading
+          as="h2"
+          size="xxlarge"
+          style={{
+            color: themeTokens.text.main,
+          }}
+        >
           {`Search from ${numberOfPackages} R packages on CRAN and Bioconductor`}
         </Heading>
         <form onSubmit={onSubmitSearch}>
