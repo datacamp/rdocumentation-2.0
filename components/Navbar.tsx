@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { DataCampLogo } from '@datacamp/waffles/brand';
 import { Button } from '@datacamp/waffles/button';
 import { Heading } from '@datacamp/waffles/heading';
@@ -12,7 +13,6 @@ import {
 } from '@datacamp/waffles/theme';
 import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
@@ -96,25 +96,33 @@ export default function Navbar() {
   return (
     <Header data-theme={theme}>
       <nav>
-        <Link href="/">
-          <LogoWrapper>
-            <Heading style={{ color: themeTokens.text.main }}>
-              RDocumentation
+        <LogoWrapper>
+          <a href="/">
+            <Heading css={{ color: themeTokens.text.main, margin: 0 }}>
+              Rdocumentation
             </Heading>
-            <div>
-              <VerticalDivider />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <Paragraph
-                style={{ color: themeTokens.text.secondary }}
-                variant="secondary"
-              >
-                powered by
-              </Paragraph>
-              <DataCampLogo />
-            </div>
-          </LogoWrapper>
-        </Link>
+          </a>
+
+          <div>
+            <VerticalDivider />
+          </div>
+          <a
+            css={{ display: 'flex', flexDirection: 'column' }}
+            href="https://www.datacamp.com"
+          >
+            <Paragraph
+              size="small"
+              style={{
+                color: themeTokens.text.secondary,
+                marginBottom: 0,
+              }}
+              variant="secondary"
+            >
+              powered by
+            </Paragraph>
+            <DataCampLogo css={{ flexShrink: 0, height: 18, width: 86 }} />
+          </a>
+        </LogoWrapper>
       </nav>
 
       <RightContainer>
