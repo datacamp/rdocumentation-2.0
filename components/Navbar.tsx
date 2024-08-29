@@ -79,7 +79,7 @@ const VerticalDivider = styled.hr(`
 
 const inputStyle = { flexGrow: 1, minWidth: '343px' };
 const buttonStyle = {
-  height: '36px',
+  height: tokens.sizing.medium,
 };
 
 export default function Navbar() {
