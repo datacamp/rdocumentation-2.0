@@ -72,10 +72,11 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
         as="h3"
         css={{
           color: themeTokens.text.main,
-          textAlign: 'left',
+          fontSize: tokens.fontSizes.large,
           [mediaQuery.aboveMedium]: {
             textAlign: 'center',
           },
+          textAlign: 'left',
         }}
         size="medium"
       >

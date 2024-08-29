@@ -2,7 +2,6 @@
 
 import { Button } from '@datacamp/waffles/button';
 import { mediaQuery } from '@datacamp/waffles/helpers';
-import { useMediaQuery } from '@datacamp/waffles/hooks';
 import { ExternalLink } from '@datacamp/waffles/icon';
 import { Link } from '@datacamp/waffles/link';
 import { Paragraph } from '@datacamp/waffles/paragraph';
@@ -73,8 +72,7 @@ const categoryStyle = {
 
 export const HomePageLinks = () => {
   const { theme } = useContext(ThemeContext);
-  const { isAboveSmall } = useMediaQuery();
-  const buttonSize = isAboveSmall ? 'medium' : 'large';
+  const buttonSize = 'large';
   return (
     <ContentWrapper data-theme={theme}>
       <Column>
