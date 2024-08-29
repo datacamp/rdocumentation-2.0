@@ -78,6 +78,7 @@ export const HomePageLinks = () => {
       <Column>
         <Button
           as="a"
+          data-trackid={'course-link-r-fundamentals'}
           href="https://www.datacamp.com/tracks/r-programming-fundamentals"
           iconRight={<ExternalLink />}
           size={buttonSize}
@@ -90,12 +91,14 @@ export const HomePageLinks = () => {
           </Paragraph>
           <Link
             css={linkStyle}
+            data-trackid={'course-link-free-introduction-to-r'}
             href="https://www.datacamp.com/courses/free-introduction-to-r"
           >
             Introduction to R
           </Link>
           <Link
             css={linkStyle}
+            data-trackid={'course-link-data-visualization-with-r'}
             href="https://www.datacamp.com/tracks/data-visualization-with-r"
           >
             Data Visualization with R
@@ -105,18 +108,21 @@ export const HomePageLinks = () => {
           </Paragraph>
           <Link
             css={linkStyle}
+            data-trackid={'tutorial-link-cheat-sheet-getting-started-r'}
             href="https://www.datacamp.com/cheat-sheet/getting-started-r"
           >
             R Basics Cheat Sheet
           </Link>
           <Link
             css={linkStyle}
+            data-trackid={'tutorial-link-tutorial-linear-regression-r'}
             href="https://www.datacamp.com/tutorial/linear-regression-R"
           >
             Linear Regression in R
           </Link>
           <Link
             css={linkStyle}
+            data-trackid={'tutorial-link-tutorial-make-histogram-basic-r'}
             href="https://www.datacamp.com/tutorial/make-histogram-basic-r"
           >
             Histograms in R
@@ -126,6 +132,7 @@ export const HomePageLinks = () => {
       <Column>
         <Button
           as="a"
+          data-trackid={'course-link-big-data-with-r'}
           href="https://www.datacamp.com/tracks/big-data-with-r"
           iconRight={<ExternalLink />}
           size={buttonSize}
@@ -138,12 +145,16 @@ export const HomePageLinks = () => {
           </Paragraph>
           <Link
             css={linkStyle}
+            data-trackid={
+              'course-link-practicing-statistics-interview-questions-in-r'
+            }
             href="https://www.datacamp.com/courses/practicing-statistics-interview-questions-in-r"
           >
             Practicing Interview Questions in R
           </Link>
           <Link
             css={linkStyle}
+            data-trackid={'course-link-data-manipulation-with-r'}
             href="https://www.datacamp.com/tracks/data-manipulation-with-r"
           >
             Data Manipulation with R
@@ -153,18 +164,21 @@ export const HomePageLinks = () => {
           </Paragraph>
           <Link
             css={linkStyle}
+            data-trackid={'tutorial-link-tutorial-r-data-import-tutorial'}
             href="https://www.datacamp.com/tutorial/r-data-import-tutorial"
           >
             Importing Data into R
           </Link>
           <Link
             css={linkStyle}
+            data-trackid={'tutorial-link-tutorial-pca-analysis-r'}
             href="https://www.datacamp.com/tutorial/pca-analysis-r"
           >
             Principal Component Analysis in R
           </Link>
           <Link
             css={linkStyle}
+            data-trackid={'tutorial-link-tutorial-contingency-tables-r'}
             href="https://www.datacamp.com/tutorial/contingency-tables-r"
           >
             Contingency Tables in R
@@ -174,6 +188,7 @@ export const HomePageLinks = () => {
       <Column>
         <Button
           as="a"
+          data-trackid={'course-link-machine-learning-scientist-with-r'}
           href="https://www.datacamp.com/tracks/machine-learning-scientist-with-r"
           iconRight={<ExternalLink />}
           size={buttonSize}
@@ -186,12 +201,14 @@ export const HomePageLinks = () => {
           </Paragraph>
           <Link
             css={linkStyle}
+            data-trackid={'course-link-machine-learning-in-the-tidyverse'}
             href="https://www.datacamp.com/courses/machine-learning-in-the-tidyverse"
           >
             Machine Learning in the Tidyverse
           </Link>
           <Link
             css={linkStyle}
+            data-trackid={'course-link-supervised-machine-learning-in-r'}
             href="https://www.datacamp.com/tracks/supervised-machine-learning-in-r"
           >
             Supervised Machine Learning in R
@@ -201,12 +218,16 @@ export const HomePageLinks = () => {
           </Paragraph>
           <Link
             css={linkStyle}
+            data-trackid={'tutorial-link-tutorial-decision-trees-r'}
             href="https://www.datacamp.com/tutorial/decision-trees-R"
           >
             Decision Trees in R
           </Link>
           <Link
             css={linkStyle}
+            data-trackid={
+              'tutorial-link-tutorial-supervised-machine-learning-in-r'
+            }
             href="https://www.datacamp.com/tracks/supervised-machine-learning-in-r"
           >
             Hierarchical Clustering in R

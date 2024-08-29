@@ -49,8 +49,13 @@ function CourseAds() {
   }
 
   return (
-    <section>
-      <Heading css={{ marginBottom: tokens.spacing.medium }}>
+    <section css={{ marginBottom: tokens.spacing.medium }}>
+      <Heading
+        css={{
+          marginBottom: tokens.spacing.large,
+          marginTop: tokens.spacing.small,
+        }}
+      >
         Continue Improving Your R Skills
       </Heading>
       <Wrapper>
@@ -61,6 +66,7 @@ function CourseAds() {
                 cursor: 'pointer',
               },
             }}
+            data-trackid={`course-ads-${title}`}
             key={title}
             onClick={() => router.push(link)}
           >
@@ -76,7 +82,6 @@ function CourseAds() {
                 {title}
               </Link>
             </Card.Header>
-
             <Card.Body>{description}</Card.Body>
           </Card>
         ))}
