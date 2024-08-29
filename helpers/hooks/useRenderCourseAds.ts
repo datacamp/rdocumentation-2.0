@@ -49,12 +49,13 @@ const top50Paths = [
   '/packages/mice/versions/3.16.0/topics/mice',
   '/packages/forecast/versions/8.23.0/topics/auto.arima',
   '/packages/base/versions/3.6.2/topics/substr',
+  '/packages/survminer/versions/0.4.9/topics/ggsurvplot',
+  '/packages/randomForest/versions/4.7-1.1/topics/randomForest',
+  '/packages/base/versions/3.6.2/topics/mean',
 ];
 
 export const useRenderCourseAds = () => {
   const router = useRouter();
-
-  console.log(JSON.stringify(router));
 
   return top50Paths.includes(router.asPath);
 };
