@@ -1,4 +1,11 @@
-import { useRouter } from 'next/router';
+/** @jsxImportSource @emotion/react */
+
+import { Link } from '@datacamp/waffles/link';
+import { Paragraph } from '@datacamp/waffles/paragraph';
+import { theme } from '@datacamp/waffles/theme';
+import { tokens } from '@datacamp/waffles/tokens';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import Html from './Html';
 
@@ -10,6 +17,42 @@ type Props = {
   name: string;
 };
 
+const clickableCardStyles = css({
+  borderRadius: tokens.borderRadius.medium,
+  borderWidth: tokens.borderWidth.medium,
+  color: theme.text.main,
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '10px 12px',
+  textDecoration: 'none',
+  width: '100%',
+});
+
+const TitleWrapper = styled.div({
+  alignItems: 'baseline',
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
+});
+
+const HTMLWrapper = styled.div({
+  fontWeight: 'bold',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+});
+
+const DescriptionWrapper = styled.div({
+  display: '-webkit-box',
+  fontSize: tokens.fontSizes.small,
+  fontWeight: 'normal',
+  marginTop: tokens.spacing.small,
+  overflow: 'hidden',
+  textAlign: 'left',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 3,
+});
+
 export default function ClickableCard({
   description,
   extraInfo,
@@ -17,27 +60,19 @@ export default function ClickableCard({
   id,
   name,
 }: Props) {
-  const router = useRouter();
-
-  function handleClick() {
-    router.push(href);
-  }
-
   return (
-    <button
-      className="flex flex-col w-full px-4 py-3 border-2 rounded-md hover:border-dc-navy dark:hover:border-dc-yellow focus:border-dc-navy dark:focus:border-dc-yellow focus:outline-none"
-      key={id}
-      onClick={handleClick}
-    >
-      <div className="flex items-baseline justify-between w-full">
-        <div className="font-bold truncate">
+    <Link css={clickableCardStyles} href={href} key={id}>
+      <TitleWrapper>
+        <HTMLWrapper>
           <Html>{name}</Html>
-        </div>
-        <div className="text-sm text-gray-500">{extraInfo}</div>
-      </div>
-      <div className="mt-2 text-sm text-left line-clamp-3">
+        </HTMLWrapper>
+        <Paragraph css={{ margin: 0 }} size="small" variant="secondary">
+          {extraInfo}
+        </Paragraph>
+      </TitleWrapper>
+      <DescriptionWrapper>
         <Html>{description}</Html>
-      </div>
-    </button>
+      </DescriptionWrapper>
+    </Link>
   );
 }
