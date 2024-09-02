@@ -16,7 +16,7 @@ RDocumentation provides an easy way to search the documentation for every versio
 
 To run locally, clone this repo and `cd` into the directory.
 
-Change the name of `.env.local.example` to `.env.local`. Since RDocumentation fetches data from the GitHub API, you'll need to create a GitHub [personal access token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) (with `public_repo` scope) and add it as an environment variable.
+Create a `.env.local`. Since RDocumentation fetches data from the GitHub API, you'll need to create a GitHub [personal access token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) (with `public_repo` scope) and add it as an environment variable.
 
 ```
 GITHUB_TOKEN=YOUR_PERSONAL_ACCESS_TOKEN

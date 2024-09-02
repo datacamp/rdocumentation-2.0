@@ -23,17 +23,15 @@ export default function PackageFunctionList({
   packageVersion,
 }: Props) {
   const [searchInput, setSearchInput] = useState('');
-
-  let filteredFunctions = functions;
   const cleanSearchValue = searchInput.trim().toLowerCase();
-
-  if (searchInput !== '') {
-    filteredFunctions = filteredFunctions.filter(
-      (f) =>
-        f.name.toLowerCase().indexOf(cleanSearchValue) > -1 ||
-        f.title.toLowerCase().indexOf(cleanSearchValue) > -1,
-    );
-  }
+  const filteredFunctions =
+    searchInput !== ''
+      ? [...functions].filter(
+          (f) =>
+            f.name.toLowerCase().indexOf(cleanSearchValue) > -1 ||
+            f.title.toLowerCase().indexOf(cleanSearchValue) > -1,
+        )
+      : functions;
 
   return (
     <div>
@@ -55,13 +53,13 @@ export default function PackageFunctionList({
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 md:grid-cols-3 md:gap-5">
-        {filteredFunctions.map((f) => (
+        {filteredFunctions.map((fn) => (
           <ClickableCard
-            description={f.title}
-            href={`/packages/${packageName}/versions/${packageVersion}/topics/${f.name}`}
-            id={f.id}
-            key={f.id}
-            name={f.name}
+            description={fn.title}
+            href={`/packages/${packageName}/versions/${packageVersion}/topics/${fn.name}`}
+            id={fn.id}
+            key={fn.id}
+            name={fn.name}
           />
         ))}
       </div>

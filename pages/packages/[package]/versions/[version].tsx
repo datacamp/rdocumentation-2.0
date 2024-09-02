@@ -113,18 +113,16 @@ export default function PackageVersionPage({
                 </Link>
               </div>
             )}
-            {
-            metadata.readmemd 
-            ?
-            <PackageReadme readme={metadata.readmemd} />
-            :
-            <PackageReadMePlaceholder
-                packageName = {metadata.package_name}
-                version = {metadata.version}
-                title = {metadata.title}
-                description = {metadata.description}
+            {metadata.readmemd ? (
+              <PackageReadme readme={metadata.readmemd} />
+            ) : (
+              <PackageReadMePlaceholder
+                description={metadata.description}
+                packageName={metadata.package_name}
+                title={metadata.title}
+                version={metadata.version}
               />
-            }
+            )}
           </div>
           <div className="w-full pt-8 border-t lg:border-t-0 lg:w-1/3 lg:pt-0 lg:pl-8 lg:border-l">
             <PackageSidebar
@@ -145,15 +143,13 @@ export default function PackageVersionPage({
           </div>
         </div>
         <div className="w-full pt-8 mt-12 border-t lg:pt-0 lg:border-t-0 max-w-none">
-          {
-            metadata.topics?.length > 0
-            &&
+          {metadata.topics?.length > 0 && (
             <PackageFunctionList
               functions={metadata.topics}
               packageName={metadata.package_name}
               packageVersion={metadata.version}
             />
-          }
+          )}
         </div>
       </div>
     </Layout>
@@ -169,6 +165,41 @@ export const getServerSideProps: GetServerSideProps = async ({
       `${API_URL}/api/packages/${packageName}/versions/${version}`,
     );
     const metadata = await res.json();
+    const {
+      canonicalLink,
+      description,
+      license,
+      maintainer,
+      package: { type_id },
+      package_name,
+      pageTitle,
+      readmemd,
+      release_date,
+      title,
+      topics,
+      uri,
+      version: metadataVersion,
+    } = metadata;
+    const reducedMetaData = {
+      canonicalLink,
+      description,
+      license,
+      maintainer,
+      package: { type_id },
+      package_name,
+      pageTitle,
+      readmemd,
+      release_date,
+      title,
+      topics: topics.map((topic) => ({
+        id: topic.id,
+        name: topic.name,
+        title: topic.title,
+      })),
+      type_id,
+      uri,
+      version: metadataVersion,
+    };
 
     // create an array of all package versions
     const versionsArray = metadata.package.versions.map((v) => v.version);
@@ -226,7 +257,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     return {
       props: {
-        metadata,
+        metadata: reducedMetaData,
         monthlyDownloads,
         repository,
         urls: {
