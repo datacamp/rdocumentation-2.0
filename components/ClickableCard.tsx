@@ -19,7 +19,7 @@ type Props = {
 
 const clickableCardStyles = css({
   borderRadius: tokens.borderRadius.medium,
-  borderWidth: '2px',
+  borderWidth: tokens.borderWidth.medium,
   color: theme.text.main,
   display: 'flex',
   flexDirection: 'column',
