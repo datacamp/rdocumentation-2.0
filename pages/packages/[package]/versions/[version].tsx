@@ -1,7 +1,12 @@
+import { mediaQuery } from '@datacamp/waffles/helpers';
+import { tokens } from '@datacamp/waffles/tokens';
+import styled from '@emotion/styled';
 import { graphql } from '@octokit/graphql';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
+import { useContext } from 'react';
 
+import { ThemeContext } from '../../../_app';
 import Layout from '../../../../components/Layout';
 import PackageFunctionList from '../../../../components/PackageFunctionList';
 import PackageReadme from '../../../../components/PackageReadme';
@@ -71,6 +76,72 @@ type Props = {
   versionsArray: string[];
 };
 
+const Container = styled.div({
+  '@media (min-width: 768px)': {
+    marginTop: '3rem',
+  },
+  marginTop: '2rem',
+});
+
+const FlexContainer = styled.div({
+  [mediaQuery.aboveMedium]: {
+    flexDirection: 'row',
+  },
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+const MainContent = styled.div({
+  [mediaQuery.aboveMedium]: {
+    paddingBottom: 0,
+    width: 'calc(100% * 2 / 3)',
+  },
+  paddingBottom: '2rem',
+  width: '100%',
+});
+
+const SidebarContainer = styled.div({
+  [mediaQuery.aboveMedium]: {
+    borderTop: 0,
+    paddingLeft: '2rem',
+    paddingTop: 0,
+    width: 'calc(100% / 3)',
+  },
+  paddingTop: '2rem',
+  width: '100%',
+});
+
+const WarningBox = styled.div({
+  '&[data-theme="dark"]': {
+    border: `2px solid ${tokens.colors.yellow}`,
+  },
+  '&[data-theme="light"]': {
+    border: `2px solid ${tokens.colors.navy}`,
+  },
+  a: {
+    color: 'white',
+    textDecoration: 'underline',
+  },
+  backgroundColor: tokens.colors.navy,
+  borderRadius: '0.375rem',
+  color: 'white',
+  marginBottom: '1.25rem',
+  padding: '1rem',
+  span: {
+    marginLeft: '0.75rem',
+  },
+});
+
+const AdditionalContent = styled.div({
+  '@media (min-width: 1024px)': {
+    borderTop: 0,
+    paddingTop: 0,
+  },
+  marginTop: '3rem',
+  paddingTop: '2rem',
+  width: '100%',
+});
+
 export default function PackageVersionPage({
   metadata,
   monthlyDownloads,
@@ -78,18 +149,12 @@ export default function PackageVersionPage({
   urls,
   versionsArray,
 }: Props) {
-  // construct link to the current package version
+  const { theme } = useContext(ThemeContext);
   const linkToCurrentVersion = `https://rdocumentation.org${metadata.uri}`;
-
-  // get the latest version of the package
   const latestVersion = versionsArray[0];
-
-  // get the number of downloads last month
   const downloadsLastMonth = monthlyDownloads
     ? monthlyDownloads[monthlyDownloads.length - 1].downloads
     : null;
-
-  // get the last published date
   const lastPublished = metadata.release_date
     ? new Date(metadata.release_date)
     : null;
@@ -100,18 +165,17 @@ export default function PackageVersionPage({
       description={metadata.description}
       title={metadata.pageTitle}
     >
-      <div className="mt-8 md:mt-12">
-        <div className="block lg:flex">
-          <div className="w-full pb-8 lg:pb-0 lg:w-2/3 lg:pr-8">
-            {/* show a warning if looking at an older package version */}
+      <Container>
+        <FlexContainer>
+          <MainContent>
             {metadata.version !== latestVersion && (
-              <div className="px-4 py-2 mb-5 text-white border-2 rounded-md border-dc-navy dark:border-dc-yellow bg-dc-navy">
+              <WarningBox data-theme={theme}>
                 <span>⚠️</span>
-                <span className="ml-3">{`There's a newer version (${latestVersion}) of this package.`}</span>{' '}
+                <span>{`There's a newer version (${latestVersion}) of this package.`}</span>
                 <Link href={metadata.canonicalLink}>
-                  <a className="text-white underline">Take me there.</a>
+                  <a>Take me there.</a>
                 </Link>
-              </div>
+              </WarningBox>
             )}
             {metadata.readmemd ? (
               <PackageReadme readme={metadata.readmemd} />
@@ -123,8 +187,8 @@ export default function PackageVersionPage({
                 version={metadata.version}
               />
             )}
-          </div>
-          <div className="w-full pt-8 border-t lg:border-t-0 lg:w-1/3 lg:pt-0 lg:pl-8 lg:border-l">
+          </MainContent>
+          <SidebarContainer>
             <PackageSidebar
               downloadsLastMonth={downloadsLastMonth}
               githubUrl={urls.githubUrl}
@@ -140,9 +204,9 @@ export default function PackageVersionPage({
               version={metadata.version}
               versionsArray={versionsArray}
             />
-          </div>
-        </div>
-        <div className="w-full pt-8 mt-12 border-t lg:pt-0 lg:border-t-0 max-w-none">
+          </SidebarContainer>
+        </FlexContainer>
+        <AdditionalContent>
           {metadata.topics?.length > 0 && (
             <PackageFunctionList
               functions={metadata.topics}
@@ -150,8 +214,8 @@ export default function PackageVersionPage({
               packageVersion={metadata.version}
             />
           )}
-        </div>
-      </div>
+        </AdditionalContent>
+      </Container>
     </Layout>
   );
 }

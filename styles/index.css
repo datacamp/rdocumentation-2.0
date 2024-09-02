@@ -20,10 +20,6 @@
   .prose * {
     @apply dark:text-white;
   }
-
-  .dc-input > div {
-    @apply w-full;
-  }
 }
 
 .list-view dl {

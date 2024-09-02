@@ -1,4 +1,6 @@
+import { mediaQuery } from '@datacamp/waffles/helpers';
 import { Input } from '@datacamp/waffles/input';
+import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import ClickableCard from './ClickableCard';
@@ -16,6 +18,43 @@ type Props = {
   packageName: string;
   packageVersion: string;
 };
+
+const FlexContainer = styled.div({
+  [mediaQuery.aboveMedium]: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  display: 'block',
+});
+
+const Heading = styled.h2({
+  fontSize: '1.5rem',
+  fontWeight: 'bold',
+});
+
+const InputWrapper = styled.div({
+  [mediaQuery.aboveMedium]: {
+    marginTop: 0,
+    width: 'max-content',
+  },
+  marginTop: '1.25rem',
+  width: '100%',
+});
+
+const GridContainer = styled.div({
+  [mediaQuery.aboveSmall]: {
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+  },
+  [mediaQuery.aboveMedium]: {
+    gap: '1.25rem',
+    gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+  },
+  display: 'grid',
+  gap: '1rem',
+  gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
+  marginTop: '1.25rem',
+});
 
 export default function PackageFunctionList({
   functions,
@@ -36,23 +75,22 @@ export default function PackageFunctionList({
   return (
     <div>
       <CourseAds />
-      <div className="block md:flex md:items-center md:justify-between">
-        <h2 className="text-2xl font-bold">{`Functions in ${packageName} (${packageVersion})`}</h2>
-        <div className="mt-5 dc-input md:mt-0">
+      <FlexContainer>
+        <Heading>{`Functions in ${packageName} (${packageVersion})`}</Heading>
+        <InputWrapper>
           <label className="sr-only" htmlFor="functionSearch">
             Search functions
           </label>
           <Input
-            className="w-full md:w-72"
             id="functionSearch"
             name="functionSearch"
             onChange={(event) => setSearchInput(event.target.value)}
             placeholder="Search all functions"
             value={searchInput}
           />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 md:grid-cols-3 md:gap-5">
+        </InputWrapper>
+      </FlexContainer>
+      <GridContainer>
         {filteredFunctions.map((fn) => (
           <ClickableCard
             description={fn.title}
@@ -62,7 +100,7 @@ export default function PackageFunctionList({
             name={fn.name}
           />
         ))}
-      </div>
+      </GridContainer>
     </div>
   );
 }
