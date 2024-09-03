@@ -1,3 +1,4 @@
+import { Heading } from '@datacamp/waffles/heading';
 import { mediaQuery } from '@datacamp/waffles/helpers';
 import { Input } from '@datacamp/waffles/input';
 import styled from '@emotion/styled';
@@ -19,18 +20,13 @@ type Props = {
   packageVersion: string;
 };
 
-const FlexContainer = styled.div({
+const Flex = styled.div({
   [mediaQuery.aboveMedium]: {
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'space-between',
   },
   display: 'block',
-});
-
-const Heading = styled.h2({
-  fontSize: '1.5rem',
-  fontWeight: 'bold',
 });
 
 const InputWrapper = styled.div({
@@ -75,11 +71,11 @@ export default function PackageFunctionList({
   return (
     <div>
       <CourseAds />
-      <FlexContainer>
+      <Flex>
         <Heading>{`Functions in ${packageName} (${packageVersion})`}</Heading>
         <InputWrapper>
           <label className="sr-only" htmlFor="functionSearch">
-            Search functions
+            Search all functions
           </label>
           <Input
             id="functionSearch"
@@ -89,7 +85,7 @@ export default function PackageFunctionList({
             value={searchInput}
           />
         </InputWrapper>
-      </FlexContainer>
+      </Flex>
       <GridContainer>
         {filteredFunctions.map((fn) => (
           <ClickableCard
