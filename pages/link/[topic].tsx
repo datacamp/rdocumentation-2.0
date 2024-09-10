@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
       redirect: {
         destination: res.url.replace(API_URL, ''),
-        permanent: false,
+        permanent: true,
       },
     };
   } catch (error) {

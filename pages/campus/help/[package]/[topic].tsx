@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
       redirect: {
         destination: `/packages/${packageName}/versions/${latestVersion}/topics/${topicName}`,
-        permanent: false,
+        permanent: true,
       },
     };
   } catch (error) {
