@@ -61,6 +61,7 @@ const Autocomplete = ({ searchInput }: Props) => {
         relevantTopics?.slice(0, Math.min(relevantTopics?.length, 5)),
       );
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   }

@@ -1,4 +1,4 @@
-ARG NODE_VERSION=16.4-alpine3.11
+ARG NODE_VERSION=20-alpine
 
 FROM node:${NODE_VERSION} AS dependencies
 

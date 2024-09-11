@@ -172,9 +172,7 @@ export default function PackageVersionPage({
               <WarningBox data-theme={theme}>
                 <span>⚠️</span>
                 <span>{`There's a newer version (${latestVersion}) of this package.`}</span>
-                <Link href={metadata.canonicalLink}>
-                  <a>Take me there.</a>
-                </Link>
+                <Link href={metadata.canonicalLink}>Take me there.</Link>
               </WarningBox>
             )}
             {metadata.readmemd ? (

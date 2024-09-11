@@ -85,9 +85,7 @@ export default function TopicPage({ topicData }: Props) {
       <div css={{ marginTop: tokens.spacing.large }}>
         <section className="text-xl text-gray-500">
           <Link href={`/packages/${packageName}/versions/${packageVersion}`}>
-            <a>
-              {packageName} (version {packageVersion})
-            </a>
+            {packageName} (version {packageVersion})
           </Link>
         </section>
         <div className="mt-2 prose-sm prose sm:prose max-w-none sm:max-w-none">
