@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
       redirect: {
         destination: `/packages/${packageName}/versions/${latestVersion}`,
-        permanent: true,
+        statusCode: 301,
       },
     };
   } catch (error) {

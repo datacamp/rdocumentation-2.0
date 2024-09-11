@@ -3,13 +3,13 @@ module.exports = {
     return [
       {
         destination: '/',
-        permanent: false,
         source: '/trends',
+        statusCode: 301,
       },
       {
         destination: '/',
-        permanent: false,
         source: '/taskviews',
+        statusCode: 301,
       },
     ];
   },
