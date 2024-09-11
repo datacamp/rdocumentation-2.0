@@ -1,15 +1,11 @@
 import '../styles/index.css';
 
 import { ToastProvider } from '@datacamp/waffles/toast';
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { createContext, useEffect, useState } from 'react';
 import ReactGA4 from 'react-ga4';
 
 import * as gtag from '../lib/gtag';
-
-const emotionCache = createCache({ key: 'rdocs' });
 
 export const ThemeContext = createContext({
   theme: 'light',
@@ -17,7 +13,7 @@ export const ThemeContext = createContext({
 });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState<string>();
 
   function toggleTheme() {
     if (theme === 'light') {
@@ -44,12 +40,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [theme]);
 
   return (
-    <CacheProvider value={emotionCache}>
-      <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <ToastProvider>
-          <Component {...pageProps} />
-        </ToastProvider>
-      </ThemeContext.Provider>
-    </CacheProvider>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <ToastProvider>
+        <Component {...pageProps} />
+      </ToastProvider>
+    </ThemeContext.Provider>
   );
 }
