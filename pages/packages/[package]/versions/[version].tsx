@@ -237,8 +237,10 @@ export const getServerSideProps: GetServerSideProps = async ({
       pageTitle,
       readmemd,
       release_date,
+      sourceJSON: { 'Date/Publication': datePublication },
       title,
       topics,
+      updated_at,
       uri,
       version: metadataVersion,
     } = metadata;
@@ -251,7 +253,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       package_name,
       pageTitle,
       readmemd,
-      release_date,
+      release_date: datePublication ? release_date : updated_at,
       title,
       topics: topics.map((topic) => ({
         id: topic.id,
