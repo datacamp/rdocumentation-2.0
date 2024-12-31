@@ -4,6 +4,7 @@ import { useToast } from '@datacamp/waffles/toast';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { FaGithub, FaHome, FaUser } from 'react-icons/fa';
 
 import { copyTextToClipboard } from '../lib/utils';
@@ -59,6 +60,7 @@ export default function PackageSidebar({
 }: PackageSidebarProps) {
   const router = useRouter();
   const { toast } = useToast();
+  const [availableAuthor, setAvailableAuthor] = useState(false);
 
   function handleCopyLink() {
     copyTextToClipboard(linkToCurrentVersion);
@@ -69,6 +71,14 @@ export default function PackageSidebar({
     const selectedVersion = event.target.value;
     router.push(`/packages/${packageName}/versions/${selectedVersion}`);
   }
+
+  useEffect(() => {
+    fetch(`/collaborators/name/${encodeURI(maintainer.name)}`).then((res) => {
+      if (res.status === 200) {
+        setAvailableAuthor(true);
+      }
+    });
+  }, [maintainer.name]);
 
   return (
     <div className="space-y-6">
@@ -218,9 +228,13 @@ export default function PackageSidebar({
         <div className="w-1/2">
           <SidebarHeader>Maintainer</SidebarHeader>
           <SidebarValue Icon={FaUser}>
-            <Link href={`/collaborators/name/${encodeURI(maintainer.name)}`}>
-              {maintainer.name}
-            </Link>
+            {availableAuthor ? (
+              <Link href={`/collaborators/name/${encodeURI(maintainer.name)}`}>
+                {maintainer.name}
+              </Link>
+            ) : (
+              maintainer.name
+            )}
           </SidebarValue>
         </div>
         {lastPublished && (
