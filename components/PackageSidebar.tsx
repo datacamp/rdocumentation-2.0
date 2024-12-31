@@ -4,9 +4,9 @@ import { useToast } from '@datacamp/waffles/toast';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { FaGithub, FaHome, FaUser } from 'react-icons/fa';
 
+import useHasCollaborator from '../helpers/hooks/useHasCollaborator';
 import { copyTextToClipboard } from '../lib/utils';
 
 import MonthlyDownloadsChart from './MonthlyDownloadsChart';
@@ -60,7 +60,6 @@ export default function PackageSidebar({
 }: PackageSidebarProps) {
   const router = useRouter();
   const { toast } = useToast();
-  const [availableAuthor, setAvailableAuthor] = useState(false);
 
   function handleCopyLink() {
     copyTextToClipboard(linkToCurrentVersion);
@@ -72,13 +71,7 @@ export default function PackageSidebar({
     router.push(`/packages/${packageName}/versions/${selectedVersion}`);
   }
 
-  useEffect(() => {
-    fetch(`/collaborators/name/${encodeURI(maintainer.name)}`).then((res) => {
-      if (res.status === 200) {
-        setAvailableAuthor(true);
-      }
-    });
-  }, [maintainer.name]);
+  const availableAuthor = useHasCollaborator(maintainer.name);
 
   return (
     <div className="space-y-6">
