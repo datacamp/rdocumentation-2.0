@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FaGithub, FaHome, FaUser } from 'react-icons/fa';
 
+import useHasCollaborator from '../helpers/hooks/useHasCollaborator';
 import { copyTextToClipboard } from '../lib/utils';
 
 import MonthlyDownloadsChart from './MonthlyDownloadsChart';
@@ -69,6 +70,8 @@ export default function PackageSidebar({
     const selectedVersion = event.target.value;
     router.push(`/packages/${packageName}/versions/${selectedVersion}`);
   }
+
+  const availableAuthor = useHasCollaborator(maintainer.name);
 
   return (
     <div className="space-y-6">
@@ -218,9 +221,13 @@ export default function PackageSidebar({
         <div className="w-1/2">
           <SidebarHeader>Maintainer</SidebarHeader>
           <SidebarValue Icon={FaUser}>
-            <Link href={`/collaborators/name/${encodeURI(maintainer.name)}`}>
-              {maintainer.name}
-            </Link>
+            {availableAuthor ? (
+              <Link href={`/collaborators/name/${encodeURI(maintainer.name)}`}>
+                {maintainer.name}
+              </Link>
+            ) : (
+              maintainer.name
+            )}
           </SidebarValue>
         </div>
         {lastPublished && (
