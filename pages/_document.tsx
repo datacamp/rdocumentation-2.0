@@ -31,7 +31,7 @@ class MyDocument extends Document {
           />
           <script
             async
-            src="https://promo.datacamp.com/banner.js?variant=rdocs"
+            src="https://campaign-service.datacamp.com/api/v1/banner"
           />
         </Head>
         <body>
