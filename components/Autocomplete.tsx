@@ -34,24 +34,43 @@ const Autocomplete = ({ searchInput }: Props) => {
   }
 
   async function autoComplete(query) {
+    setPackageSuggestions([]);
+    setTopicSuggestions([]);
+
+    if (!query || query.trim().length === 0) {
+      return;
+    }
+
     try {
-      // fetch the data
+      const packagesEndpoint = `${API_URL}/search_packages?q=${query}&page=1&latest=1`;
+      const functionsEndpoint = `${API_URL}/search_functions?q=${query}&page=1&latest=1`;
+
       const [resPackages, resTopics] = await Promise.all([
-        fetch(`${API_URL}/search_packages?q=${query}&page=1&latest=1`, {
+        fetch(packagesEndpoint, {
           headers: {
             Accept: 'application/json',
           },
         }),
-        fetch(`${API_URL}/search_functions?q=${query}&page=1&latest=1`, {
+        fetch(functionsEndpoint, {
           headers: {
             Accept: 'application/json',
           },
         }),
       ]);
 
-      const { packages } = await resPackages?.json();
-      const functions = await resTopics?.json();
-      const topics = functions?.functions;
+      let packages = [];
+      let topics = [];
+
+      if (resPackages.ok) {
+        const packagesData = await resPackages.json();
+        packages = packagesData.packages || [];
+      }
+
+      if (resTopics.ok) {
+        const functionsData = await resTopics.json();
+        topics = functionsData.functions || [];
+      }
+
       const relevantPackages = packages?.filter((p) => p?.score > 1);
       const relevantTopics = topics?.filter((p) => p?.score > 1);
       setPackageSuggestions(
