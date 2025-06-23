@@ -56,26 +56,37 @@ export default function SearchResults() {
   useEffect(() => {
     async function fetchResults() {
       try {
+        setPackageResults([]);
+        setFunctionResults([]);
         setIsLoading(true);
         // fetch the data
-        const resPackages = await fetch(
-          `${API_URL}/search_packages?q=${searchTerm}&page=${pageNumber}&latest=1`,
-          {
-            headers: {
-              Accept: 'application/json',
-            },
+        const packagesEndpoint = `${API_URL}/search_packages?q=${searchTerm}&page=${pageNumber}&latest=1`;
+        const functionsEndpoint = `${API_URL}/search_functions?q=${searchTerm}&page=${pageNumber}&latest=1`;
+
+        const resPackages = await fetch(packagesEndpoint, {
+          headers: {
+            Accept: 'application/json',
           },
-        );
-        const resFunctions = await fetch(
-          `${API_URL}/search_functions?q=${searchTerm}&page=${pageNumber}&latest=1`,
-          {
-            headers: {
-              Accept: 'application/json',
-            },
+        });
+        const resFunctions = await fetch(functionsEndpoint, {
+          headers: {
+            Accept: 'application/json',
           },
-        );
-        const { packages } = await resPackages.json();
-        const { functions } = await resFunctions.json();
+        });
+
+        let packages = [];
+        let functions = [];
+
+        if (resPackages.ok) {
+          const packagesData = await resPackages.json();
+          packages = packagesData.packages || [];
+        }
+
+        if (resFunctions.ok) {
+          const functionsData = await resFunctions.json();
+          functions = functionsData.functions || [];
+        }
+
         setPackageResults(packages);
         setFunctionResults(functions);
         setIsLoading(false);
@@ -84,8 +95,15 @@ export default function SearchResults() {
         console.log(error);
       }
     }
-    // get results once search term exists
-    if (searchTerm) fetchResults();
+
+    if (!searchTerm) {
+      setPackageResults([]);
+      setFunctionResults([]);
+      setIsLoading(false);
+      return;
+    }
+
+    fetchResults();
   }, [searchTerm, pageNumber]);
 
   function handlePreviousPage() {
