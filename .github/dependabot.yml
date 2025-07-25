@@ -1,0 +1,123 @@
+version: 2
+registries:
+  npm-npmjs:
+    type: npm-registry
+    url: https://registry.npmjs.org
+    token: ${{secrets.NPM_TOKEN_READ_ONLY}}
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    registries:
+      - npm-npmjs
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+    open-pull-requests-limit: 20
+    reviewers:
+      - "@datacamp-engineering/conversion-engineering"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      security:
+        applies-to: security-updates
+        update-types:
+          - "patch"
+          - "minor"
+          - "major"
+
+      datacamp-packages:
+        patterns:
+          - "@datacamp*"
+        update-types:
+          - "patch"
+          - "minor"
+
+      react-framework:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "next"
+        update-types:
+          - "patch"
+          - "minor"
+
+      react-ecosystem:
+        patterns:
+          - "react-*"
+          - "better-react-mathjax"
+        update-types:
+          - "patch"
+          - "minor"
+
+      styling-and-ui:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss*"
+          - "@emotion*"
+          - "postcss"
+          - "autoprefixer"
+        update-types:
+          - "patch"
+          - "minor"
+
+      utilities:
+        patterns:
+          - "date-fns"
+          - "react-use"
+          - "remark-gfm"
+          - "recharts"
+          - "@octokit/graphql"
+          - "react-ga4"
+          - "react-i18next"
+        update-types:
+          - "patch"
+          - "minor"
+
+      development-tools:
+        patterns:
+          - "typescript"
+          - "prettier"
+          - "eslint"
+        update-types:
+          - "patch"
+          - "minor"
+
+      type-definitions:
+        patterns:
+          - "@types*"
+        update-types:
+          - "patch"
+          - "minor"
+
+  # JavaScript dependencies - Acceptance Tests
+  - package-ecosystem: npm
+    directory: "/acceptance_tests"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "@datacamp-engineering/conversion-engineering"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@playwright/test"
+    groups:
+      datacamp-test-packages:
+        patterns:
+          - "@datacamp*"
+        update-types:
+          - "patch"
+          - "minor"
+
+      all-other-test-dependencies:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@datacamp*"
+        update-types:
+          - "patch"
+          - "minor"
