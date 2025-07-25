@@ -87,7 +87,7 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (_context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   let packageCount;
   try {
     const response = await fetch(

@@ -1,12 +1,11 @@
 /* eslint-disable global-require */
 module.exports = {
-  darkMode: 'class',
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/line-clamp'),
+  content: [
+    './components/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
   ],
-  purge: ['./components/**/*.{js,ts,jsx,tsx}', './pages/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
   theme: {
     extend: {
       colors: {
@@ -27,6 +26,17 @@ module.exports = {
         'dc-red': '#FF5400',
         'dc-yellow': '#FCCE0D',
       },
+    },
+    fontWeight: {
+      black: '900',
+      bold: '700',
+      extrabold: '800',
+      extralight: '200',
+      light: '300',
+      medium: '500',
+      normal: '400',
+      semibold: '600',
+      thin: '100',
     },
   },
   variants: {
