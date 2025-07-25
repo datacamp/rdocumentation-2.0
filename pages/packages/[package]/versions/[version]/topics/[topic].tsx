@@ -11,7 +11,6 @@ import atomOneDark from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-
 import CourseAds from '../../../../../../components/CourseAds';
 import Html from '../../../../../../components/Html';
 import Layout from '../../../../../../components/Layout';
-import * as gtag from '../../../../../../lib/gtag';
 import { API_URL } from '../../../../../../lib/utils';
 
 type Props = {
