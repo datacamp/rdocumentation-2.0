@@ -31,6 +31,7 @@ class MyDocument extends Document {
           />
           <script
             async
+            referrerPolicy="no-referrer-when-downgrade"
             src="https://campaign-service.datacamp.com/api/v1/banner"
           />
         </Head>
