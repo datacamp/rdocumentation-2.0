@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Heading } from '@datacamp/waffles/heading';
 import { mediaQuery } from '@datacamp/waffles/helpers';
+import { Text } from '@datacamp/waffles/text';
 import { theme as themeTokens } from '@datacamp/waffles/theme';
 import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
@@ -60,6 +61,16 @@ export default function HomePage({ packageCount }: { packageCount?: number }) {
         >
           {`Search from ${numberOfPackages} R packages on CRAN and Bioconductor`}
         </Heading>
+        <Text
+          css={{
+            color: themeTokens.text.secondary,
+            display: 'block',
+            marginTop: tokens.spacing.medium,
+          }}
+        >
+          Tip: Search for functions using function(package) format, e.g.
+          lm(stats)
+        </Text>
         <form onSubmit={onSubmitSearch}>
           <HomeSearchBar
             onChange={handleChangeSearchInput}

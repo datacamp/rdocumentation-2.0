@@ -4,9 +4,11 @@ import { Heading } from '@datacamp/waffles/heading';
 import { Paragraph } from '@datacamp/waffles/paragraph';
 import { tokens } from '@datacamp/waffles/tokens';
 import router from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { API_URL } from '../lib/utils';
+
+const DEBOUNCE_MS = 300;
 
 type Props = {
   searchInput: string;
@@ -28,33 +30,48 @@ const paragraphStyle = {
 const Autocomplete = ({ searchInput }: Props) => {
   const [packageSuggestions, setPackageSuggestions] = useState([]);
   const [topicSuggestions, setTopicSuggestions] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   function onClick(query) {
     router.push(`/search?q=${encodeURIComponent(query)}`);
   }
 
-  async function autoComplete(query) {
-    setPackageSuggestions([]);
-    setTopicSuggestions([]);
+  async function autoComplete(query: string) {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
 
     if (!query || query.trim().length === 0) {
+      setPackageSuggestions([]);
+      setTopicSuggestions([]);
+      setIsSearching(false);
       return;
     }
 
+    abortControllerRef.current = new AbortController();
+    const { signal } = abortControllerRef.current;
+
     try {
-      const packagesEndpoint = `${API_URL}/search_packages?q=${query}&page=1&latest=1`;
-      const functionsEndpoint = `${API_URL}/search_functions?q=${query}&page=1&latest=1`;
+      const packagesEndpoint = `${API_URL}/search_packages?q=${encodeURIComponent(
+        query,
+      )}&page=1`;
+      const functionsEndpoint = `${API_URL}/search_functions?q=${encodeURIComponent(
+        query,
+      )}&page=1`;
 
       const [resPackages, resTopics] = await Promise.all([
         fetch(packagesEndpoint, {
           headers: {
             Accept: 'application/json',
           },
+          signal,
         }),
         fetch(functionsEndpoint, {
           headers: {
             Accept: 'application/json',
           },
+          signal,
         }),
       ]);
 
@@ -71,22 +88,52 @@ const Autocomplete = ({ searchInput }: Props) => {
         topics = functionsData.functions || [];
       }
 
-      const relevantPackages = packages?.filter((p) => p?.score > 1);
-      const relevantTopics = topics?.filter((p) => p?.score > 1);
-      setPackageSuggestions(
-        relevantPackages?.slice(0, Math.min(relevantPackages?.length, 5)),
-      );
-      setTopicSuggestions(
-        relevantTopics?.slice(0, Math.min(relevantTopics?.length, 5)),
-      );
+      const seen = new Set<string>();
+      const dedupeByName = (items: typeof packages, nameKey: string) =>
+        items.filter((item) => {
+          const name = item?.fields?.[nameKey];
+          if (!name || seen.has(name)) return false;
+          seen.add(name);
+          return item?.score > 1;
+        });
+
+      const relevantPackages = dedupeByName(packages, 'package_name');
+      seen.clear();
+      const relevantTopics = topics.filter((item) => {
+        const key = `${item?.fields?.name}@${item?.fields?.package_name}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return item?.score > 1;
+      });
+
+      setPackageSuggestions(relevantPackages.slice(0, 5));
+      setTopicSuggestions(relevantTopics.slice(0, 5));
+      setIsSearching(false);
     } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        return;
+      }
+      setIsSearching(false);
       // eslint-disable-next-line no-console
       console.error(err);
     }
   }
 
   useEffect(() => {
-    autoComplete(searchInput);
+    if (searchInput && searchInput.trim().length > 0) {
+      setIsSearching(true);
+    }
+
+    const timeoutId = setTimeout(() => {
+      autoComplete(searchInput);
+    }, DEBOUNCE_MS);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
   }, [searchInput]);
 
   return (
@@ -106,6 +153,15 @@ const Autocomplete = ({ searchInput }: Props) => {
           >{`View results for "${searchInput}"`}</Paragraph>
         </div>
       )}
+      {isSearching &&
+        packageSuggestions.length === 0 &&
+        topicSuggestions.length === 0 && (
+          <div className="px-4 py-2">
+            <Paragraph css={{ color: tokens.colors.grey, marginBottom: 0 }}>
+              Searching...
+            </Paragraph>
+          </div>
+        )}
       <div>
         {packageSuggestions?.length > 0 && searchInput && (
           <ul>
@@ -146,12 +202,18 @@ const Autocomplete = ({ searchInput }: Props) => {
               </Heading>
             </li>
             {topicSuggestions?.map((t) => {
+              const funcName = t?.fields?.name;
+              const pkgName = t?.fields?.package_name;
+              const scopedQuery =
+                funcName && pkgName
+                  ? `${funcName}(${pkgName})`
+                  : funcName || '';
               return (
                 <li
                   className="flex items-center px-4 py-2"
                   css={liStyle}
-                  key={t?.fields?.package_name + t?.fields?.name}
-                  onClick={() => onClick(t?.fields?.name)}
+                  key={`${pkgName}-${funcName}`}
+                  onClick={() => onClick(scopedQuery)}
                 >
                   <div>
                     <Paragraph
