@@ -2,13 +2,19 @@
 import { Button } from '@datacamp/waffles/button';
 import { Heading } from '@datacamp/waffles/heading';
 import { ArrowLeft, ArrowRight } from '@datacamp/waffles/icon';
+import { Text } from '@datacamp/waffles/text';
 import { tokens } from '@datacamp/waffles/tokens';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import ClickableCard from '../components/ClickableCard';
 import Layout from '../components/Layout';
+import {
+  buildSearchEndpoints,
+  formatSearchHeading,
+  parseSearchQuery,
+} from '../lib/searchQueryParser';
 import { API_URL } from '../lib/utils';
 
 type PackageResult = {
@@ -52,16 +58,23 @@ export default function SearchResults() {
   const onFirstPage = pageNumber === 1;
   const onLastPage = packageResults.length < 15 && functionResults.length < 15;
 
-  // fetch first page of results and add pages as requested
+  const parsedQuery = useMemo(
+    () => parseSearchQuery(searchTerm as string),
+    [searchTerm],
+  );
+
   useEffect(() => {
     async function fetchResults() {
       try {
         setPackageResults([]);
         setFunctionResults([]);
         setIsLoading(true);
-        // fetch the data
-        const packagesEndpoint = `${API_URL}/search_packages?q=${searchTerm}&page=${pageNumber}&latest=1`;
-        const functionsEndpoint = `${API_URL}/search_functions?q=${searchTerm}&page=${pageNumber}&latest=1`;
+
+        const { functionsEndpoint, packagesEndpoint } = buildSearchEndpoints(
+          API_URL,
+          parsedQuery,
+          pageNumber,
+        );
 
         const resPackages = await fetch(packagesEndpoint, {
           headers: {
@@ -74,8 +87,8 @@ export default function SearchResults() {
           },
         });
 
-        let packages = [];
-        let functions = [];
+        let packages: PackageResult[] = [];
+        let functions: FunctionResult[] = [];
 
         if (resPackages.ok) {
           const packagesData = await resPackages.json();
@@ -87,8 +100,24 @@ export default function SearchResults() {
           functions = functionsData.functions || [];
         }
 
-        setPackageResults(packages);
-        setFunctionResults(functions);
+        const seenPackages = new Set<string>();
+        const deduplicatedPackages = packages.filter((p) => {
+          const name = p?.fields?.package_name;
+          if (!name || seenPackages.has(name)) return false;
+          seenPackages.add(name);
+          return true;
+        });
+
+        const seenFunctions = new Set<string>();
+        const deduplicatedFunctions = functions.filter((f) => {
+          const key = `${f?.fields?.name}@${f?.fields?.package_name}`;
+          if (seenFunctions.has(key)) return false;
+          seenFunctions.add(key);
+          return true;
+        });
+
+        setPackageResults(deduplicatedPackages);
+        setFunctionResults(deduplicatedFunctions);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -104,7 +133,7 @@ export default function SearchResults() {
     }
 
     fetchResults();
-  }, [searchTerm, pageNumber]);
+  }, [searchTerm, pageNumber, parsedQuery]);
 
   function handlePreviousPage() {
     if (onFirstPage) return;
@@ -116,12 +145,20 @@ export default function SearchResults() {
     router.push(`/search?q=${searchTerm}&p=${pageNumber + 1}`);
   }
 
+  const pageTitle = parsedQuery.isScoped
+    ? `Results for '${parsedQuery.functionName}' in '${parsedQuery.packageName}'`
+    : `Results for '${parsedQuery.rawQuery}'`;
+
   return (
-    <Layout title={searchTerm ? `Results for '${searchTerm}'` : ''}>
+    <Layout title={searchTerm ? pageTitle : ''}>
       <div className="mt-8 md:mt-12">
         <Heading size="large">
-          Page {pageNumber} of results for '{searchTerm}':
+          {formatSearchHeading(parsedQuery, pageNumber)}
         </Heading>
+        <Text className="text-gray-500 mt-2 block">
+          Tip: Search for functions using function(package) format, e.g.
+          lm(stats)
+        </Text>
         <div className="grid grid-cols-1 mt-5 md:grid-cols-2">
           {/* package results */}
           <div className="pb-5 space-y-4 md:border-r md:space-y-5 md:pr-10">
