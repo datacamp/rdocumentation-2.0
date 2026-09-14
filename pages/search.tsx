@@ -49,6 +49,52 @@ const ButtonWrapper = styled.div(`
   justify-content: center;
 `);
 
+const JSON_HEADERS = { Accept: 'application/json' };
+
+/**
+ * latest=1 drops packages whose latest_version flag is missing from the index
+ * instead of showing an older version, which would make them undiscoverable.
+ * When the query looks like a package name and no exact match came back,
+ * recover it with one unfiltered request.
+ *
+ * Remove once COMM-10361 fixes the underlying data.
+ */
+async function recoverExactPackageMatch(
+  parsed: ReturnType<typeof parseSearchQuery>,
+  pageNumber: number,
+  deduplicatedPackages: PackageResult[],
+): Promise<PackageResult[]> {
+  if (pageNumber !== 1) return deduplicatedPackages;
+
+  const candidate = packageNameCandidate(parsed);
+  if (!candidate) return deduplicatedPackages;
+
+  const candidateLower = candidate.toLowerCase();
+  const alreadyPresent = deduplicatedPackages.some(
+    (p) => p?.fields?.package_name?.toLowerCase() === candidateLower,
+  );
+  if (alreadyPresent) return deduplicatedPackages;
+
+  const endpoint = buildPackageFallbackEndpoint(API_URL, parsed, pageNumber);
+  const response = await fetch(endpoint, { headers: JSON_HEADERS });
+  if (!response.ok) return deduplicatedPackages;
+
+  const data = await response.json();
+  const exactMatches = (data.packages || []).filter(
+    (p: PackageResult) =>
+      p?.fields?.package_name?.toLowerCase() === candidateLower,
+  );
+  const recovered = keepNewestVersionPerKey(
+    exactMatches,
+    (p: PackageResult) => p?.fields?.package_name,
+    (p: PackageResult) => p?.fields?.version,
+  );
+
+  return recovered.length > 0
+    ? [...recovered, ...deduplicatedPackages]
+    : deduplicatedPackages;
+}
+
 export default function SearchResults() {
   const router = useRouter();
   const { p: page, q: searchTerm } = router.query;
@@ -80,14 +126,10 @@ export default function SearchResults() {
         );
 
         const resPackages = await fetch(packagesEndpoint, {
-          headers: {
-            Accept: 'application/json',
-          },
+          headers: JSON_HEADERS,
         });
         const resFunctions = await fetch(functionsEndpoint, {
-          headers: {
-            Accept: 'application/json',
-          },
+          headers: JSON_HEADERS,
         });
 
         let packages: PackageResult[] = [];
@@ -122,43 +164,11 @@ export default function SearchResults() {
           (f) => f?.fields?.version,
         );
 
-        // latest=1 drops packages whose latest_version flag is missing from the
-        // index instead of showing an older version, which would make them
-        // undiscoverable. When the query looks like a package name and no exact
-        // match came back, recover it with one unfiltered request. Remove once
-        // COMM-10361 fixes the underlying data.
-        let finalPackages = deduplicatedPackages;
-        const candidate =
-          pageNumber === 1 ? packageNameCandidate(parsedQuery) : null;
-        const candidateLower = candidate ? candidate.toLowerCase() : null;
-        const hasExactMatch =
-          candidateLower !== null &&
-          deduplicatedPackages.some(
-            (p) => p?.fields?.package_name?.toLowerCase() === candidateLower,
-          );
-
-        if (candidateLower !== null && !hasExactMatch) {
-          const resFallback = await fetch(
-            buildPackageFallbackEndpoint(API_URL, parsedQuery, pageNumber),
-            { headers: { Accept: 'application/json' } },
-          );
-
-          if (resFallback.ok) {
-            const fallbackData = await resFallback.json();
-            const exactMatches = (fallbackData.packages || []).filter(
-              (p: PackageResult) =>
-                p?.fields?.package_name?.toLowerCase() === candidateLower,
-            );
-            const recovered = keepNewestVersionPerKey(
-              exactMatches,
-              (p: PackageResult) => p?.fields?.package_name,
-              (p: PackageResult) => p?.fields?.version,
-            );
-            if (recovered.length > 0) {
-              finalPackages = [...recovered, ...deduplicatedPackages];
-            }
-          }
-        }
+        const finalPackages = await recoverExactPackageMatch(
+          parsedQuery,
+          pageNumber,
+          deduplicatedPackages,
+        );
 
         setPackageResults(finalPackages);
         setFunctionResults(deduplicatedFunctions);

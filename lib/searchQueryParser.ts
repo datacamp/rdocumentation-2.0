@@ -146,7 +146,9 @@ export function buildPackageFallbackEndpoint(
     parsed.isScoped && parsed.packageName
       ? parsed.packageName
       : parsed.rawQuery;
-  return `${baseUrl}/search_packages?q=${encodeURIComponent(term)}&page=${page}`;
+  return `${baseUrl}/search_packages?q=${encodeURIComponent(
+    term,
+  )}&page=${page}`;
 }
 
 /**
