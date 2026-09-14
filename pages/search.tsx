@@ -16,6 +16,7 @@ import {
   parseSearchQuery,
 } from '../lib/searchQueryParser';
 import { API_URL } from '../lib/utils';
+import { keepNewestVersionPerKey } from '../lib/versionCompare';
 
 type PackageResult = {
   description: string;
@@ -100,21 +101,24 @@ export default function SearchResults() {
           functions = functionsData.functions || [];
         }
 
-        const seenPackages = new Set<string>();
-        const deduplicatedPackages = packages.filter((p) => {
-          const name = p?.fields?.package_name;
-          if (!name || seenPackages.has(name)) return false;
-          seenPackages.add(name);
-          return true;
-        });
+        // The API can still return more than one version per package or
+        // function. Keep the newest one rather than the first one returned,
+        // because equal relevance scores are tied-broken by index insertion
+        // order, which puts the oldest release first.
+        const deduplicatedPackages = keepNewestVersionPerKey(
+          packages,
+          (p) => p?.fields?.package_name,
+          (p) => p?.fields?.version,
+        );
 
-        const seenFunctions = new Set<string>();
-        const deduplicatedFunctions = functions.filter((f) => {
-          const key = `${f?.fields?.name}@${f?.fields?.package_name}`;
-          if (seenFunctions.has(key)) return false;
-          seenFunctions.add(key);
-          return true;
-        });
+        const deduplicatedFunctions = keepNewestVersionPerKey(
+          functions,
+          (f) =>
+            f?.fields?.name && f?.fields?.package_name
+              ? `${f.fields.name}@${f.fields.package_name}`
+              : null,
+          (f) => f?.fields?.version,
+        );
 
         setPackageResults(deduplicatedPackages);
         setFunctionResults(deduplicatedFunctions);

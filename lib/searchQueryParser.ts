@@ -80,6 +80,15 @@ export function parseSearchQuery(query: string | string[]): ParsedSearchQuery {
 /**
  * Build API endpoint URLs based on parsed query.
  * Returns the appropriate endpoints for packages and functions searches.
+ *
+ * Package search requests `latest=1` so Elasticsearch returns one document per
+ * package instead of every historical version. Without it the API returns every
+ * indexed version with an identical relevance score, and the tie is broken by
+ * index insertion order, which surfaces the oldest release first.
+ *
+ * Function search deliberately does not request `latest=1`: topic documents are
+ * missing for many packages' newest versions, so the filter drops those results
+ * entirely. Function results are de-duplicated client side instead.
  */
 export function buildSearchEndpoints(
   baseUrl: string,
@@ -93,7 +102,7 @@ export function buildSearchEndpoints(
       )}&package=${encodeURIComponent(parsed.packageName)}&page=${page}`,
       packagesEndpoint: `${baseUrl}/search_packages?q=${encodeURIComponent(
         parsed.packageName,
-      )}&page=${page}`,
+      )}&page=${page}&latest=1`,
     };
   }
 
@@ -103,7 +112,7 @@ export function buildSearchEndpoints(
     )}&page=${page}`,
     packagesEndpoint: `${baseUrl}/search_packages?q=${encodeURIComponent(
       parsed.rawQuery,
-    )}&page=${page}`,
+    )}&page=${page}&latest=1`,
   };
 }
 

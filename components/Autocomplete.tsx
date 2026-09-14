@@ -7,6 +7,7 @@ import router from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
 import { API_URL } from '../lib/utils';
+import { keepNewestVersionPerKey } from '../lib/versionCompare';
 
 const DEBOUNCE_MS = 300;
 
@@ -55,7 +56,7 @@ const Autocomplete = ({ searchInput }: Props) => {
     try {
       const packagesEndpoint = `${API_URL}/search_packages?q=${encodeURIComponent(
         query,
-      )}&page=1`;
+      )}&page=1&latest=1`;
       const functionsEndpoint = `${API_URL}/search_functions?q=${encodeURIComponent(
         query,
       )}&page=1`;
@@ -88,23 +89,23 @@ const Autocomplete = ({ searchInput }: Props) => {
         topics = functionsData.functions || [];
       }
 
-      const seen = new Set<string>();
-      const dedupeByName = (items: typeof packages, nameKey: string) =>
-        items.filter((item) => {
-          const name = item?.fields?.[nameKey];
-          if (!name || seen.has(name)) return false;
-          seen.add(name);
-          return item?.score > 1;
-        });
+      // Collapse repeated packages/functions to their newest version. The API
+      // scores every indexed version identically, so the first entry returned
+      // is the oldest one rather than the most relevant.
+      const relevantPackages = keepNewestVersionPerKey(
+        packages.filter((item) => item?.score > 1),
+        (item) => item?.fields?.package_name,
+        (item) => item?.fields?.version,
+      );
 
-      const relevantPackages = dedupeByName(packages, 'package_name');
-      seen.clear();
-      const relevantTopics = topics.filter((item) => {
-        const key = `${item?.fields?.name}@${item?.fields?.package_name}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return item?.score > 1;
-      });
+      const relevantTopics = keepNewestVersionPerKey(
+        topics.filter((item) => item?.score > 1),
+        (item) =>
+          item?.fields?.name && item?.fields?.package_name
+            ? `${item.fields.name}@${item.fields.package_name}`
+            : null,
+        (item) => item?.fields?.version,
+      );
 
       setPackageSuggestions(relevantPackages.slice(0, 5));
       setTopicSuggestions(relevantTopics.slice(0, 5));
