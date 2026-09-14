@@ -11,8 +11,10 @@ import { useEffect, useMemo, useState } from 'react';
 import ClickableCard from '../components/ClickableCard';
 import Layout from '../components/Layout';
 import {
+  buildPackageFallbackEndpoint,
   buildSearchEndpoints,
   formatSearchHeading,
+  packageNameCandidate,
   parseSearchQuery,
 } from '../lib/searchQueryParser';
 import { API_URL } from '../lib/utils';
@@ -120,7 +122,45 @@ export default function SearchResults() {
           (f) => f?.fields?.version,
         );
 
-        setPackageResults(deduplicatedPackages);
+        // latest=1 drops packages whose latest_version flag is missing from the
+        // index instead of showing an older version, which would make them
+        // undiscoverable. When the query looks like a package name and no exact
+        // match came back, recover it with one unfiltered request. Remove once
+        // COMM-10361 fixes the underlying data.
+        let finalPackages = deduplicatedPackages;
+        const candidate =
+          pageNumber === 1 ? packageNameCandidate(parsedQuery) : null;
+        const candidateLower = candidate ? candidate.toLowerCase() : null;
+        const hasExactMatch =
+          candidateLower !== null &&
+          deduplicatedPackages.some(
+            (p) => p?.fields?.package_name?.toLowerCase() === candidateLower,
+          );
+
+        if (candidateLower !== null && !hasExactMatch) {
+          const resFallback = await fetch(
+            buildPackageFallbackEndpoint(API_URL, parsedQuery, pageNumber),
+            { headers: { Accept: 'application/json' } },
+          );
+
+          if (resFallback.ok) {
+            const fallbackData = await resFallback.json();
+            const exactMatches = (fallbackData.packages || []).filter(
+              (p: PackageResult) =>
+                p?.fields?.package_name?.toLowerCase() === candidateLower,
+            );
+            const recovered = keepNewestVersionPerKey(
+              exactMatches,
+              (p: PackageResult) => p?.fields?.package_name,
+              (p: PackageResult) => p?.fields?.version,
+            );
+            if (recovered.length > 0) {
+              finalPackages = [...recovered, ...deduplicatedPackages];
+            }
+          }
+        }
+
+        setPackageResults(finalPackages);
         setFunctionResults(deduplicatedFunctions);
         setIsLoading(false);
       } catch (error) {

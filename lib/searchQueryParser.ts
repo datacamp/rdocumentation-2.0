@@ -117,6 +117,39 @@ export function buildSearchEndpoints(
 }
 
 /**
+ * Return the query as a candidate package name, or null when it cannot be one.
+ *
+ * Used to decide whether an exact-name recovery request is worth making.
+ */
+export function packageNameCandidate(parsed: ParsedSearchQuery): string | null {
+  const candidate = parsed.isScoped ? parsed.packageName : parsed.rawQuery;
+  if (!candidate) return null;
+  return /^[A-Za-z][A-Za-z0-9._]*$/.test(candidate) ? candidate : null;
+}
+
+/**
+ * Unfiltered package search endpoint.
+ *
+ * A package whose latest_version flag is missing from the index is dropped by
+ * latest=1 entirely, rather than shown with an older version, which would make
+ * it undiscoverable. This endpoint recovers those packages. Roughly 1% of
+ * packages are affected because their database row has a null
+ * latest_version_id, so no document is flagged; see COMM-10361. Remove this
+ * once the data is fixed.
+ */
+export function buildPackageFallbackEndpoint(
+  baseUrl: string,
+  parsed: ParsedSearchQuery,
+  page = 1,
+): string {
+  const term =
+    parsed.isScoped && parsed.packageName
+      ? parsed.packageName
+      : parsed.rawQuery;
+  return `${baseUrl}/search_packages?q=${encodeURIComponent(term)}&page=${page}`;
+}
+
+/**
  * Format the search result heading based on parsed query.
  */
 export function formatSearchHeading(

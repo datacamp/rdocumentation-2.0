@@ -24,14 +24,18 @@ export function compareRVersions(a: string, b: string): number {
   for (let i = 0; i < segmentCount; i += 1) {
     const rawA = partsA[i] ?? '';
     const rawB = partsB[i] ?? '';
-    const numberA = Number.parseInt(rawA, 10);
-    const numberB = Number.parseInt(rawB, 10);
+    // A strict test, rather than Number.parseInt, so that a segment such as
+    // "1a" genuinely falls through to the string comparison instead of
+    // silently parsing as 1. CRAN versions are always numeric, so this is
+    // defensive rather than load-bearing.
+    const isNumericA = /^\d+$/.test(rawA);
+    const isNumericB = /^\d+$/.test(rawB);
 
-    if (Number.isNaN(numberA) || Number.isNaN(numberB)) {
+    if (!isNumericA || !isNumericB) {
       const difference = rawA.localeCompare(rawB);
       if (difference !== 0) return difference;
-    } else if (numberA !== numberB) {
-      return numberA - numberB;
+    } else if (Number(rawA) !== Number(rawB)) {
+      return Number(rawA) - Number(rawB);
     }
   }
 
