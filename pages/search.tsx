@@ -11,11 +11,14 @@ import { useEffect, useMemo, useState } from 'react';
 import ClickableCard from '../components/ClickableCard';
 import Layout from '../components/Layout';
 import {
+  buildPackageFallbackEndpoint,
   buildSearchEndpoints,
   formatSearchHeading,
+  packageNameCandidate,
   parseSearchQuery,
 } from '../lib/searchQueryParser';
 import { API_URL } from '../lib/utils';
+import { keepNewestVersionPerKey } from '../lib/versionCompare';
 
 type PackageResult = {
   description: string;
@@ -45,6 +48,52 @@ const ButtonWrapper = styled.div(`
   padding: ${tokens.spacing.large};
   justify-content: center;
 `);
+
+const JSON_HEADERS = { Accept: 'application/json' };
+
+/**
+ * latest=1 drops packages whose latest_version flag is missing from the index
+ * instead of showing an older version, which would make them undiscoverable.
+ * When the query looks like a package name and no exact match came back,
+ * recover it with one unfiltered request.
+ *
+ * Remove once COMM-10361 fixes the underlying data.
+ */
+async function recoverExactPackageMatch(
+  parsed: ReturnType<typeof parseSearchQuery>,
+  pageNumber: number,
+  deduplicatedPackages: PackageResult[],
+): Promise<PackageResult[]> {
+  if (pageNumber !== 1) return deduplicatedPackages;
+
+  const candidate = packageNameCandidate(parsed);
+  if (!candidate) return deduplicatedPackages;
+
+  const candidateLower = candidate.toLowerCase();
+  const alreadyPresent = deduplicatedPackages.some(
+    (p) => p?.fields?.package_name?.toLowerCase() === candidateLower,
+  );
+  if (alreadyPresent) return deduplicatedPackages;
+
+  const endpoint = buildPackageFallbackEndpoint(API_URL, parsed, pageNumber);
+  const response = await fetch(endpoint, { headers: JSON_HEADERS });
+  if (!response.ok) return deduplicatedPackages;
+
+  const data = await response.json();
+  const exactMatches = (data.packages || []).filter(
+    (p: PackageResult) =>
+      p?.fields?.package_name?.toLowerCase() === candidateLower,
+  );
+  const recovered = keepNewestVersionPerKey(
+    exactMatches,
+    (p: PackageResult) => p?.fields?.package_name,
+    (p: PackageResult) => p?.fields?.version,
+  );
+
+  return recovered.length > 0
+    ? [...recovered, ...deduplicatedPackages]
+    : deduplicatedPackages;
+}
 
 export default function SearchResults() {
   const router = useRouter();
@@ -77,14 +126,10 @@ export default function SearchResults() {
         );
 
         const resPackages = await fetch(packagesEndpoint, {
-          headers: {
-            Accept: 'application/json',
-          },
+          headers: JSON_HEADERS,
         });
         const resFunctions = await fetch(functionsEndpoint, {
-          headers: {
-            Accept: 'application/json',
-          },
+          headers: JSON_HEADERS,
         });
 
         let packages: PackageResult[] = [];
@@ -100,23 +145,32 @@ export default function SearchResults() {
           functions = functionsData.functions || [];
         }
 
-        const seenPackages = new Set<string>();
-        const deduplicatedPackages = packages.filter((p) => {
-          const name = p?.fields?.package_name;
-          if (!name || seenPackages.has(name)) return false;
-          seenPackages.add(name);
-          return true;
-        });
+        // The API can still return more than one version per package or
+        // function. Keep the newest one rather than the first one returned,
+        // because equal relevance scores are tied-broken by index insertion
+        // order, which puts the oldest release first.
+        const deduplicatedPackages = keepNewestVersionPerKey(
+          packages,
+          (p) => p?.fields?.package_name,
+          (p) => p?.fields?.version,
+        );
 
-        const seenFunctions = new Set<string>();
-        const deduplicatedFunctions = functions.filter((f) => {
-          const key = `${f?.fields?.name}@${f?.fields?.package_name}`;
-          if (seenFunctions.has(key)) return false;
-          seenFunctions.add(key);
-          return true;
-        });
+        const deduplicatedFunctions = keepNewestVersionPerKey(
+          functions,
+          (f) =>
+            f?.fields?.name && f?.fields?.package_name
+              ? `${f.fields.name}@${f.fields.package_name}`
+              : null,
+          (f) => f?.fields?.version,
+        );
 
-        setPackageResults(deduplicatedPackages);
+        const finalPackages = await recoverExactPackageMatch(
+          parsedQuery,
+          pageNumber,
+          deduplicatedPackages,
+        );
+
+        setPackageResults(finalPackages);
         setFunctionResults(deduplicatedFunctions);
         setIsLoading(false);
       } catch (error) {
