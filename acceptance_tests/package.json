@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@datacamp/playwright-helpers": "^1.1.0",
-    "@playwright/test": "1.31.2"
+    "@playwright/test": "1.65.0"
   },
   "private": true
 }
