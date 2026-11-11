@@ -8,10 +8,30 @@ orbs:
   datacamp-artifactory: datacamp/artifactory@1
   datacamp-circleci: datacamp/central-ci@2
 
+jobs:
+  playwright-dependencies:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.65.0-noble
+    working_directory: /project
+    steps:
+      - checkout
+      - run:
+          name: Validate acceptance dependencies in the matching runner
+          working_directory: /project/acceptance_tests
+          command: |
+            npm uninstall --global yarn
+            npm install --global --no-audit --no-fund corepack@0.36.0
+            export YARN_NPM_AUTH_TOKEN="${NPM_TOKEN_INSTALL_PACKAGES_READ}"
+            test "$(corepack yarn --version)" = "4.18.1"
+            corepack yarn install --immutable
+            test "$(corepack yarn playwright --version)" = "Version 1.65.0"
+            corepack yarn playwright test --list --reporter=line
 workflows:
 # BEGIN ANSIBLE MANAGED BLOCK
   build-and-deploy-eks:
     jobs:
+      - playwright-dependencies:
+          context: org-global
       - queue/block_workflow:
           name: queue
           context: org-global
@@ -30,6 +50,7 @@ workflows:
           repo: rdocumentation
           requires:
             - queue
+            - playwright-dependencies
 
       - datacamp-artifactory/tag_repository:
           name: tag
@@ -43,6 +64,11 @@ workflows:
                 - master
   deploy-backstage:
     jobs:
+      - playwright-dependencies:
+          context: org-global
+          filters:
+            branches:
+              only: /backstage\/.*/
       - datacamp-artifactory/build_and_push_image_to_artifactory:
           artifactory-url: artifactory-proxy-public.ops.datacamp.com
           name: docker-build
@@ -51,6 +77,8 @@ workflows:
           dockerfile: Dockerfile
           executor: datacamp-artifactory/buildkit
           repo: rdocumentation
+          requires:
+            - playwright-dependencies
           filters:
             branches:
               only:
